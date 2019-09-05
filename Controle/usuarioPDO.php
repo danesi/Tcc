@@ -18,9 +18,28 @@ if (realpath('./index.php')) {
 
 class UsuarioPDO{
     
-             /*inserir*/
+    
+    function login() {
+        $con = new conexao();
+        $pdo = $con->getConexao();
+        $senha = md5($_POST['senha']);
+        $email = $_POST['email'];
+        $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :email AND senha = :senha;");
+        $stmt->bindValue(":email", $email);
+        $stmt->bindValue(":senha", $senha);
+        if($stmt->execute()) {
+            $linha = $stmt->fetch(PDO::FETCH_ASSOC);
+            $usuario = new usuario($linha);
+            $_SESSION['logado'] = serialize($usuario);
+            header('location: ../index.php');
+        }
+    }
+
+
+    /*inserir*/
     function inserirUsuario() {
         $usuario = new usuario($_POST);
+        $senha = md5($usuario->getSenha());
             $con = new conexao();
             $pdo = $con->getConexao();
             $stmt = $pdo->prepare('insert into Usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :id_endereco);' );
@@ -35,7 +54,7 @@ class UsuarioPDO{
         
             $stmt->bindValue(':email', $usuario->getEmail());    
         
-            $stmt->bindValue(':senha', $usuario->getSenha());    
+            $stmt->bindValue(':senha', $senha);    
         
             $stmt->bindValue(':id_endereco', $usuario->getId_endereco());    
         
