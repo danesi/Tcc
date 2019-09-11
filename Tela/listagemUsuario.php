@@ -4,56 +4,30 @@
         <meta charset="UTF-8">
         <title>Listagem Usuario</title>
         <?php
-            include_once '../Base/header.php';
-            include_once '../Controle/usuarioPDO.php';
-            include_once '../Modelo/Usuario.php';
-            $usuarioPDO = new usuarioPDO();
+        include_once '../Base/header.php';
+        include_once '../Controle/usuarioPDO.php';
+        include_once '../Modelo/Usuario.php';
+        $usuarioPDO = new usuarioPDO();
         ?>
-        <body class="homeimg">
+    <body class="homeimg">
         <?php
         include_once '../Base/navBar.php';
         ?>
         <main>
-            <div class="row " style="margin-top: 5vh;">
-                <table class=" card col s10 offset-s1 center">
-                <h4 class='center'>Listagem Usuario</h4>
-                    <tr class="center">
-
-                        <td class='center'>Id_usuario</td>
-                        <td class='center'>Nome</td>
-                        <td class='center'>Cpf</td>
-                        <td class='center'>Nascimento</td>
-                        <td class='center'>Telefone</td>
-                        <td class='center'>Email</td>
-                        <td class='center'>Senha</td>
-                        <td class='center'>Id_endereco</td>
-                        <td class='center'>Editar</td>
-                        <td class='center'>Excluir</td>
-                    </tr>
-                    <?php
-                    $stmt = $usuarioPDO->selectUsuario();
-                        
-                    if ($stmt) {
-                        while ($linha = $stmt->fetch()) {
-                            $usuario = new usuario($linha);
-                            ?>
-                        <tr>
-                            <td class="center"><?php echo $usuario->getId_usuario()?></td>
-                            <td class="center"><?php echo $usuario->getNome()?></td>
-                            <td class="center"><?php echo $usuario->getCpf()?></td>
-                            <td class="center"><?php echo $usuario->getNascimento()?></td>
-                            <td class="center"><?php echo $usuario->getTelefone()?></td>
-                            <td class="center"><?php echo $usuario->getEmail()?></td>
-                            <td class="center"><?php echo $usuario->getSenha()?></td>
-                            <td class="center"><?php echo $usuario->getId_endereco()?></td>
-                            <td class = 'center'><a href="./editarUsuario.php?id=<?php echo $usuario->getid_usuario()?>">Editar</a></td>
-                            <td class="center"><a href="../Controle/usuarioControle.php?function=deletar&id=<?php echo $usuario->getid_usuario()?>">Excluir</a></td>
-                        </tr>
-                                <?php
-                        }
-                    }
-                    ?>
-                    </table>
+            <div class="row">
+                <div class="col l9 offset-l3 alinha" style="padding-right: 10vh">
+                    <div class="card blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
         <?php

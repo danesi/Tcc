@@ -14,7 +14,7 @@ if (isset($_SESSION['logado'])) {
         ?>
     <body class="homeimg">
         <?php
-        include_once './Base/navBar.php';
+        include_once './Base/iNav.php';
         ?>
         <main>
            

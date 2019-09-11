@@ -43,21 +43,13 @@ class UsuarioPDO{
             $con = new conexao();
             $pdo = $con->getConexao();
             $stmt = $pdo->prepare('insert into Usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :id_endereco);' );
-
             $stmt->bindValue(':nome', $usuario->getNome());    
-        
             $stmt->bindValue(':cpf', $usuario->getCpf());    
-        
             $stmt->bindValue(':nascimento', $usuario->getNascimento());    
-        
             $stmt->bindValue(':telefone', $usuario->getTelefone());    
-        
             $stmt->bindValue(':email', $usuario->getEmail());    
-        
             $stmt->bindValue(':senha', $senha);    
-        
             $stmt->bindValue(':id_endereco', $usuario->getId_endereco());    
-        
             if($stmt->execute()){ 
                 header('location: ../index.php?msg=usuarioInserido');
             }else{
