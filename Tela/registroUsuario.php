@@ -1,3 +1,13 @@
+<?php
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    
+    if (!isset($_SESSION['logado'])) {
+        $_SESSION['msg'] = "Você não tem permissão para acessar essa página";
+        header("Location: ../index.php");
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,7 +18,7 @@
         ?>
     <body class="homeimg">
         <?php
-        include_once '../Base/navBar.php';
+        include_once '../Base/iNav.php';
         ?>
         <main>
             <div class="row" style="margin-top: 1vh; padding-right: 5vh">
