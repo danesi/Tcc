@@ -12,137 +12,95 @@ if (realpath("./index.php")) {
     }
 }
 ?>
-
-<nav class="nav-extended white">
-    <div class="nav-wrapper" style="width: 100vw; margin-left: auto; margin-right: auto;">
-        <a href="<?php echo $pontos; ?>./Tela/home.php" class="brand-logo left black-text">Tcc</a>
-        <ul class="right hide-on-med-and-down">
-            
-            <!--usuario-->
+<div class="col l12">
+    <ul class="sidenav sidenav-fixed">
+        <li><div class="user-view">
+                <a href="#user"><div class="fotoPerfil left-align" style="background-image: url('../Img/tcc.jfif');background-size: cover;
+                                     background-position: center;
+                                     background-repeat: no-repeat;
+                                     max-height: 20vh; max-width: 20vh;"></div></a>
+                <a href="#name"><span class="white-text name">aa</span></a>
+            </div></li>
+            <div class="divider"></div>
+        <ul class="collapsible">
+            <a href="/index.php" class="black-text">
+                <li>
+                    <div class="headerMeu" style="margin-left: 16px">
+                        Início
+                    </div>
+                </li>
+            </a>
             <li>
-                <a class='dropdown-trigger center black-text' style="background-color: transparent" data-hover="true" href='#' data-target='usuario'>Usuario</a>
-                <ul id='usuario' class='dropdown-content'>
-                    <!--usuariologin-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/login.php">login</a></li>
-                    <!--usuariologin-->
-                    <!--usuarioregistro-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/registroUsuario.php">registro</a></li>
-                    <!--usuarioregistro-->
-                    <!--usuariolistagem-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/listagemUsuario.php">listagem</a></li>
-                    <!--usuariolistagem-->
-                    <!--usuarioitem-->
-                
-                
-                
-                </ul>
+                <div class="collapsible-header anime" x="0">Meu Perfil<i class="large material-icons right animi">arrow_drop_down</i></div>
+                <div class="collapsible-body">
+                    <ul>
+                        <li><a href="Tela/perfil.php" id="linkprestador" class="black-text modal-trigger">Ver Meu Perfil</a></li>
+                    </ul>
+                </div>
             </li>
-            <!--usuario-->
-            
-            <!--administrador-->
             <li>
-                <a class='dropdown-trigger center black-text' style="background-color: transparent" data-hover="true" href='#' data-target='administrador'>Administrador</a>
-                <ul id='administrador' class='dropdown-content'>
-                    <!--administradorregistro-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/registroAdministrador.php">registro</a></li>
-                    <!--administradorregistro-->
-                    
-                    <!--administradorlistagem-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/listagemAdministrador.php">listagem</a></li>
-                    <!--administradorlistagem-->
-                    <!--administradoritem-->
-                
-                
-                
-                </ul>
+                <div class="collapsible-header anime" x="0">Administração<i class="large material-icons right animi">arrow_drop_down</i></div>
+                <div class="collapsible-body">
+                    <ul>
+                        <li>
+                            <a href="Tela/listagemUsuario.php" class="black-text">Ver Usuários
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Tela/cadastroUsuarioAdm.php" class="black-text">
+                                Cadastrar Usuário
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
-            <!--administrador-->
-            
-            <!--empregado-->
             <li>
-                <a class='dropdown-trigger center black-text' style="background-color: transparent" data-hover="true" href='#' data-target='empregado'>Empregado</a>
-                <ul id='empregado' class='dropdown-content'>
-                    <!--empregadoregistro-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php">registro</a></li>
-                    <!--empregadoregistro-->
-                    <!--empregadolistagem-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/listagemEmpregado.php">listagem</a></li>
-                    <!--empregadolistagem-->
-                    <!--empregadoitem-->
-                
-                
-                </ul>
+                <div class="collapsible-header anime" x="0">Funcionários<i class="large material-icons right animi">arrow_drop_down</i></div>
+                <div class="collapsible-body">
+                    <ul>
+                        <li><a href="Tela/registroPrestador.php" id="linkprestador" class="black-text modal-trigger">Cadastrar</a></li>
+                        <li><a href="Tela/listagemPrestador.php" class="black-text">Ver funcionários</a></li>
+                    </ul>
+                </div>
             </li>
-            <!--empregado-->
-            
-            <!--empregador-->
             <li>
-                <a class='dropdown-trigger center black-text' style="background-color: transparent" data-hover="true" href='#' data-target='empregador'>Empregador</a>
-                <ul id='empregador' class='dropdown-content'>
-                    <!--empregadorregistro-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/registroEmpregador.php">registro</a></li>
-                    <!--empregadorregistro-->
-                    <!--empregadorlistagem-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/listagemEmpregador.php">listagem</a></li>
-                    <!--empregadorlistagem-->
-                    <!--empregadoritem-->
-                
-                
-                </ul>
+                <div class="collapsible-header anime" x="0">Serviços<i class="large material-icons right animi">arrow_drop_down</i></div>
+                <div class="collapsible-body">
+                    <ul>
+                        <li><a href="Tela/registroServico.php" class="black-text modal-trigger">Cadastrar</a></li>
+                        <li><a href="Tela/listagemServico.php" class="black-text">Ver Serviços</a></li>
+                    </ul>
+                </div>
             </li>
-            <!--empregador-->
-            
-            <!--endereco-->
-            <li>
-                <a class='dropdown-trigger center black-text' style="background-color: transparent" data-hover="true" href='#' data-target='endereco'>Endereco</a>
-                <ul id='endereco' class='dropdown-content'>
-                    <!--enderecoregistro-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/registroEndereco.php">registro</a></li>
-                    <!--enderecoregistro-->
-                    <!--enderecolistagem-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/listagemEndereco.php">listagem</a></li>
-                    <!--enderecolistagem-->
-                    <!--enderecoitem-->
-                
-                
-                </ul>
-            </li>
-            <!--endereco-->
-            
-            <!--servico-->
-            <li>
-                <a class='dropdown-trigger center black-text' style="background-color: transparent" data-hover="true" href='#' data-target='servico'>Servico</a>
-                <ul id='servico' class='dropdown-content'>
-                    <!--servicoregistro-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/registroServico.php">registro</a></li>
-                    <!--servicoregistro-->
-                    <!--servicolistagem-->
-                    <li><a href="<?php echo $pontos; ?>./Tela/listagemServico.php">listagem</a></li>
-                    <!--servicolistagem-->
-                    <!--servicoitem-->
-                
-                
-                </ul>
-            </li>
-            <!--servico-->
-            <!--proximo-->
-
-
-
-
-
-
-
-
-
-
-
-
+            <a href="Controle/usuarioControle.php?function=logout&url=" class="black-text">
+                <li>
+                    <div class="headerMeu" style="margin-left: 16px">
+                        Sair
+                    </div>
+                </li>
+            </a>
         </ul>
-    </div>
-</nav>
+    </ul> 
+</div>
 <script>
-$('.dropdown-trigger').dropdown({
+    $('.dropdown-trigger').dropdown({
         coverTrigger: false,
+    });
+    $('.collapsible').collapsible();
+    $(document).ready(function () {
+        $('.sidenav').sidenav();
+    });
+
+
+    $(".anime").click(function () {
+        if ($(this).attr("x") == 0) {
+            $(".anime").attr("x", "0");
+            $(".animi").attr("style", "transform: rotate(0deg);");
+            $(this).children($(".animi")).attr("style", "transform: rotate(180deg);");
+            $(this).attr("x", "1");
+        } else {
+            $(this).children($(".animi")).attr("style", "transform: rotate(0deg);");
+            $(this).attr("x", "0");
+        }
     });
 </script>
