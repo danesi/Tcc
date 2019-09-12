@@ -18,7 +18,7 @@ if (realpath("./index.php")) {
         <a href="<?php echo $pontos; ?>./Tela/home.php" class="brand-logo left black-text">Tcc</a>
         <ul class="right hide-on-med-and-down">
             <li>
-                <a class="waves-effect waves-light btn blue darken-1">Quero trabalhar</a>
+                <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php" class="waves-effect waves-light btn blue darken-1">Quero trabalhar</a>
             </li>
             <li>
                 <a class="waves-effect waves-light btn orange darken-1">Quero disponibilizar</a>

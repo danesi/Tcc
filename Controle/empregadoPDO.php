@@ -19,23 +19,19 @@ if (realpath('./index.php')) {
 class EmpregadoPDO{
     
              /*inserir*/
-    function inserirEmpregado() {
-        $empregado = new empregado($_POST);
-            $con = new conexao();
-            $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('insert into Empregado values(default , :escolaridade , :area_atuacao , :nota);' );
-
-            $stmt->bindValue(':escolaridade', $empregado->getEscolaridade());    
-        
-            $stmt->bindValue(':area_atuacao', $empregado->getArea_atuacao());    
-        
-            $stmt->bindValue(':nota', $empregado->getNota());    
-        
-            if($stmt->execute()){ 
-                header('location: ../index.php?msg=empregadoInserido');
-            }else{
-                header('location: ../index.php?msg=empregadoErroInsert');
-            }
+    function inserirEmpregado(empregado $empregado, $id_usuario) {
+        $con = new conexao();
+        $pdo = $con->getConexao();
+        $stmt = $pdo->prepare('insert into empregado values(:id_usuario , :escolaridade , :area_atuacao , :nota);' );
+        $stmt->bindValue(':id_usuario', $id_usuario);
+        $stmt->bindValue(':escolaridade', $empregado->getEscolaridade());
+        $stmt->bindValue(':area_atuacao', $empregado->getArea_atuacao());
+        $stmt->bindValue(':nota', $empregado->getNota());
+        if($stmt->execute()){
+            header('location: ../Tela/perfilEmpregado.php?msg=empregadoInserido');
+        }else{
+            header('location: ../index.php?msg=empregadoErroInsert');
+        }
     }
     /*inserir*/
                 

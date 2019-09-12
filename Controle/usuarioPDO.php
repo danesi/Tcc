@@ -2,24 +2,32 @@
 
 if (realpath('./index.php')) {
     include_once './Controle/conexao.php';
+    include_once './Modelo/Empregado.php';
+    include_once './Controle/EmpregadoPDO.php';
     include_once './Modelo/Usuario.php';
 } else {
     if (realpath('../index.php')) {
         include_once '../Controle/conexao.php';
+        include_once '../Modelo/Empregado.php';
+        include_once '../Controle/EmpregadoPDO.php';
         include_once '../Modelo/Usuario.php';
     } else {
         if (realpath('../../index.php')) {
             include_once '../../Controle/conexao.php';
+            include_once '../../Modelo/Empregado.php';
+            include_once '../../Controle/EmpregadoPDO.php';
             include_once '../../Modelo/Usuario.php';
         }
     }
 }
 
 
-class UsuarioPDO{
-    
-    
-    function login() {
+class UsuarioPDO
+{
+
+
+    function login()
+    {
         $con = new conexao();
         $pdo = $con->getConexao();
         $senha = md5($_POST['senha']);
@@ -27,7 +35,7 @@ class UsuarioPDO{
         $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :email AND senha = :senha;");
         $stmt->bindValue(":email", $email);
         $stmt->bindValue(":senha", $senha);
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $linha = $stmt->fetch(PDO::FETCH_ASSOC);
             $usuario = new usuario($linha);
             $_SESSION['logado'] = serialize($usuario);
@@ -37,33 +45,75 @@ class UsuarioPDO{
 
 
     /*inserir*/
-    function inserirUsuario() {
+    function inserirUsuario()
+    {
         $usuario = new usuario($_POST);
         $senha = md5($usuario->getSenha());
-            $con = new conexao();
-            $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('insert into Usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :id_endereco);' );
-            $stmt->bindValue(':nome', $usuario->getNome());    
-            $stmt->bindValue(':cpf', $usuario->getCpf());    
-            $stmt->bindValue(':nascimento', $usuario->getNascimento());    
-            $stmt->bindValue(':telefone', $usuario->getTelefone());    
-            $stmt->bindValue(':email', $usuario->getEmail());    
-            $stmt->bindValue(':senha', $senha);    
-            $stmt->bindValue(':id_endereco', $usuario->getId_endereco());    
-            if($stmt->execute()){ 
-                header('location: ../index.php?msg=usuarioInserido');
-            }else{
-                header('location: ../index.php?msg=usuarioErroInsert');
+        $con = new conexao();
+        $pdo = $con->getConexao();
+        $stmt = $pdo->prepare('insert into usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :foto, 1);');
+        $stmt->bindValue(':nome', $usuario->getNome());
+        $stmt->bindValue(':cpf', $usuario->getCpf());
+        $stmt->bindValue(':nascimento', $usuario->getNascimento());
+        $stmt->bindValue(':telefone', $usuario->getTelefone());
+        $stmt->bindValue(':email', $usuario->getEmail());
+        $stmt->bindValue(':senha', $senha);
+        $stmt->bindValue(':foto', "");
+        if ($stmt->execute()) {
+            $ultId = $this->selecUltimoUsuario();
+            $SendCadImg = filter_input(INPUT_POST, 'cadastrar', FILTER_SANITIZE_STRING);
+            if ($SendCadImg && $_FILES['foto']['name'] != null) {
+                $nome_imagem = md5($ultId);
+                $ext = explode('.', $_FILES['foto']['name']);
+                $extensao = "." . $ext[1];
+                $diretorio = '../Img/Perfil/' . $nome_imagem . $extensao;
+
+                if (move_uploaded_file($_FILES['foto']['tmp_name'], $diretorio)) {
+                    $usuario->setFoto('Img/Perfil/' . $nome_imagem . $extensao);
+                    $caminho = '/Img/Perfil/' . $nome_imagem . $extensao;
+                    $this->alteraNomeFoto($ultId, $caminho);
+                } else {
+                    header('location: ../Tela/registroEmpregado.php?msg=ErroSalvarFoto');
+                }
+            } else {
+                header('location: ../Tela/registroEmpregado.php?msg=ErroCarregarFoto');
             }
+        }
+        $ultId = $this->selecUltimoUsuario();
+        $empregadoPDO = new EmpregadoPDO();
+        $empregadoPDO->inserirEmpregado(new empregado($_POST), $ultId);
     }
+
     /*inserir*/
-                
-    
 
-            
 
-    public function selectUsuario(){
-            
+    public function alteraNomeFoto($id_usuario, $foto)
+    {
+        $con = new conexao();
+        $pdo = $con->getConexao();
+        $stmt = $pdo->prepare('update usuario set foto = :foto where id_usuario = :id_usuario;');
+        $stmt->bindValue(':id_usuario', $id_usuario);
+        $stmt->bindValue(':foto', $foto);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    public function selecUltimoUsuario()
+    {
+        $con = new conexao();
+        $pdo = $con->getConexao();
+        $stmt = $pdo->prepare('select max(id_usuario) as id_usuario from usuario;');
+        $stmt->execute();
+        while ($linha = $stmt->fetch()) {
+            $usuario = new usuario($linha);
+        }
+        return $usuario->getId_usuario();
+    }
+
+
+    public function selectUsuario()
+    {
+
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('select * from usuario ;');
@@ -74,11 +124,11 @@ class UsuarioPDO{
             return false;
         }
     }
-    
 
-                    
-    public function selectUsuarioId_usuario($id_usuario){
-            
+
+    public function selectUsuarioId_usuario($id_usuario)
+    {
+
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('select * from usuario where id_usuario = :id_usuario;');
@@ -90,11 +140,11 @@ class UsuarioPDO{
             return false;
         }
     }
-    
 
-                    
-    public function selectUsuarioNome($nome){
-            
+
+    public function selectUsuarioNome($nome)
+    {
+
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('select * from usuario where nome = :nome;');
@@ -106,11 +156,11 @@ class UsuarioPDO{
             return false;
         }
     }
-    
 
-                    
-    public function selectUsuarioCpf($cpf){
-            
+
+    public function selectUsuarioCpf($cpf)
+    {
+
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('select * from usuario where cpf = :cpf;');
@@ -122,11 +172,11 @@ class UsuarioPDO{
             return false;
         }
     }
-    
 
-                    
-    public function selectUsuarioNascimento($nascimento){
-            
+
+    public function selectUsuarioNascimento($nascimento)
+    {
+
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('select * from usuario where nascimento = :nascimento;');
@@ -138,11 +188,11 @@ class UsuarioPDO{
             return false;
         }
     }
-    
 
-                    
-    public function selectUsuarioTelefone($telefone){
-            
+
+    public function selectUsuarioTelefone($telefone)
+    {
+
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('select * from usuario where telefone = :telefone;');
@@ -154,11 +204,11 @@ class UsuarioPDO{
             return false;
         }
     }
-    
 
-                    
-    public function selectUsuarioEmail($email){
-            
+
+    public function selectUsuarioEmail($email)
+    {
+
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('select * from usuario where email = :email;');
@@ -170,11 +220,11 @@ class UsuarioPDO{
             return false;
         }
     }
-    
 
-                    
-    public function selectUsuarioSenha($senha){
-            
+
+    public function selectUsuarioSenha($senha)
+    {
+
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('select * from usuario where senha = :senha;');
@@ -186,11 +236,11 @@ class UsuarioPDO{
             return false;
         }
     }
-    
 
-                    
-    public function selectUsuarioId_endereco($id_endereco){
-            
+
+    public function selectUsuarioId_endereco($id_endereco)
+    {
+
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('select * from usuario where id_endereco = :id_endereco;');
@@ -202,32 +252,34 @@ class UsuarioPDO{
             return false;
         }
     }
-    
- 
-    public function updateUsuario(Usuario $usuario){        
+
+
+    public function updateUsuario(Usuario $usuario)
+    {
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('update usuario set nome = :nome , cpf = :cpf , nascimento = :nascimento , telefone = :telefone , email = :email , senha = :senha , id_endereco = :id_endereco where id_usuario = :id_usuario;');
         $stmt->bindValue(':nome', $usuario->getNome());
-        
+
         $stmt->bindValue(':cpf', $usuario->getCpf());
-        
+
         $stmt->bindValue(':nascimento', $usuario->getNascimento());
-        
+
         $stmt->bindValue(':telefone', $usuario->getTelefone());
-        
+
         $stmt->bindValue(':email', $usuario->getEmail());
-        
+
         $stmt->bindValue(':senha', $usuario->getSenha());
-        
+
         $stmt->bindValue(':id_endereco', $usuario->getId_endereco());
-        
+
         $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
         $stmt->execute();
         return $stmt->rowCount();
-    }            
-    
-    public function deleteUsuario($definir){
+    }
+
+    public function deleteUsuario($definir)
+    {
         $con = new conexao();
         $pdo = $con->getConexao();
         $stmt = $pdo->prepare('delete from usuario where id_usuario = :definir ;');
@@ -235,24 +287,25 @@ class UsuarioPDO{
         $stmt->execute();
         return $stmt->rowCount();
     }
-    
-    public function deletar(){
+
+    public function deletar()
+    {
         $this->deleteUsuario($_GET['id']);
         header('location: ../Tela/listarUsuario.php');
     }
 
 
-
-            /*editar*/
-            function editar() {
-                $usuario = new Usuario($_POST);
-                    if($this->updateUsuario($usuario) > 0){
-                        header('location: ../index.php?msg=usuarioAlterado');
-                    } else {
-                        header('location: ../index.php?msg=usuarioErroAlterar');
-                    }
-            }
-            /*editar*/
-            /*chave*/
-            }
+    /*editar*/
+    function editar()
+    {
+        $usuario = new Usuario($_POST);
+        if ($this->updateUsuario($usuario) > 0) {
+            header('location: ../index.php?msg=usuarioAlterado');
+        } else {
+            header('location: ../index.php?msg=usuarioErroAlterar');
+        }
+    }
+    /*editar*/
+    /*chave*/
+}
                 
