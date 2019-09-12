@@ -10,6 +10,7 @@ private $telefone;
 private $email;
 private $senha;
 private $foto;
+private $admin;
 private $id_endereco;
 
 
@@ -122,6 +123,16 @@ public function __construct() {
     public function setFoto($foto)
     {
         $this->foto = $foto;
+    }
+
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
     }
 
 }
