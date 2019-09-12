@@ -3,14 +3,17 @@
 if (realpath('./index.php')) {
     include_once './Controle/conexao.php';
     include_once './Modelo/Empregado.php';
+    include_once './Modelo/Usuario.php';
 } else {
     if (realpath('../index.php')) {
         include_once '../Controle/conexao.php';
         include_once '../Modelo/Empregado.php';
+        include_once '../Modelo/Usuario.php';
     } else {
         if (realpath('../../index.php')) {
             include_once '../../Controle/conexao.php';
             include_once '../../Modelo/Empregado.php';
+            include_once '../../Modelo/Usuario.php';
         }
     }
 }
@@ -19,24 +22,65 @@ if (realpath('./index.php')) {
 class EmpregadoPDO{
     
              /*inserir*/
-    function inserirEmpregado(empregado $empregado, $id_usuario) {
+    function inserirEmpregado() {
+        $empregado = new empregado($_POST);
+        $usuario = new usuario(unserialize($_SESSION['logado']));
+        $empregado->setId_usuario($usuario->getId_usuario());
         $con = new conexao();
         $pdo = $con->getConexao();
-        $stmt = $pdo->prepare('insert into empregado values(:id_usuario , :escolaridade , :area_atuacao , :nota);' );
-        $stmt->bindValue(':id_usuario', $id_usuario);
+        $stmt = $pdo->prepare('insert into empregado values(:id_usuario , :escolaridade , :area_atuacao, null);' );
+        $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
         $stmt->bindValue(':escolaridade', $empregado->getEscolaridade());
         $stmt->bindValue(':area_atuacao', $empregado->getArea_atuacao());
-        $stmt->bindValue(':nota', $empregado->getNota());
         if($stmt->execute()){
-            header('location: ../Tela/perfilEmpregado.php?msg=empregadoInserido');
+            $SendCadImg = filter_input(INPUT_POST, 'cadastrar', FILTER_SANITIZE_STRING);
+            if ($SendCadImg && $_FILES['foto']['name'] != null) {
+                $nome_imagem = md5($usuario->getId_usuario());
+                $ext = explode('.', $_FILES['foto']['name']);
+                $extensao = "." . $ext[1];
+                $diretorio = '../Img/Perfil/' . $nome_imagem . $extensao;
+
+                if (move_uploaded_file($_FILES['foto']['tmp_name'], $diretorio)) {
+                    $usuario->setFoto('Img/Perfil/' . $nome_imagem . $extensao);
+                    $caminho = '/Img/Perfil/' . $nome_imagem . $extensao;
+                    $this->alteraNomeFoto($usuario->getId_usuario(), $caminho);
+                    header("Location: ../index.php?msg=sucesso");
+                } else {
+                    header("Location: ../Tela/registroEmpregado.php?msg=erroSalvarImagem");
+                }
+            } else {
+                header("Location: ../Tela/registroEmpregado.php?msg=erroCarrregaImagem");
+            }
+
         }else{
             header('location: ../index.php?msg=empregadoErroInsert');
         }
     }
     /*inserir*/
-                
-    
 
+
+    public function alteraNomeFoto($id_usuario, $foto)
+    {
+        $con = new conexao();
+        $pdo = $con->getConexao();
+        $stmt = $pdo->prepare('update usuario set foto = :foto where id_usuario = :id_usuario;');
+        $stmt->bindValue(':id_usuario', $id_usuario);
+        $stmt->bindValue(':foto', $foto);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    public function verificaEmpregado($id_usuario) {
+        $pdo = conexao::getConexao();
+        $stmt = $pdo->prepare("select * from empregado where id_usuario = :id_usuario;");
+        $stmt->bindValue(":id_usuario", $id_usuario);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
             
 
     public function selectEmpregado(){

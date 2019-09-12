@@ -1,5 +1,7 @@
 <?php
-
+if (!isset($_SESSION)) {
+    session_start();
+}
 if (realpath('./index.php')) {
     include_once './Controle/conexao.php';
     include_once './Modelo/Empregado.php';
@@ -35,12 +37,21 @@ class UsuarioPDO
         $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :email AND senha = :senha;");
         $stmt->bindValue(":email", $email);
         $stmt->bindValue(":senha", $senha);
-        if ($stmt->execute()) {
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
             $linha = $stmt->fetch(PDO::FETCH_ASSOC);
             $usuario = new usuario($linha);
             $_SESSION['logado'] = serialize($usuario);
             header('location: ../index.php');
+        } else {
+            header('location: ../Tela/login.php');
         }
+    }
+
+    function logoff()
+    {
+        session_destroy();
+        header("Location: ../index.php");
     }
 
 
@@ -48,10 +59,10 @@ class UsuarioPDO
     function inserirUsuario()
     {
         $usuario = new usuario($_POST);
-        $senha = md5($usuario->getSenha());
+        $senha = md5($_POST['senha1']);
         $con = new conexao();
         $pdo = $con->getConexao();
-        $stmt = $pdo->prepare('insert into usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :foto, 1);');
+        $stmt = $pdo->prepare('insert into usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :foto, 1, 0);');
         $stmt->bindValue(':nome', $usuario->getNome());
         $stmt->bindValue(':cpf', $usuario->getCpf());
         $stmt->bindValue(':nascimento', $usuario->getNascimento());
@@ -60,43 +71,11 @@ class UsuarioPDO
         $stmt->bindValue(':senha', $senha);
         $stmt->bindValue(':foto', "");
         if ($stmt->execute()) {
-            $ultId = $this->selecUltimoUsuario();
-            $SendCadImg = filter_input(INPUT_POST, 'cadastrar', FILTER_SANITIZE_STRING);
-            if ($SendCadImg && $_FILES['foto']['name'] != null) {
-                $nome_imagem = md5($ultId);
-                $ext = explode('.', $_FILES['foto']['name']);
-                $extensao = "." . $ext[1];
-                $diretorio = '../Img/Perfil/' . $nome_imagem . $extensao;
-
-                if (move_uploaded_file($_FILES['foto']['tmp_name'], $diretorio)) {
-                    $usuario->setFoto('Img/Perfil/' . $nome_imagem . $extensao);
-                    $caminho = '/Img/Perfil/' . $nome_imagem . $extensao;
-                    $this->alteraNomeFoto($ultId, $caminho);
-                } else {
-                    header('location: ../Tela/registroEmpregado.php?msg=ErroSalvarFoto');
-                }
-            } else {
-                header('location: ../Tela/registroEmpregado.php?msg=ErroCarregarFoto');
-            }
+            header("Location: ../index.php?msg=sucesso");
         }
-        $ultId = $this->selecUltimoUsuario();
-        $empregadoPDO = new EmpregadoPDO();
-        $empregadoPDO->inserirEmpregado(new empregado($_POST), $ultId);
     }
 
     /*inserir*/
-
-
-    public function alteraNomeFoto($id_usuario, $foto)
-    {
-        $con = new conexao();
-        $pdo = $con->getConexao();
-        $stmt = $pdo->prepare('update usuario set foto = :foto where id_usuario = :id_usuario;');
-        $stmt->bindValue(':id_usuario', $id_usuario);
-        $stmt->bindValue(':foto', $foto);
-        $stmt->execute();
-        return $stmt->rowCount();
-    }
 
     public function selecUltimoUsuario()
     {
