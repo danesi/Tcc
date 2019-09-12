@@ -13,9 +13,9 @@
         <main>
             <div class="row" style="margin-top: 1vh; padding-right: 5vh">
                 <div class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1">
-                    <form action="../Controle/usuarioControle.php?function=inserirUsuario"  method="post" id="form" enctype="multipart/form-data">
+                    <form action="../Controle/empregadoControle.php?function=inserirEmpregado"  method="post" id="form" enctype="multipart/form-data">
                         <div class="row center">
-                            <h4 class="textoCorPadrao2">Suas infomaçãoes</h4>
+                            <h4 class="textoCorPadrao2">Complemente suas infomaçãoes</h4>
                             <div class="divider"></div>
                             <div class="row">
                                 <div class="center">
@@ -37,32 +37,7 @@
                                     <input class="file-path validate" name="imagem" id="foto" type="text" placeholder="Selecione a foto" required hidden>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
-                                    <input type="text" name="nome" id="nome" class="validate" required>
-                                    <label for="nome" class="active">Nome<samp class="red-text">*</samp></label>
-                                </div>
-                                <div class="input-field col s5 m5 s10 offset-s1">
-                                    <input type="text" name="cpf" id="cpf" class="validate" required>
-                                    <label for="cpf">CPF<samp class="red-text">*</samp></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
-                                    <input type="text" name="nascimento" id="nascimento" class="datepicker" class="validate" required>
-                                    <label for="nascimento">Data de nascimento<samp class="red-text">*</samp></label>
-                                </div>
-                                <div class="input-field col s5 m5 s10 offset-s1">
-                                    <input type="text" name="telefone" id="telefone" class="validate" required>
-                                    <label for="telefone">Telefone<samp class="red-text">*</samp></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
-                                    <input type="email" name="email" id="email" class="validate" required>
-                                    <label for="email">E-mail<samp class="red-text">*</samp></label>
-                                </div>
-                                <div class="input-field col s5 m5 s10 offset-s1">
+                                <div class="input-field col s5 m5 s12 offset-l1 offset-m1">
                                     <select name="escolaridade" required>
                                         <option value="" disabled selected>Escolha sua escolaridade</option>
                                         <option value="Fundamental - Incompleto">Fundamental - Incompleto</option>
@@ -74,24 +49,9 @@
                                     </select>
                                     <label>Escolaridade<samp class="red-text">*</samp></label>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col l10 offset-l1">
+                                <div class="input-field col l5">
                                     <textarea id="textarea1" class="materialize-textarea" name="area_atuacao"></textarea>
                                     <label for="textarea1">Áreas de atuação</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
-                                    <input type="password" name="senha1" class="validate" required id="senha1">
-                                    <label for="senha1">Senha<samp class="red-text">*</samp></label>
-                                </div>
-                                <div class="input-field col s5 m5 s10 offset-s1">
-                                    <input type="password" name="senha2" class="validate" required id="senha2">
-                                    <label for="senha2">Repita a senha<samp class="red-text">*</samp></label>
-                                    <div class="row right">
-                                        <samp class="red-text">*</samp><samp class="grey-text"> Campos obrigatórios</samp>
-                                    </div>
                                 </div>
                             </div>
                             <div class="row center">

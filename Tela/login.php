@@ -14,7 +14,7 @@
         ?>
     <body class="homeimg">
         <?php
-        include_once '../Base/navBar.php';
+        include_once '../Base/iNav.php';
         ?>
         <main>
             <div class="row" style="margin-top: 10vh;">
