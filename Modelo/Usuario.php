@@ -9,6 +9,7 @@ private $nascimento;
 private $telefone;
 private $email;
 private $senha;
+private $foto;
 private $id_endereco;
 
 
@@ -56,11 +57,29 @@ public function __construct() {
      }
 
      public function getNascimento(){
-         return $this->nascimento;
+         if ($this->nascimento != null) {
+             $data = explode("/", $this->nascimento);
+             if (count($data)>1) {
+                 return $data[2] . "-" . $data[1] . "-" . $data[0];
+             } else {
+                 return $this->nascimento;
+             }
+         } else {
+             return null;
+         }
      }
 
      function setNascimento($nascimento){
-          $this->nascimento = $nascimento;
+         if ($this->nascimento != null) {
+             $data = explode("-", $this->nascimento);
+             if (count($data) > 1) {
+                 return $data[2] . "/" . $data[1] . "/" . $data[0];
+             } else {
+                 return $this->nascimento;
+             }
+         } else {
+             return null;
+         }
      }
 
      public function getTelefone(){
@@ -94,5 +113,15 @@ public function __construct() {
      function setId_endereco($id_endereco){
           $this->id_endereco = $id_endereco;
      }
+
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+    }
 
 }
