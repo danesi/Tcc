@@ -42,6 +42,7 @@ class UsuarioPDO
             $linha = $stmt->fetch(PDO::FETCH_ASSOC);
             $usuario = new usuario($linha);
             $_SESSION['logado'] = serialize($usuario);
+            $_SESSION['id_usuario'] = $usuario->getId_usuario();
             header('location: ../index.php');
         } else {
             header('location: ../Tela/login.php');

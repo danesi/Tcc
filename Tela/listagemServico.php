@@ -36,14 +36,14 @@
                             $servico = new servico($linha);
                             ?>
                         <tr>
-                            <td class="center"><?php echo $servico->getId_usuario()?></td>
+                            <td class="center"><?php echo $servico->getId_servico()?></td>
                             <td class="center"><?php echo $servico->getNome()?></td>
                             <td class="center"><?php echo $servico->getDescricao()?></td>
                             <td class="center"><?php echo $servico->getSalario()?></td>
                             <td class="center"><?php echo $servico->getId_endereco()?></td>
-                            <td class="center"><?php echo $servico->getId_empregado()?></td>
-                            <td class = 'center'><a href="./editarServico.php?id=<?php echo $servico->getid_usuario()?>">Editar</a></td>
-                            <td class="center"><a href="../Controle/servicoControle.php?function=deletar&id=<?php echo $servico->getid_usuario()?>">Excluir</a></td>
+                            <td class="center"><?php echo $servico->getId_usuario()?></td>
+                            <td class = 'center'><a href="./editarServico.php?id=<?php echo $servico->getId_servico()?>">Editar</a></td>
+                            <td class="center"><a href="../Controle/servicoControle.php?function=deletar&id=<?php echo $servico->getId_servico()?>">Excluir</a></td>
                         </tr>
                                 <?php
                         }

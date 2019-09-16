@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6dbede08-6c8c-4d7b-b77d-eb25d565a4ce" name="Default Changelist" comment="" />
+    <list default="true" id="6dbede08-6c8c-4d7b-b77d-eb25d565a4ce" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Img/Servico/c4ca4238a0b923820dcc509a6f75849b.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Base/navDeslogado.php" beforeDir="false" afterPath="$PROJECT_DIR$/Base/navDeslogado.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Base/navLogado.php" beforeDir="false" afterPath="$PROJECT_DIR$/Base/navLogado.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controle/empregadorPDO.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controle/empregadorPDO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controle/servicoPDO.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controle/servicoPDO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controle/usuarioPDO.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controle/usuarioPDO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelo/Empregado.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modelo/Empregado.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelo/Empregador.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modelo/Empregador.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelo/Servico.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modelo/Servico.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tela/editarServico.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/editarServico.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tela/listagemServico.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/listagemServico.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tela/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tela/registroEmpregador.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/registroEmpregador.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +68,7 @@
     <property name="DatabaseDriversLRU" value="mariadb" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -95,6 +111,8 @@
       <workItem from="1568293655191" duration="3851000" />
       <workItem from="1568322971034" duration="5659000" />
       <workItem from="1568330003924" duration="276000" />
+      <workItem from="1568571259281" duration="372000" />
+      <workItem from="1568668800049" duration="6057000" />
     </task>
     <task id="LOCAL-00001" summary="testando as msg">
       <created>1568241838348</created>

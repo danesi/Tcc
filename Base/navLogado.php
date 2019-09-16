@@ -27,12 +27,9 @@ $usuario = new Usuario(unserialize($_SESSION['logado']));
         <a href="<?php echo $pontos; ?>./index.php" class="brand-logo left black-text">Tcc</a>
         <ul class="right hide-on-med-and-down">
             <li>
-                <?php if($empregadoPDO->verificaEmpregado($usuario->getId_usuario())) { ?>
-                    <a href="#!"
-                       class="waves-effect waves-light btn blue darken-1">Quero trabalhar</a>
-                <?php } else { ?>
-                <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php"
-                   class="waves-effect waves-light btn blue darken-1">Quero trabalhar</a>
+                <?php if(!$empregadoPDO->verificaEmpregado($usuario->getId_usuario())) { ?>
+                    <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php"
+                                                                                                class="waves-effect waves-light btn blue darken-1">Quero trabalhar</a>
                 <?php } ?>
             </li>
             <li>
