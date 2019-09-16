@@ -1,5 +1,7 @@
 <?php
-
+if(!isset($_SESSION)){
+    session_start();
+}
 if (realpath('./index.php')) {
     include_once './Controle/conexao.php';
     include_once './Modelo/Empregador.php';
@@ -19,22 +21,18 @@ if (realpath('./index.php')) {
 class EmpregadorPDO{
     
              /*inserir*/
-    function inserirEmpregador() {
-        $empregador = new empregador($_POST);
+    function inserirEmpregador(empregador $empregador) {
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('insert into Empregador values(default , :razao_social , :cnpj , :nota);' );
-
-            $stmt->bindValue(':razao_social', $empregador->getRazao_social());    
-        
-            $stmt->bindValue(':cnpj', $empregador->getCnpj());    
-        
-            $stmt->bindValue(':nota', $empregador->getNota());    
-        
-            if($stmt->execute()){ 
-                header('location: ../index.php?msg=empregadorInserido');
-            }else{
-                header('location: ../index.php?msg=empregadorErroInsert');
+            $stmt = $pdo->prepare('insert into empregador values(default, :id_usuario , :razao_social , :cnpj, :nota);' );
+            $stmt->bindValue(':id_usuario', $_SESSION['id_usuario']);
+            $stmt->bindValue(':razao_social', $empregador->getRazao_social());
+            $stmt->bindValue(':cnpj', $empregador->getCnpj());
+            $stmt->bindValue(':nota', "");
+            if($stmt->execute()){
+                return true;
+            } else {
+                return false;
             }
     }
     /*inserir*/

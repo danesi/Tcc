@@ -33,7 +33,9 @@
                     <div class="row center">
                         <input type="submit" class="btn corPadrao2" value="Entrar">
                     </div>
-                    
+                    <div class="row center">
+                        <a href="registroUsuario.php" class="blue-text" >Cadastre-se</a>
+                    </div>
                         <div class='row'>
                             <?php
                             if (isset($_GET['msg'])) {
@@ -43,8 +45,6 @@
                             }
                             ?>
                         </div>
-                    
-                    
                 </form>
             </div>
         </main>

@@ -1,6 +1,18 @@
-<?php 
-
-class empregador{
+<?php
+$pontos = "";
+if (realpath("./index.php")) {
+    $pontos = './';
+} else {
+    if (realpath("../index.php")) {
+        $pontos = '../';
+    } else {
+        if (realpath("../../index.php")) {
+            $pontos = '../../';
+        }
+    }
+}
+include_once $pontos . 'Modelo/Usuario.php';
+class empregador extends usuario {
 
 private $id_usuario;
 private $razao_social;

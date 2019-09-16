@@ -21,10 +21,10 @@ if (realpath("./index.php")) {
         <a href="<?php echo $pontos; ?>./index.php" class="brand-logo left black-text">Tcc</a>
         <ul class="right hide-on-med-and-down">
             <li>
-                <a href="<?php echo $pontos; ?>./Tela/registroUsuario.php" class="waves-effect waves-light btn blue darken-1">Quero trabalhar</a>
+                <a href="<?php echo $pontos; ?>./Tela/login.php" class="waves-effect waves-light btn blue darken-1">Quero trabalhar</a>
             </li>
             <li>
-                <a href="<?php echo $pontos; ?>./Tela/registroEmpregador.php" class="waves-effect waves-light btn orange darken-1">Quero disponibilizar</a>
+                <a href="<?php echo $pontos; ?>./Tela/login.php" class="waves-effect waves-light btn orange darken-1">Quero disponibilizar</a>
             </li>
             <li>
                 <a href="<?php echo $pontos; ?>./Tela/login.php" class="waves-effect waves-light btn orange darken-1">Entrar</a>

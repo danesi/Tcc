@@ -22,7 +22,7 @@
                     <div class="row center">
                         <h4 class="textoCorPadrao2">Editar Servico</h4>
                         <div class="input-field col s6" hidden>
-                            <input type="text" name="id_usuario" value="<?= $nomeNormal->getId_usuario() ?>">
+                            <input type="text" name="id_usuario" value="<?= $nomeNormal->getId_servico() ?>">
                             <label>id_usuario</label>
                         </div>
                         <div class="input-field col s6">
@@ -42,7 +42,7 @@
                             <label>id_endereco</label>
                         </div>
                         <div class="input-field col s6">
-                            <input type="text" name="id_empregado" value="<?= $nomeNormal->getId_empregado() ?>">
+                            <input type="text" name="id_empregado" value="<?= $nomeNormal->getId_usuario() ?>">
                             <label>id_empregado</label>
                         </div>
                     <div class="row center">
