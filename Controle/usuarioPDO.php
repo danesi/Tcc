@@ -63,7 +63,7 @@ class UsuarioPDO
         $senha = md5($_POST['senha1']);
         $con = new conexao();
         $pdo = $con->getConexao();
-        $stmt = $pdo->prepare('insert into usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :foto, 1, 0);');
+        $stmt = $pdo->prepare('insert into usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :foto, 0, 1);');
         $stmt->bindValue(':nome', $usuario->getNome());
         $stmt->bindValue(':cpf', $usuario->getCpf());
         $stmt->bindValue(':nascimento', $usuario->getNascimento());
