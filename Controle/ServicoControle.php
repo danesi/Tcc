@@ -5,18 +5,18 @@ if (!isset($_SESSION)) {
 }
 
 if (realpath('./index.php')) {
-    include_once './Controle/enderecoPDO.php';
+    include_once './Controle/ServicoPDO.php';
 } else {
     if (realpath('../index.php')) {
-        include_once '../Controle/enderecoPDO.php';
+        include_once '../Controle/ServicoPDO.php';
     } else {
         if (realpath('../../index.php')) {
-            include_once '../../Controle/enderecoPDO.php';
+            include_once '../../Controle/ServicoPDO.php';
         }
     }
 }
 
-$classe = new enderecoPDO();
+$classe = new servicoPDO();
 
 if (isset($_GET['function'])) {
     $metodo = $_GET['function'];

@@ -5,18 +5,18 @@ if (!isset($_SESSION)) {
 }
 
 if (realpath('./index.php')) {
-    include_once './Controle/servicoPDO.php';
+    include_once './Controle/UsuarioPDO.php';
 } else {
     if (realpath('../index.php')) {
-        include_once '../Controle/servicoPDO.php';
+        include_once '../Controle/UsuarioPDO.php';
     } else {
         if (realpath('../../index.php')) {
-            include_once '../../Controle/servicoPDO.php';
+            include_once '../../Controle/UsuarioPDO.php';
         }
     }
 }
 
-$classe = new servicoPDO();
+$classe = new usuarioPDO();
 
 if (isset($_GET['function'])) {
     $metodo = $_GET['function'];

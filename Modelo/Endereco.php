@@ -1,6 +1,6 @@
 <?php 
 
-class endereco{
+class Endereco{
 
 private $id_endereco;
 private $endereco;

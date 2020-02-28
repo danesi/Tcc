@@ -5,7 +5,7 @@
         <title>Listagem Endereco</title>
         <?php
             include_once '../Base/header.php';
-            include_once '../Controle/enderecoPDO.php';
+            include_once '../Controle/EnderecoPDO.php';
             include_once '../Modelo/Endereco.php';
             $enderecoPDO = new enderecoPDO();
         ?>
@@ -45,7 +45,7 @@
                             <td class="center"><?php echo $endereco->getEstado()?></td>
                             <td class="center"><?php echo $endereco->getCidade()?></td>
                             <td class = 'center'><a href="./editarEndereco.php?id=<?php echo $endereco->getid_endereco()?>">Editar</a></td>
-                            <td class="center"><a href="../Controle/enderecoControle.php?function=deletar&id=<?php echo $endereco->getid_endereco()?>">Excluir</a></td>
+                            <td class="center"><a href="../Controle/EnderecoControle.php?function=deletar&id=<?php echo $endereco->getid_endereco()?>">Excluir</a></td>
                         </tr>
                                 <?php
                         }

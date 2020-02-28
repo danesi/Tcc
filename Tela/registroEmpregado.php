@@ -13,7 +13,7 @@
         <main>
             <div class="row" style="margin-top: 1vh; padding-right: 5vh">
                 <div class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1">
-                    <form action="../Controle/empregadoControle.php?function=inserirEmpregado"  method="post" id="form" enctype="multipart/form-data">
+                    <form action="../Controle/EmpregadoControle.php?function=inserirEmpregado" method="post" id="form" enctype="multipart/form-data">
                         <div class="row center">
                             <h4 class="textoCorPadrao2">Complemente suas infomaçãoes</h4>
                             <div class="divider"></div>

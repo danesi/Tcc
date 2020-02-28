@@ -24,6 +24,7 @@ class EmpregadoPDO{
              /*inserir*/
     function inserirEmpregado() {
         $empregado = new empregado($_POST);
+        print_r($_POST);
         $usuario = new usuario(unserialize($_SESSION['logado']));
         $empregado->setId_usuario($usuario->getId_usuario());
         $con = new conexao();
@@ -45,16 +46,16 @@ class EmpregadoPDO{
                     $caminho = '/Img/Perfil/' . $nome_imagem . $extensao;
                     $this->alteraNomeFoto($usuario->getId_usuario(), $caminho);
                     $_SESSION['toast'][] = "Empregado cadastrado com sucesso!";
-                    header("Location: ../Tela/perfilEmpregado.php");
+//                    header("Location: ../Tela/perfilEmpregado.php");
                 } else {
-                    header("Location: ../Tela/registroEmpregado.php?msg=erroSalvarImagem");
+//                    header("Location: ../Tela/registroEmpregado.php?msg=erroSalvarImagem");
                 }
             } else {
-                header("Location: ../Tela/registroEmpregado.php?msg=erroCarrregaImagem");
+//                header("Location: ../Tela/registroEmpregado.php?msg=erroCarrregaImagem");
             }
 
         }else{
-            header('location: ../index.php?msg=empregadoErroInsert');
+//            header('location: ../index.php?msg=empregadoErroInsert');
         }
     }
     /*inserir*/

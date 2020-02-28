@@ -5,7 +5,7 @@
         <title>Listagem Servico</title>
         <?php
             include_once '../Base/header.php';
-            include_once '../Controle/servicoPDO.php';
+            include_once '../Controle/ServicoPDO.php';
             include_once '../Modelo/Servico.php';
             $servicoPDO = new servicoPDO();
         ?>
@@ -43,7 +43,7 @@
                             <td class="center"><?php echo $servico->getId_endereco()?></td>
                             <td class="center"><?php echo $servico->getId_usuario()?></td>
                             <td class = 'center'><a href="./editarServico.php?id=<?php echo $servico->getId_servico()?>">Editar</a></td>
-                            <td class="center"><a href="../Controle/servicoControle.php?function=deletar&id=<?php echo $servico->getId_servico()?>">Excluir</a></td>
+                            <td class="center"><a href="../Controle/ServicoControle.php?function=deletar&id=<?php echo $servico->getId_servico()?>">Excluir</a></td>
                         </tr>
                                 <?php
                         }

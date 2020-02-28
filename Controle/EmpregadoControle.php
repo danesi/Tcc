@@ -5,13 +5,13 @@ if (!isset($_SESSION)) {
 }
 
 if (realpath('./index.php')) {
-    include_once './Controle/empregadoPDO.php';
+    include_once './Controle/EmpregadoPDO.php';
 } else {
     if (realpath('../index.php')) {
-        include_once '../Controle/empregadoPDO.php';
+        include_once '../Controle/EmpregadoPDO.php';
     } else {
         if (realpath('../../index.php')) {
-            include_once '../../Controle/empregadoPDO.php';
+            include_once '../../Controle/EmpregadoPDO.php';
         }
     }
 }
