@@ -96,6 +96,7 @@
                 </div>
                 <div class="card col s6 offset-s1 z-depth-3">
                     <div class="card-title">Excluir perfil</div>
+                    <div class="divider"></div>
                     <samp>Lorem ipsum dolor sit amet consectetur adipiscing elit magna mi erat, dis pellentesque augue malesuada imperdiet eget euismod faucibus</samp>
                     <div class="row center">
                         <a href="#modalExcluir" class="waves-effect waves-light btn modal-trigger red darken-2">Excluir</a>
