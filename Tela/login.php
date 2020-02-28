@@ -22,8 +22,8 @@
                     <div class="row center">
                         <h4 class="textoCorPadrao2">Faça Login</h4>
                         <div class="input-field col s10 offset-s1">
-                            <input type="text" name="email">
-                            <label>Usuario</label>
+                            <input type="email" name="email">
+                            <label>Email</label>
                         </div>
                         <div class="input-field col s10 offset-s1">
                             <input type="password" name="senha">

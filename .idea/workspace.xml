@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dbede08-6c8c-4d7b-b77d-eb25d565a4ce" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Img/Perfil/c81e728d9d4c2f636f067f89cc14862c.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Img/Servico/c4ca4238a0b923820dcc509a6f75849b.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Img/Servico/c81e728d9d4c2f636f067f89cc14862c.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Img/Perfil/c4ca4238a0b923820dcc509a6f75849b.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2617015c-08a2-4217-8691-68cfb240a5bf.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controle/usuarioPDO.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controle/usuarioPDO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tela/criaTelaRegistro.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tela/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tela/registroEmpregado.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/registroEmpregado.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tela/registroEmpregador.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/registroEmpregador.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +54,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="AjustesEmpregador" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -70,10 +71,16 @@
     <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="mariadb&#10;mysql" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -83,33 +90,6 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Tcc\Img\Perfil" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="allServicesViewState">
-      <serviceView>
-        <treeState>
-          <expand>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@e7271aff" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-          </expand>
-          <select />
-        </treeState>
-      </serviceView>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -129,6 +109,7 @@
       <workItem from="1568668800049" duration="6057000" />
       <workItem from="1569623067067" duration="16000" />
       <workItem from="1572352674852" duration="645000" />
+      <workItem from="1582888968563" duration="1684000" />
     </task>
     <task id="LOCAL-00001" summary="testando as msg">
       <created>1568241838348</created>
@@ -158,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568330171036</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="teste">
+      <created>1582890555261</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1582890555261</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,6 +172,21 @@
     <MESSAGE value="Cadastrando usuario normal e mais umas coisas" />
     <MESSAGE value="Umas coisa do git" />
     <MESSAGE value="Inserindo empregador e servico" />
-    <option name="LAST_COMMIT_MESSAGE" value="Inserindo empregador e servico" />
+    <MESSAGE value="teste" />
+    <option name="LAST_COMMIT_MESSAGE" value="teste" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1582890553686">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582890553686" />
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog" timestamp="1582890758501">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582890758501" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1582890588622">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582890588622" />
   </component>
 </project>

@@ -52,6 +52,9 @@
                                 <div class="input-field col l5">
                                     <textarea id="textarea1" class="materialize-textarea" name="area_atuacao"></textarea>
                                     <label for="textarea1">Áreas de atuação</label>
+                                    <div class="row right">
+                                        <samp class="red-text">*</samp><samp class="grey-text"> Campos obrigatórios</samp>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row center">
