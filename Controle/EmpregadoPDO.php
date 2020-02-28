@@ -163,15 +163,13 @@ class EmpregadoPDO{
     }
     
  
-    public function updateEmpregado(Empregado $empregado){        
+    public function updateEmpregado(Empregado $empregado){
         $con = new conexao();
         $pdo = $con->getConexao();
-        $stmt = $pdo->prepare('update empregado set escolaridade = :escolaridade , area_atuacao = :area_atuacao , nota = :nota where id_usuario = :id_usuario;');
+        $stmt = $pdo->prepare('update empregado set escolaridade = :escolaridade , area_atuacao = :area_atuacao where id_usuario = :id_usuario;');
         $stmt->bindValue(':escolaridade', $empregado->getEscolaridade());
         
         $stmt->bindValue(':area_atuacao', $empregado->getArea_atuacao());
-        
-        $stmt->bindValue(':nota', $empregado->getNota());
         
         $stmt->bindValue(':id_usuario', $empregado->getId_usuario());
         $stmt->execute();
@@ -198,9 +196,11 @@ class EmpregadoPDO{
             function editar() {
                 $empregado = new Empregado($_POST);
                     if($this->updateEmpregado($empregado) > 0){
-                        header('location: ../index.php?msg=empregadoAlterado');
+                        $_SESSION['toast'][]= "Dados de empregado alterados!";
+                        header('location: ../Tela/perfilEmpregado.php');
                     } else {
-                        header('location: ../index.php?msg=empregadoErroAlterar');
+                        $_SESSION['toast'][]= "Erro ao alterar dados";
+                        header('location: ../Tela/perfilEmpregado.php');
                     }
             }
             /*editar*/
