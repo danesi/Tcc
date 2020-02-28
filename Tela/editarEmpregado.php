@@ -14,7 +14,7 @@
         include_once '../Controle/empregadoPDO.php';
         $Empregado = new empregadoPDO();
             $stmt = $Empregado->selectEmpregadoId_usuario($_GET['id']);
-                $nomeNormal = new Empregado($stmt->fetch());
+                $nomeNormal = new Empregado($stmt->fetch())  ;
         ?>
         <main>
             <div class="row" style="margin-top: 10vh;">
