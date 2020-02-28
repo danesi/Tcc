@@ -186,8 +186,9 @@ class EmpregadoPDO{
     }
     
     public function deletar(){
-        $this->deleteEmpregado($_GET['id']);
-        header('location: ../Tela/listarEmpregado.php');
+        $this->deleteEmpregado($_GET['id_usuario']);
+        $_SESSION['toast'][] = 'Perfil de empregado excluido!';
+        header('location: ../index.php');
     }
 
 
