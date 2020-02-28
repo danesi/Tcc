@@ -44,7 +44,8 @@ class EmpregadoPDO{
                     $usuario->setFoto('Img/Perfil/' . $nome_imagem . $extensao);
                     $caminho = '/Img/Perfil/' . $nome_imagem . $extensao;
                     $this->alteraNomeFoto($usuario->getId_usuario(), $caminho);
-                    header("Location: ../index.php?msg=sucesso");
+                    $_SESSION['toast'][] = "Empregado cadastrado com sucesso!";
+                    header("Location: ../Tela/perfilEmpregado.php");
                 } else {
                     header("Location: ../Tela/registroEmpregado.php?msg=erroSalvarImagem");
                 }
