@@ -70,6 +70,9 @@
                         <div class="input-field col l10 m10 s10 offset-l1 offset-s1 offset-m1">
                             <textarea id="textarea1" class="materialize-textarea" name="descricao"></textarea>
                             <label for="textarea1">Descrição<samp class="red-text">*</samp></label>
+                            <div class="row right">
+                                <samp class="red-text">*</samp><samp class="grey-text"> Campos obrigatórios</samp>
+                            </div>
                         </div>
                     </div>
                         <div class="row center">
