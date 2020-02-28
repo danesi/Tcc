@@ -11,14 +11,14 @@
         include_once '../Base/navBar.php';
         ?>
         <?php
-        include_once '../Controle/servicoPDO.php';
+        include_once '../Controle/ServicoPDO.php';
         $Servico = new servicoPDO();
             $stmt = $Servico->selectServicoId_usuario($_GET['id']);
                 $nomeNormal = new Servico($stmt->fetch());
         ?>
         <main>
             <div class="row" style="margin-top: 10vh;">
-                <form action="../Controle/servicoControle.php?function=editar" class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1" method="post">
+                <form action="../Controle/ServicoControle.php?function=editar" class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1" method="post">
                     <div class="row center">
                         <h4 class="textoCorPadrao2">Editar Servico</h4>
                         <div class="input-field col s6" hidden>

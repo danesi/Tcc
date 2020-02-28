@@ -11,14 +11,14 @@
         include_once '../Base/navBar.php';
         ?>
         <?php
-        include_once '../Controle/enderecoPDO.php';
+        include_once '../Controle/EnderecoPDO.php';
         $Endereco = new enderecoPDO();
             $stmt = $Endereco->selectEnderecoId_endereco($_GET['id']);
                 $nomeNormal = new Endereco($stmt->fetch());
         ?>
         <main>
             <div class="row" style="margin-top: 10vh;">
-                <form action="../Controle/enderecoControle.php?function=editar" class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1" method="post">
+                <form action="../Controle/EnderecoControle.php?function=editar" class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1" method="post">
                     <div class="row center">
                         <h4 class="textoCorPadrao2">Editar Endereco</h4>
                         <div class="input-field col s6" hidden>

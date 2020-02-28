@@ -5,7 +5,7 @@
         <title>Listagem Empregado</title>
         <?php
             include_once '../Base/header.php';
-            include_once '../Controle/empregadoPDO.php';
+            include_once '../Controle/EmpregadoPDO.php';
             include_once '../Modelo/Empregado.php';
             $empregadoPDO = new empregadoPDO();
         ?>
@@ -39,7 +39,7 @@
                             <td class="center"><?php echo $empregado->getArea_atuacao()?></td>
                             <td class="center"><?php echo $empregado->getNota()?></td>
                             <td class = 'center'><a href="./editarEmpregado.php?id=<?php echo $empregado->getid_usuario()?>">Editar</a></td>
-                            <td class="center"><a href="../Controle/empregadoControle.php?function=deletar&id=<?php echo $empregado->getid_usuario()?>">Excluir</a></td>
+                            <td class="center"><a href="../Controle/EmpregadoControle.php?function=deletar&id=<?php echo $empregado->getid_usuario()?>">Excluir</a></td>
                         </tr>
                                 <?php
                         }

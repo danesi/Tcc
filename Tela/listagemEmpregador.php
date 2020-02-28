@@ -5,7 +5,7 @@
         <title>Listagem Empregador</title>
         <?php
             include_once '../Base/header.php';
-            include_once '../Controle/empregadorPDO.php';
+            include_once '../Controle/EmpregadorPDO.php';
             include_once '../Modelo/Empregador.php';
             $empregadorPDO = new empregadorPDO();
         ?>
@@ -39,7 +39,7 @@
                             <td class="center"><?php echo $empregador->getCnpj()?></td>
                             <td class="center"><?php echo $empregador->getNota()?></td>
                             <td class = 'center'><a href="./editarEmpregador.php?id=<?php echo $empregador->getid_usuario()?>">Editar</a></td>
-                            <td class="center"><a href="../Controle/empregadorControle.php?function=deletar&id=<?php echo $empregador->getid_usuario()?>">Excluir</a></td>
+                            <td class="center"><a href="../Controle/EmpregadorControle.php?function=deletar&id=<?php echo $empregador->getid_usuario()?>">Excluir</a></td>
                         </tr>
                                 <?php
                         }

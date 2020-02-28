@@ -11,14 +11,14 @@
         include_once '../Base/navBar.php';
         ?>
         <?php
-        include_once '../Controle/usuarioPDO.php';
+        include_once '../Controle/UsuarioPDO.php';
         $Usuario = new usuarioPDO();
             $stmt = $Usuario->selectUsuarioId_usuario($_GET['id']);
                 $nomeNormal = new Usuario($stmt->fetch());
         ?>
         <main>
             <div class="row" style="margin-top: 10vh;">
-                <form action="../Controle/usuarioControle.php?function=editar" class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1" method="post">
+                <form action="../Controle/UsuarioControle.php?function=editar" class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1" method="post">
                     <div class="row center">
                         <h4 class="textoCorPadrao2">Editar Usuario</h4>
                         <div class="input-field col s6" hidden>

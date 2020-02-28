@@ -12,7 +12,7 @@ if (realpath("./index.php")) {
     }
 }
 include_once $pontos . 'Modelo/Usuario.php';
-class empregador extends usuario {
+class Empregador extends usuario {
 
 private $id_usuario;
 private $razao_social;

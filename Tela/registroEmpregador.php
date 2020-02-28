@@ -22,7 +22,7 @@
         <main>
             <div class="row" style="margin-top: 1vh;">
                 <div class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1">
-                <form action="../Controle/servicoControle.php?function=inserirServico" method="post" enctype="multipart/form-data">
+                <form action="../Controle/ServicoControle.php?function=inserirServico" method="post" enctype="multipart/form-data">
                     <div class="row center">
                         <h4 class="textoCorPadrao2">Cadastrar Serviço</h4>
                     </div>

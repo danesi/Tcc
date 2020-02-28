@@ -13,7 +13,7 @@
         <main>
             <div class="row" style="margin-top: 1vh; padding-right: 5vh">
                 <div class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1">
-                    <form action="../Controle/usuarioControle.php?function=inserirUsuario"  method="post" id="form">
+                    <form action="../Controle/UsuarioControle.php?function=inserirUsuario" method="post" id="form">
                         <div class="row center">
                             <h4 class="textoCorPadrao2">Cadastrar Usuario</h4>
                             <div class="divider"></div>

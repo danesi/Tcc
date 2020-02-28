@@ -5,7 +5,7 @@
         <title>Listagem Usuario</title>
         <?php
         include_once '../Base/header.php';
-        include_once '../Controle/usuarioPDO.php';
+        include_once '../Controle/UsuarioPDO.php';
         include_once '../Modelo/Usuario.php';
         $usuarioPDO = new usuarioPDO();
         ?>

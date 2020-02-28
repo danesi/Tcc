@@ -16,7 +16,7 @@ if (realpath("./index.php")) {
     }
 }
 include_once $pontos . 'Modelo/Usuario.php';
-include_once $pontos . 'Controle/empregadoPDO.php';
+include_once $pontos.'Controle/EmpregadoPDO.php';
 $empregadoPDO = new EmpregadoPDO();
 
 $usuario = new Usuario(unserialize($_SESSION['logado']));

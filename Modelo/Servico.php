@@ -1,6 +1,6 @@
 <?php
 
-class servico
+class Servico
 {
 
     private $id_servico;
