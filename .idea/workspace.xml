@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6dbede08-6c8c-4d7b-b77d-eb25d565a4ce" name="Default Changelist" comment="" />
+    <list default="true" id="6dbede08-6c8c-4d7b-b77d-eb25d565a4ce" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controle/EmpregadoPDO.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controle/EmpregadoPDO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tela/perfilEmpregado.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/perfilEmpregado.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -146,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582891854242</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Nav bar">
+      <created>1582909832831</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1582909832831</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,13 +186,14 @@
     <MESSAGE value="Inserindo empregador e servico" />
     <MESSAGE value="teste" />
     <MESSAGE value="Peril do empregado" />
-    <option name="LAST_COMMIT_MESSAGE" value="Peril do empregado" />
+    <MESSAGE value="Nav bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Nav bar" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1582891853720">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1582909832361">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582891853720" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582909832361" />
     <state x="92" y="92" width="1182" height="544" key="DiffContextDialog" timestamp="1582890758501">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -190,9 +202,13 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582891350735" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1582891857646">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1582909835345">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582891857646" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582909835345" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1582909869192">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582909869192" />
   </component>
 </project>

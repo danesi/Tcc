@@ -32,7 +32,7 @@
             <!--            </div>-->
             <div class="row center">
                 <div class="col s3 offset-s1">
-                    <div class="card z-depth-4">
+                    <div class="card z-depth-3">
                         <div class="card-image">
                             <img src="../<?= $usuario->getFoto() ?>">
                             <span class="card-title"><?= $usuario->getNome() ?></span>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="right-divider"></div>
-                <div class="card col s6 offset-s1 z-depth-4">
+                <div class="card col s6 offset-s1 z-depth-3">
                     <div class="card-title">Editar dados</div>
                     <div class="divider"></div>
                     <br>
@@ -94,6 +94,13 @@
                                     href="./perfil.php">perfil</a></samp>
                     </div>
                 </div>
+                <div class="card col s6 offset-s1 z-depth-3">
+                    <div class="card-title">Excluir perfil</div>
+                    <samp>Lorem ipsum dolor sit amet consectetur adipiscing elit magna mi erat, dis pellentesque augue malesuada imperdiet eget euismod faucibus</samp>
+                    <div class="row center">
+                        <a href="#modalExcluir" class="waves-effect waves-light btn modal-trigger red darken-2">Excluir</a>
+                    </div>
+                </div>
             </div>
             <div class="row center">
                 <a class="btn orange darken-2" href="../index.php">Voltar</a>
@@ -104,8 +111,19 @@
     </div>
 </main>
 </body>
+<div id="modalExcluir" class="modal">
+    <div class="modal-content">
+        <h4>Atenção</h4>
+        <p>Você tem certeza que deseja excluir esse perfil de empregado?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="../Controle/EmpregadoControle.php?function=deletar&id_usuario=<?= $empregado->getId_usuario() ?>" class="modal-close waves-effect waves-green btn-flat red darken-2 white-text">Excluir</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat orange darken-2 white-text">Cancelar</a>
+    </div>
+</div>
 </html>
 <script>
     $('.tooltipped').tooltip();
     $('select').formSelect();
+    $('.modal').modal();
 </script>
