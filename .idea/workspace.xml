@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dbede08-6c8c-4d7b-b77d-eb25d565a4ce" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Img/Perfil/c4ca4238a0b923820dcc509a6f75849b.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2617015c-08a2-4217-8691-68cfb240a5bf.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tela/criaTelaRegistro.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tela/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tela/registroEmpregado.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/registroEmpregado.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tela/registroEmpregador.php" beforeDir="false" afterPath="$PROJECT_DIR$/Tela/registroEmpregador.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,11 +76,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Banco" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Tcc\Banco" />
+      <recent name="C:\xampp\htdocs\Tcc\Base" />
       <recent name="C:\xampp\htdocs\Tcc\Img\Perfil" />
     </key>
   </component>
@@ -146,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582890555261</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Peril do empregado">
+      <created>1582891854242</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1582891854242</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +168,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="testando as msg" />
     <MESSAGE value="Registro do empregado" />
@@ -173,20 +176,25 @@
     <MESSAGE value="Umas coisa do git" />
     <MESSAGE value="Inserindo empregador e servico" />
     <MESSAGE value="teste" />
-    <option name="LAST_COMMIT_MESSAGE" value="teste" />
+    <MESSAGE value="Peril do empregado" />
+    <option name="LAST_COMMIT_MESSAGE" value="Peril do empregado" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1582890553686">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1582891853720">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582890553686" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582891853720" />
     <state x="92" y="92" width="1182" height="544" key="DiffContextDialog" timestamp="1582890758501">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582890758501" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1582890588622">
+    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1582891350735">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582890588622" />
+    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582891350735" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1582891857646">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728/1366.0.1440.860@0.0.1366.728" timestamp="1582891857646" />
   </component>
 </project>
