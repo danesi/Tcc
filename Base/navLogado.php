@@ -34,8 +34,7 @@ $usuario = new Usuario(unserialize($_SESSION['logado']));
                 <?php } ?>
             </li>
             <li>
-                <a href="<?php echo $pontos; ?>./Tela/registroEmpregador.php"
-                   class="waves-effect waves-light btn orange darken-1">Quero disponibilizar</a>
+                <a class="waves-effect waves-light btn orange darken-1 modal-trigger" href="#modalEmpregador">Quero disponibilizar</a>
             </li>
             <li>
                 <a class="dropdown-trigger black-text" data-target='dropPerfil'>
@@ -132,7 +131,22 @@ $usuario = new Usuario(unserialize($_SESSION['logado']));
         </a>
     </ul>
 </ul>
+
+<div id="modalEmpregador" class="modal">
+    <div class="modal-content">
+        <h4>Atenção</h4>
+        <p>Para você disponibilizar um serviço, você precisa ter um perfil de empregador com algumas informação a mais...</p>
+        <p>Logo após esse pocesso você poderá cadastrar seu serviço normalmente.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat orange darken-2 white-text">Voltar</a>
+        <a href="<?php echo $pontos ?>Tela/registroEmpregador.php" class="modal-close waves-effect waves-green btn-flat white-text blue darken-2">Continuar</a>
+    </div>
+</div>
+
 <script>
+    $('.modal').modal();
+
     $('.dropdown-trigger').dropdown({
         coverTrigger: false,
     });

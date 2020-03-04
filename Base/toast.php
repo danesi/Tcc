@@ -23,7 +23,6 @@ if (isset($_SESSION['toast'])) {
     foreach ($_SESSION['toast'] as $toast) {
         ?>
         <script>
-
             setTimeout(function () {
                 M.toast({html: '<?php echo $toast ?>'});
             }, <?php echo $tempo ?>);
