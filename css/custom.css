@@ -218,3 +218,16 @@ main {
 .ajustar {
     padding-left: 10vh;
 }
+
+.fotoEditarServico {
+    border-radius: 10px;
+    height: 150px;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    object-position: center;
+}

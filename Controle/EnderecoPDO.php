@@ -2,6 +2,8 @@
 
         include_once __DIR__.'/../Controle/conexao.php';
         include_once __DIR__.'/../Modelo/Endereco.php';
+        include_once __DIR__.'/../Modelo/Servico.php';
+        include_once __DIR__.'/../Controle/ServicoPDO.php';
         include_once __DIR__.'/../Controle/UsuarioPDO.php';
         include_once __DIR__.'/../Controle/EmpregadorPDO.php';
 
@@ -28,6 +30,27 @@ class EnderecoPDO
         } else {
             $_SESSION['toast'][] = 'Erro ao inserir endereco';
             header("Location: ../Tela/perfilEmpregado.php");
+        }
+    }
+
+    function inserirEnderecoServico()
+    {
+        $endereco = new endereco($_POST);
+        $id_servico = $_POST['id_servico'];
+        $pdo = conexao::getConexao();
+        $stmt = $pdo->prepare('insert into Endereco values(default , :endereco , :cep , :numero , :complemento , :estado , :cidade);');
+        $stmt->bindValue(':endereco', $endereco->getEndereco());
+        $stmt->bindValue(':cep', $endereco->getCep());
+        $stmt->bindValue(':numero', $endereco->getNumero());
+        $stmt->bindValue(':complemento', $endereco->getComplemento());
+        $stmt->bindValue(':estado', $endereco->getEstado());
+        $stmt->bindValue(':cidade', $endereco->getCidade());
+        if ($stmt->execute()) {
+            $servicoPDO = new ServicoPDO();
+            $servicoPDO->relacionaEndereco($pdo->lastInsertId(), $id_servico);
+        } else {
+            $_SESSION['toast'][] = 'Erro ao inserir endereco';
+            header("Location: ../Tela/editarServico.php?id_servico=".$id_servico."&endereco");
         }
     }
 
@@ -201,6 +224,18 @@ class EnderecoPDO
         } else {
             $_SESSION['toast'][] = 'Erro ao alterar endereço!';
             header('location: ../Tela/perfilEmpregado.php');
+        }
+    }
+
+    function editarEnderecoServico()
+    {
+        $endereco = new Endereco($_POST);
+        if ($this->updateEndereco($endereco) > 0) {
+            $_SESSION['toast'][] = 'Endereço alterado com sucesso!';
+            header("Location: ../Tela/editarServico.php?id_servico=".$_POST['id_servico']."&endereco");
+        } else {
+            $_SESSION['toast'][] = 'Erro ao alterar endereço!';
+            header("Location: ../Tela/editarServico.php?id_servico=".$_POST['id_servico']."&endereco");
         }
     }
     /*editar*/
