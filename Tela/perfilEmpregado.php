@@ -4,9 +4,12 @@
     }
     include_once "../Modelo/Usuario.php";
     include_once "../Modelo/Empregado.php";
+    include_once "../Modelo/Endereco.php";
     include_once "../Controle/EmpregadoPDO.php";
+    include_once "../Controle/EnderecoPDO.php";
     $usuario = new Usuario(unserialize($_SESSION['logado']));
     $empregadoPDO = new EmpregadoPDO();
+    $enderecoPDO = new EnderecoPDO();
     $empregado = new Empregado($empregadoPDO->selectEmpregadoId_usuario($usuario->getId_usuario())->fetch());
 ?>
 <!DOCTYPE html>
@@ -52,7 +55,7 @@
                     </div>
                 </div>
                 <div class="right-divider"></div>
-                <div class="card col s6 offset-s1 z-depth-3">
+                <div class="card col s6 offset-s1 z-depth-3" style="margin-top: 7%">
                     <div class="card-title">Editar dados</div>
                     <div class="divider"></div>
                     <br>
@@ -79,6 +82,7 @@
                                     Superior - Completo
                                 </option>
                             </select>
+                            <label>Escolaridade</label>
                         </div>
                         <div class="input-field col l10 offset-l1">
                             <textarea id="textarea1" class="materialize-textarea"
@@ -94,13 +98,70 @@
                                     href="./perfil.php">perfil</a></samp>
                     </div>
                 </div>
-                <div class="card col s6 offset-s1 z-depth-3">
-                    <div class="card-title">Excluir perfil</div>
+                <div class="card col s10 offset-s1 z-depth-3">
+                    <div class="card-title">Endereço</div>
                     <div class="divider"></div>
-                    <samp>Lorem ipsum dolor sit amet consectetur adipiscing elit magna mi erat, dis pellentesque augue malesuada imperdiet eget euismod faucibus</samp>
-                    <div class="row center">
-                        <a href="#modalExcluir" class="waves-effect waves-light btn modal-trigger red darken-2">Excluir</a>
-                    </div>
+                    <?php if ($empregadoPDO->verificaEndereco($empregado->getId_usuario())) {
+                        $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($usuario->getId_endereco())->fetch());
+                        ?>
+                        <form action="../Controle/EnderecoControle.php?function=editarEnderecoEmpregado" method="post">
+                            <input name="id_endereco" hidden value="<?= $endereco->getId_endereco() ?>">
+                            <div class="row">
+                                <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
+                                    <input type="text" name="cep" id="cep" class="validate" required
+                                           value="<?= $endereco->getCep() ?>">
+                                    <label for="cep" class="active">CEP<samp class="red-text">*</samp></label>
+                                </div>
+                                <div class="input-field col s5 m5 s10 offset-s1">
+                                    <input type="text" name="endereco" id="endereco" class="validate" required
+                                           value="<?= $endereco->getEndereco() ?>">
+                                    <label for="endereco">Endereço<samp class="red-text">*</samp></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col l5 m5 s10 offset-l1">
+                                    <input type="text" name="numero" id="numero" class="validate"
+                                           value="<?= $endereco->getNumero() ?>">
+                                    <label for="numero">Número</label>
+                                </div>
+                                <div class="input-field col s5 m5 s10 offset-s1">
+                                    <input type="text" name="complemento" id="complemento" class="validate"
+                                           value="<?= $endereco->getComplemento() ?>">
+                                    <label for="complemento">Complemento</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
+                                    <input type="text" name="cidade" id="cidade" class="validate" required
+                                           value="<?= $endereco->getCidade() ?>">
+                                    <label for="cidade">Cidade<samp class="red-text">*</samp></label>
+                                </div>
+                                <div class="input-field col s5 m5 s10 offset-s1">
+                                    <input type="text" name="estado" id="estado" class="validate" required
+                                           value="<?= $endereco->getEstado() ?>">
+                                    <label for="estado">Estado<samp class="red-text">*</samp></label>
+                                    <div class="row right">
+                                        <samp class="red-text">*</samp><samp class="grey-text"> Campos
+                                            obrigatórios</samp>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="center">
+                                    <button type="submit" class="blue darken-2 btn">Alterar</button>
+                                </div>
+                            </div>
+                        </form>
+                        <?php
+                    } else {
+                        ?>
+                        <samp>Nenhum endereço encontrado, cadastre um agora para completar seu perfil</samp>
+                        <div class="row center">
+                            <a href="./registroEndereco.php?id=<?= $empregado->getId_usuario() ?>"
+                               class="waves-effect waves-light btn modal-trigger blue darken-2">Cadastrar endereço</a>
+                        </div>
+                        <?php
+                    } ?>
                 </div>
             </div>
             <div class="row center">
@@ -118,7 +179,8 @@
         <p>Você tem certeza que deseja excluir esse perfil de empregado?</p>
     </div>
     <div class="modal-footer">
-        <a href="../Controle/EmpregadoControle.php?function=deletar&id_usuario=<?= $empregado->getId_usuario() ?>" class="modal-close waves-effect waves-green btn-flat red darken-2 white-text">Excluir</a>
+        <a href="../Controle/EmpregadoControle.php?function=deletar&id_usuario=<?= $empregado->getId_usuario() ?>"
+           class="modal-close waves-effect waves-green btn-flat red darken-2 white-text">Excluir</a>
         <a href="#!" class="modal-close waves-effect waves-green btn-flat orange darken-2 white-text">Cancelar</a>
     </div>
 </div>
@@ -127,4 +189,21 @@
     $('.tooltipped').tooltip();
     $('select').formSelect();
     $('.modal').modal();
+    $("#cep").mask("00000-000");
+
+    $('#cep').blur(function () {
+        cep = $(this).val();
+        cep = cep.replace(/\D/g, '');
+        $.ajax({
+            url: 'https://viacep.com.br/ws/' + cep + '/json/unicode',
+            dataType: 'json',
+            success: function ({localidade, uf, complemento, logradouro, gia}) {
+                $('#cidade').val(localidade).focus();
+                $('#estado').val(uf).focus();
+                $('#complemento').val(complemento).focus();
+                $('#endereco').val(logradouro).focus();
+                $('#numero').val(gia).focus();
+            }
+        })
+    });
 </script>
