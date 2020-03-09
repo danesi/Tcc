@@ -54,6 +54,21 @@
             }
         }
 
+        function relacionaEndereco($id_endereco, $id_servico)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("update servico set id_endereco = :endereco where id_servico = :id_servico");
+            $stmt->bindValue(":endereco", $id_endereco);
+            $stmt->bindValue(":id_servico", $id_servico);
+            if ($stmt->execute()) {
+                $_SESSION['toast'][] = 'Endereço cadastrado com sucesso!';
+                header("Location: ../Tela/editarServico.php?id_servico=".$id_servico."&endereco");
+            } else {
+                $_SESSION['toast'][] = 'Erro ao associar endereço';
+                header("Location: ../Tela/editarServico.php?id_servico=".$id_servico."&endereco");
+            }
+        }
+
         /*inserir*/
         public function selectServico()
         {
@@ -194,13 +209,11 @@
         {
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('update servico set nome = :nome , descricao = :descricao , salario = :salario , id_endereco = :id_endereco , id_empregado = :id_empregado where id_usuario = :id_usuario;');
+            $stmt = $pdo->prepare('update servico set nome = :nome , descricao = :descricao , salario = :salario where id_servico = :id_servico;');
             $stmt->bindValue(':nome', $servico->getNome());
             $stmt->bindValue(':descricao', $servico->getDescricao());
             $stmt->bindValue(':salario', $servico->getSalario());
-            $stmt->bindValue(':id_endereco', $servico->getId_endereco());
-            $stmt->bindValue(':id_empregado', $servico->getId_usuario());
-            $stmt->bindValue(':id_usuario', $servico->getId_servico());
+            $stmt->bindValue(':id_servico', $servico->getId_servico());
             $stmt->execute();
             return $stmt->rowCount();
         }
@@ -227,9 +240,11 @@
         {
             $servico = new Servico($_POST);
             if ($this->updateServico($servico) > 0) {
-                header('location: ../index.php?msg=servicoAlterado');
+                $_SESSION['toast'][] = 'Informações do serviço alteradas!';
+                header("Location: ../Tela/editarServico.php?id_servico=".$_POST['id_servico']."&info");
             } else {
-                header('location: ../index.php?msg=servicoErroAlterar');
+                $_SESSION['toast'][] = 'Erro ao alterar informações';
+                header("Location: ../Tela/editarServico.php?id_servico=".$_POST['id_servico']."&info");
             }
         }
         /*editar*/

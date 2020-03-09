@@ -55,7 +55,7 @@
                                 <br>
                                 <div class="row center">
                                     <a href="" class="btn red darken-2">Excluir</a>
-                                    <a href="" class="btn blue darken-2">Editar</a>
+                                    <a href="./editarServico.php?id_servico=<?= $servico->getId_servico() ?>&info" class="btn blue darken-2">Editar</a>
                                 </div>
                             </ul>
 
@@ -71,3 +71,6 @@
 ?>
 </body>
 </html>
+<script>
+    $('.tooltipped').tooltip();
+</script>
