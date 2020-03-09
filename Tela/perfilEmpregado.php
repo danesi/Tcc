@@ -172,6 +172,9 @@
     </div>
     </div>
 </main>
+<?php
+    include_once '../Base/footer.php';
+?>
 </body>
 <div id="modalExcluir" class="modal">
     <div class="modal-content">
