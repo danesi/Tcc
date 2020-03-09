@@ -15,13 +15,12 @@
         {
             $empregador = new Empregador($_POST);
             $usuario = new Usuario(unserialize($_SESSION['logado']));
-            print_r($usuario);
             $pdo = conexao::getConexao();
             $stmt = $pdo->prepare('insert into empregador values(:id_usuario , :razao_social , :cnpj, :nota);');
             $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
             $stmt->bindValue(':razao_social', $empregador->getRazao_social());
             $stmt->bindValue(':cnpj', $empregador->getCnpj());
-            $stmt->bindValue(':nota', 0.0);
+            $stmt->bindValue(':nota', 0);
             if ($stmt->execute()) {
                 $_SESSION['toast'][] = "Seu perfil de mepregador foi cadastrado!";
                 $_SESSION['toast'][] = "Agora você já pode cadastrar seu serviço";
