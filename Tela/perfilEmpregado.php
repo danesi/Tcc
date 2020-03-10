@@ -178,7 +178,7 @@
 </body>
 <div id="modalExcluir" class="modal">
     <div class="modal-content">
-        <h4>Atenção</h4>
+        <h4 class="textoCorPadrao2">Atenção</h4>
         <p>Você tem certeza que deseja excluir esse perfil de empregado?</p>
     </div>
     <div class="modal-footer">

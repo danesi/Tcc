@@ -221,20 +221,25 @@
             return $stmt->rowCount();
         }
 
-        public function deleteServico($definir)
+        function excluir()
         {
-            $con = new conexao();
-            $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('delete from servico where id_usuario = :definir ;');
-            $stmt->bindValue(':definir', $definir);
-            $stmt->execute();
-            return $stmt->rowCount();
-        }
-
-        public function deletar()
-        {
-            $this->deleteServico($_GET['id']);
-            header('location: ../Tela/listarServico.php');
+            $id_servico = $_POST['id_servico'];
+            $fotoservicoPDO = new FotoservicoPDO();
+            if($fotoservicoPDO->removerTodasFotos($id_servico)){
+                $pdo = conexao::getConexao();
+                $stmt = $pdo->prepare("delete from servico where id_servico = :id_servico");
+                $stmt->bindValue(":id_servico", $id_servico);
+                if($stmt->execute()){
+                    $_SESSION['toast'][] = "Serviço excluido com sucesso!";
+                    header("Location: ../Tela/perfilServico.php");
+                } else {
+                    $_SESSION['toast'][] = "Ocorreu um erro ao excluir o serviço";
+                    header("Location: ../Tela/perfilServico.php");
+                }
+            } else {
+                $_SESSION['toast'][] = "Ocorreu um erro ao excluir as fotos do serviço";
+                header("Location: ../Tela/perfilServico.php");
+            }
         }
 
 

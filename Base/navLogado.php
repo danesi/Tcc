@@ -61,7 +61,7 @@ $usuario = new Usuario(unserialize($_SESSION['logado']));
 
 <div id="modalEmpregador" class="modal">
     <div class="modal-content">
-        <h4>Atenção</h4>
+        <h4 class="textoCorPadrao2">Atenção</h4>
         <p>Para você disponibilizar um serviço, você precisa ter um perfil de empregador com algumas informação a mais...</p>
         <p>Logo após esse pocesso você poderá cadastrar seu serviço normalmente.</p>
     </div>

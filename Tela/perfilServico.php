@@ -58,8 +58,9 @@
                                 <br>
                                 <br>
                                 <div class="row center">
-                                    <a href="" class="btn red darken-2">Excluir</a>
-                                    <a href="./editarServico.php?id_servico=<?= $servico->getId_servico() ?>&info" class="btn blue darken-2">Editar</a>
+                                    <a href="#modalexcluirServico" class="btn red darken-2 modal-trigger btnExcluirServico" id_servico="<?=$servico->getId_servico()?>">Excluir</a>
+                                    <a href="./editarServico.php?id_servico=<?= $servico->getId_servico() ?>&info"
+                                       class="btn blue darken-2">Editar</a>
                                 </div>
                             </ul>
 
@@ -70,6 +71,19 @@
             </div>
         </div>
 </main>
+<div id="modalexcluirServico" class="modal">
+    <form action="../Controle/ServicoControle.php?function=excluir" method="post">
+        <input type="text" class="inputIdServico" name="id_servico" value="" hidden>
+        <div class="modal-content">
+            <h4 class="textoCorPadrao2">Atenção</h4>
+            <p>Você realmente deseja excluir esse serviço</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn blue darken-2">Cancelar</a>
+            <button type="submit" class="btn red darken-2">Excluir</button>
+        </div>
+    </form>
+</div>
 <?php
     include_once '../Base/footer.php';
 ?>
@@ -77,4 +91,10 @@
 </html>
 <script>
     $('.tooltipped').tooltip();
+    $('.modal').modal();
+
+    $('.btnExcluirServico').click(function () {
+        id_servico = $(this).attr('id_servico');
+        $('.inputIdServico').val(id_servico);
+    });
 </script>
