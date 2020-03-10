@@ -233,7 +233,7 @@
                 </ul>
             </div>
             <div class="row center">
-                <a href="../index.php" class="corPadrao3 btn">Voltar</a>
+                <a href="../Tela/perfilServico.php" class="corPadrao3 btn">Voltar</a>
             </div>
         </div>
     </div>

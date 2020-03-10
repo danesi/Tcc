@@ -17,7 +17,9 @@ if (realpath("./index.php")) {
 }
 include_once $pontos . 'Modelo/Usuario.php';
 include_once $pontos.'Controle/EmpregadoPDO.php';
+include_once $pontos.'Controle/EmpregadorPDO.php';
 $empregadoPDO = new EmpregadoPDO();
+$empregadorPDO = new EmpregadorPDO();
 
 $usuario = new Usuario(unserialize($_SESSION['logado']));
 ?>
@@ -34,7 +36,11 @@ $usuario = new Usuario(unserialize($_SESSION['logado']));
                 <?php } ?>
             </li>
             <li>
-                <a class="waves-effect waves-light btn orange darken-1 modal-trigger" href="#modalEmpregador">Quero disponibilizar</a>
+                <?php if(!$empregadorPDO->verificaEmpregador($usuario->getId_usuario())) { ?>
+                    <a class="waves-effect waves-light btn orange darken-1 modal-trigger" href="#modalEmpregador">Quero disponibilizar</a>
+                <?php } else { ?>
+                    <a href="<?php echo $pontos; ?>./Tela/perfilServico.php" class="waves-effect waves-light btn orange darken-1">Perfil servico</a>
+                <?php } ?>
             </li>
             <li>
                 <a class="dropdown-trigger black-text" data-target='dropPerfil'>
@@ -52,85 +58,6 @@ $usuario = new Usuario(unserialize($_SESSION['logado']));
         </ul>
     </div>
 </nav>
-
-<ul class="sidenav">
-    <li>
-        <div class="user-view">
-            <a href="#user">
-                <div class="fotoPerfil left-align" style="background-image: url('../Img/default.png');background-size: cover;
-                                 background-position: center;
-                                 background-repeat: no-repeat;
-                                 max-height: 20vh; max-width: 20vh;"></div>
-            </a>
-            <a href="#name"><span class="white-text name">aa</span></a>
-        </div>
-    </li>
-    <div class="divider"></div>
-    <ul class="collapsible">
-        <a href="/index.php" class="black-text">
-            <li>
-                <div class="headerMeu" style="margin-left: 16px">
-                    Início
-                </div>
-            </li>
-        </a>
-        <li>
-            <div class="collapsible-header anime" x="0">Meu Perfil<i class="large material-icons right animi">arrow_drop_down</i>
-            </div>
-            <div class="collapsible-body">
-                <ul>
-                    <li><a href="Tela/perfil.php" id="linkprestador" class="black-text modal-trigger">Ver Meu Perfil</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header anime" x="0">Administração<i class="large material-icons right animi">arrow_drop_down</i>
-            </div>
-            <div class="collapsible-body">
-                <ul>
-                    <li>
-                        <a href="Tela/listagemUsuario.php" class="black-text">Ver Usuários
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Tela/cadastroUsuarioAdm.php" class="black-text">
-                            Cadastrar Usuário
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header anime" x="0">Funcionários<i class="large material-icons right animi">arrow_drop_down</i>
-            </div>
-            <div class="collapsible-body">
-                <ul>
-                    <li><a href="Tela/registroPrestador.php" id="linkprestador" class="black-text modal-trigger">Cadastrar</a>
-                    </li>
-                    <li><a href="Tela/listagemPrestador.php" class="black-text">Ver funcionários</a></li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header anime" x="0">Serviços<i class="large material-icons right animi">arrow_drop_down</i>
-            </div>
-            <div class="collapsible-body">
-                <ul>
-                    <li><a href="Tela/registroServico.php" class="black-text modal-trigger">Cadastrar</a></li>
-                    <li><a href="Tela/listagemServico.php" class="black-text">Ver Serviços</a></li>
-                </ul>
-            </div>
-        </li>
-        <a href="Controle/usuarioControle.php?function=logout&url=" class="black-text">
-            <li>
-                <div class="headerMeu" style="margin-left: 16px">
-                    Sair
-                </div>
-            </li>
-        </a>
-    </ul>
-</ul>
 
 <div id="modalEmpregador" class="modal">
     <div class="modal-content">
