@@ -1,5 +1,6 @@
 <?php
     include_once __DIR__."/../Controle/conexao.php";
+    include_once __DIR__."/../Modelo/Fotoservico.php";
 
     class FotoservicoPDO
     {
@@ -83,7 +84,7 @@
             }
         }
 
-        public function removerFoto()
+        function removerFoto()
         {
             $id_fotoservico = $_GET['id_foto'];
             $servico = $_GET['id_servico'];
@@ -106,7 +107,47 @@
             }
         }
 
-        public function countFotos($id_servico)
+        function removerTodasFotos($id_servico)
+        {
+            $stmtFotos = $this->selectFotosIdServico($id_servico);
+            while ($linha = $stmtFotos->fetch()) {
+                $foto = new Fotoservico($linha);
+                unlink("../".$foto->getCaminho());
+            }
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("delete from fotoservico where id_servico = :id_servico");
+            $stmt->bindValue(":id_servico", $id_servico);
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function selectFotosIdServico($id_servico)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from fotoservico where id_servico = :id_servico");
+            $stmt->bindValue(":id_servico", $id_servico);
+            $stmt->execute();
+            return $stmt;
+        }
+
+
+        function countFotosExclusao($id_servico)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("SELECT * from fotoservico where id_servico = :id_servico");
+            $stmt->bindValue(":id_servico", $id_servico);
+            $stmt->execute();
+            if ($stmt->rowCount() == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function countFotos($id_servico)
         {
             $pdo = conexao::getConexao();
             $stmt = $pdo->prepare("SELECT * from fotoservico where id_servico = :id_servico");
@@ -119,11 +160,12 @@
             }
         }
 
-        public function selectFotosById($id_fotoservico){
+        function selectFotosById($id_fotoservico)
+        {
             $pdo = conexao::getConexao();
             $stmt = $pdo->prepare("SELECT caminho FROM fotoservico where id_fotoservico = :id_fotoservico");
             $stmt->bindValue(":id_fotoservico", $id_fotoservico);
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 $stmt = $stmt->fetch();
                 return $stmt['caminho'];
             }
