@@ -46,6 +46,19 @@
             }
         }
 
+        function verificaEmpregador($id_usuario)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from empregador where id_usuario = :id_usuario;");
+            $stmt->bindValue(":id_usuario", $id_usuario);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
 
         public function selectEmpregadorId_usuario($id_usuario)
         {

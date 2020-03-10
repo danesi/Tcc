@@ -97,13 +97,28 @@
             return $servico->getId_servico();
         }
 
-        public function selectServicoId_servico($id_usuario)
+        public function selectServicoId_usuario($id_usuario)
         {
 
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('select * from servico where id_servico = :id_usuario;');
+            $stmt = $pdo->prepare('select * from servico where id_usuario = :id_usuario;');
             $stmt->bindValue(':id_usuario', $id_usuario);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return $stmt;
+            } else {
+                return false;
+            }
+        }
+
+        public function selectServicoId_servico($id_servico)
+        {
+
+            $con = new conexao();
+            $pdo = $con->getConexao();
+            $stmt = $pdo->prepare('select * from servico where id_servico = :id_servico;');
+            $stmt->bindValue(':id_servico', $id_servico);
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
                 return $stmt;
