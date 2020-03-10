@@ -1,25 +1,11 @@
 <?php
-
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-if (realpath('./index.php')) {
-    include_once './Controle/EmpregadorPDO.php';
-} else {
-    if (realpath('../index.php')) {
-        include_once '../Controle/EmpregadorPDO.php';
-    } else {
-        if (realpath('../../index.php')) {
-            include_once '../../Controle/EmpregadorPDO.php';
-        }
+    if (!isset($_SESSION)) {
+        session_start();
     }
-}
-
-$classe = new empregadorPDO();
-
-if (isset($_GET['function'])) {
-    $metodo = $_GET['function'];
-    $classe->$metodo();
-}
+    include_once __DIR__.'/../Controle/EmpregadorPDO.php';
+    $classe = new empregadorPDO();
+    if (isset($_GET['function'])) {
+        $metodo = $_GET['function'];
+        $classe->$metodo();
+    }
 

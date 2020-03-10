@@ -1,25 +1,11 @@
 <?php
-
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-if (realpath('./index.php')) {
-    include_once './Controle/ServicoPDO.php';
-} else {
-    if (realpath('../index.php')) {
-        include_once '../Controle/ServicoPDO.php';
-    } else {
-        if (realpath('../../index.php')) {
-            include_once '../../Controle/ServicoPDO.php';
-        }
+    if (!isset($_SESSION)) {
+        session_start();
     }
-}
-
-$classe = new servicoPDO();
-
-if (isset($_GET['function'])) {
-    $metodo = $_GET['function'];
-    $classe->$metodo();
-}
+    include_once __DIR__.'/../Controle/ServicoPDO.php';
+    $classe = new servicoPDO();
+    if (isset($_GET['function'])) {
+        $metodo = $_GET['function'];
+        $classe->$metodo();
+    }
 

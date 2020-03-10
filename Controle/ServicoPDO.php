@@ -6,6 +6,7 @@
     include_once __DIR__.'/../Modelo/Servico.php';
     include_once __DIR__.'/../Modelo/Empregador.php';
     include_once __DIR__.'/../Controle/EmpregadorPDO.php';
+    include_once __DIR__.'/../Controle/FotoservicoPDO.php';
 
 
     class ServicoPDO
@@ -18,11 +19,10 @@
             $salario = explode(",", $servico->getSalario());
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('insert into servico values(default , :nome , :descricao , :salario, :foto, null, :id_usuario);');
+            $stmt = $pdo->prepare('insert into servico values(default , :nome , :descricao , :salario, null, :id_usuario);');
             $stmt->bindValue(':nome', $servico->getNome());
             $stmt->bindValue(':descricao', $servico->getDescricao());
             $stmt->bindValue(':salario', $salario[0].".".$salario[1]);
-            $stmt->bindValue(':foto', "");
             $stmt->bindValue(':id_usuario', $_SESSION['id_usuario']);
             if ($stmt->execute()) {
                 $ultId_servico = $pdo->lastInsertId();
@@ -35,7 +35,8 @@
                     if (move_uploaded_file($_FILES['foto']['tmp_name'], $diretorio)) {
                         $servico->setFoto('Img/Servico/'.$nome_imagem.$extensao);
                         $caminho = '/Img/Servico/'.$nome_imagem.$extensao;
-                        if ($this->updateFoto($ultId_servico, $caminho)) {
+                        $fotoservicoPDO = new FotoservicoPDO();
+                        if ($fotoservicoPDO->inserirFotoServico($ultId_servico, $caminho)) {
                             $_SESSION['toast'][] = "Serviço cadastrado com susseço!";
                             header("Location: ../Tela/perfilServico.php");
                         } else {
@@ -50,7 +51,7 @@
 
             } else {
                 $_SESSION['toast'][] = "Erro ao cadastrar serviço!";
-//                header("Location: ../Tela/registroServico.php");
+                header("Location: ../Tela/registroServico.php");
             }
         }
 
@@ -83,19 +84,6 @@
             }
         }
 
-        public function updateFoto($id_servico, $foto)
-        {
-            $con = new conexao();
-            $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('update servico set foto = :foto where id_servico = :id_servico;');
-            $stmt->bindValue(':id_servico', $id_servico);
-            $stmt->bindValue(':foto', $foto);
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
 
         public function selecionaUltimoServico()
         {
@@ -109,12 +97,12 @@
             return $servico->getId_servico();
         }
 
-        public function selectServicoId_usuario($id_usuario)
+        public function selectServicoId_servico($id_usuario)
         {
 
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('select * from servico where id_usuario = :id_usuario;');
+            $stmt = $pdo->prepare('select * from servico where id_servico = :id_usuario;');
             $stmt->bindValue(':id_usuario', $id_usuario);
             $stmt->execute();
             if ($stmt->rowCount() > 0) {

@@ -6,13 +6,16 @@
     include_once "../Modelo/Servico.php";
     include_once "../Modelo/Endereco.php";
     include_once "../Modelo/Empregador.php";
+    include_once "../Modelo/Fotoservico.php";
     include_once "../Controle/ServicoPDO.php";
     include_once "../Controle/EnderecoPDO.php";
     include_once "../Controle/EmpregadorPDO.php";
+    include_once "../Controle/FotoservicoPDO.php";
     $usuario = new Usuario(unserialize($_SESSION['logado']));
     $servicoPDO = new ServicoPDO();
     $enderecoPDO = new EnderecoPDO();
     $empregadorPDO = new EmpregadorPDO();
+    $fotoservicoPDO = new FotoservicoPDO();
     $empregador = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario->getId_usuario())->fetch());
     $stmtServicos = $servicoPDO->selectServicoId_usuario($usuario->getId_usuario());
 ?>
@@ -36,11 +39,12 @@
             <div class="row center">
                 <?php while ($linha = $stmtServicos->fetch()) {
                     $servico = new Servico($linha);
+                    $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                     ?>
                     <div class="col s3">
                         <div class="card z-depth-3">
                             <div class="card-image">
-                                <img src="../<?= $servico->getFoto() ?>" height="270" width="100">
+                                <img src="../<?= $foto->getCaminho() ?>" height="270" width="100">
                                 <span class="card-title black-text"><?= $servico->getNome() ?></span>
                                 <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped"
                                    data-position="bottom" data-tooltip="Nota do serviço">4.5</a>

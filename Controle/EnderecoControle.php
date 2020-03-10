@@ -1,25 +1,11 @@
 <?php
-
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-if (realpath('./index.php')) {
-    include_once './Controle/EnderecoPDO.php';
-} else {
-    if (realpath('../index.php')) {
-        include_once '../Controle/EnderecoPDO.php';
-    } else {
-        if (realpath('../../index.php')) {
-            include_once '../../Controle/EnderecoPDO.php';
-        }
+    if (!isset($_SESSION)) {
+        session_start();
     }
-}
-
-$classe = new enderecoPDO();
-
-if (isset($_GET['function'])) {
-    $metodo = $_GET['function'];
-    $classe->$metodo();
-}
+    include_once __DIR__.'/../Controle/EnderecoPDO.php';
+    $classe = new enderecoPDO();
+    if (isset($_GET['function'])) {
+        $metodo = $_GET['function'];
+        $classe->$metodo();
+    }
 
