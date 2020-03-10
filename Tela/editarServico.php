@@ -13,10 +13,13 @@
 <?php
     include_once '../Controle/ServicoPDO.php';
     include_once '../Controle/EnderecoPDO.php';
+    include_once '../Controle/FotoservicoPDO.php';
     include_once '../Modelo/Endereco.php';
+    include_once '../Modelo/Fotoservico.php';
     $Servico = new servicoPDO();
     $enderecoPDO = new EnderecoPDO();
-    $stmt = $Servico->selectServicoId_usuario($_GET['id_servico']);
+    $fotoservicoPDO = new FotoservicoPDO();
+    $stmt = $Servico->selectServicoId_servico($_GET['id_servico']);
     $servico = new Servico($stmt->fetch());
 ?>
 <main>
@@ -32,7 +35,8 @@
                             <div class="row">
                                 <form action="../Controle/ServicoControle.php?function=editar" method="post">
                                     <div class="row">
-                                        <input type="text" name="id_servico" value="<?= $servico->getId_servico() ?>" hidden>
+                                        <input type="text" name="id_servico" value="<?= $servico->getId_servico() ?>"
+                                               hidden>
                                         <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
                                             <input type="text" name="nome" id="nome" required
                                                    value="<?= $servico->getNome() ?>">
@@ -66,13 +70,20 @@
                         <div class="collapsible-header"><i class="material-icons">photo</i>Fotos</div>
                         <div class="collapsible-body">
                             <div class="row">
-                                <div class="col s6 m4 l3" style="margin-bottom: 30px">
-                                    <div style="height: 150px; width: 150px; margin: auto; position:relative; top:0px; left:0px;">
-                                        <img class="fotoEditarServico materialboxed"
-                                             src="../<?php echo $servico->getFoto(); ?>">
+                                <?php
+                                    $stmtFoto = $fotoservicoPDO->selectTodasFotos($servico->getId_servico());
+                                    $cont = 0;
+                                    while ($linha = $stmtFoto->fetch()) {
+                                        $foto = new Fotoservico($linha);
+                                        ?>
+                                        <div class="col s6 m4 l3" style="margin-bottom: 30px">
+                                            <div style="height: 150px; width: 150px; margin: auto; position:relative; top:0px; left:0px;">
+                                                <img class="fotoEditarServico materialboxed"
+                                                     src="../<?php echo $foto->getCaminho(); ?>">
 
-                                        <a
-                                                href="#"><i class="small material-icons black-text right grey lighten-4"
+                                                <a
+                                                        href="../Controle/FotoserivoControle.php?function=removerFoto&id_foto=<?=$foto->getIdFotoservico()?>&id_servico=<?=$servico->getId_servico()?>"><i
+                                                            class="small material-icons black-text right grey lighten-4"
                                                             style="border-radius: 50%;
                                                                 height: 30px; width: 30px;
                                                                 position:absolute; top:5px; left:100px;
@@ -80,16 +91,25 @@
                                                             title="Deletar">close</i>
 
 
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <form action="../Controle/fotoquartoControle.php?function=addFoto"
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $cont++;
+                                        if ($cont == 4 || $cont == 8) {
+                                            ?>
+                                            <div class="row"></div>
+                                            <?php
+                                        }
+                                    } ?>
+                                <form action="../Controle/FotoserivoControle.php?function=addFoto"
                                       enctype="multipart/form-data" method="post" id="addFoto">
+                                    <input type="text" name="id_servico" value="<?= $servico->getId_servico() ?>"
+                                           hidden>
                                     <div class="row">
                                         <a href="#!" id="linkfoto" class="col s6 m4 l3">
                                             <div style="height: 150px; width: 150px; margin: auto;">
-                                                <img class="prev-img fotoEditarServico center" src="../Img/tcc.jfif">
+                                                <img class="prev-img fotoEditarServico center" src="../Img/default.png">
                                             </div>
                                             <div class="fotoEditarServico"
                                                  style="position: relative; margin-top: -150px; z-index: 1">
@@ -242,5 +262,26 @@
             }
         })
     });
+
+    $("#linkfoto").click(function () {
+        M.updateTextFields();
+        $('#btnFile').click();
+        carregarFoto();
+    });
+
+    function carregarFoto() {
+        const s = document.querySelector.bind(document);
+        const previewImg = s('.prev-img');
+        const fileChooser = s('.file-chos');
+
+        fileChooser.onchange = e => {
+            const fileToUpload = e.target.files.item(0);
+            const reader = new FileReader();
+            reader.onload = e => previewImg.src = e.target.result;
+            $('#loader').show();
+            reader.readAsDataURL(fileToUpload);
+            $("#addFoto").submit();
+        };
+    }
 </script>
 

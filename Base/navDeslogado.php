@@ -35,7 +35,7 @@ if (realpath("./index.php")) {
 
 <ul class="sidenav">
     <li><div class="user-view">
-            <a href="#user"><div class="fotoPerfil left-align" style="background-image: url('../Img/tcc.jfif');background-size: cover;
+            <a href="#user"><div class="fotoPerfil left-align" style="background-image: url('../Img/default.png');background-size: cover;
                                  background-position: center;
                                  background-repeat: no-repeat;
                                  max-height: 20vh; max-width: 20vh;"></div></a>

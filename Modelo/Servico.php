@@ -7,7 +7,6 @@ class Servico
     private $nome;
     private $descricao;
     private $salario;
-    private $foto;
     private $id_endereco;
     private $id_usuario;
 

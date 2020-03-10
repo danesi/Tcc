@@ -21,7 +21,7 @@
                                 <div class="center">
                                     <a href="#!" id="linkfoto">
                                         <div style="height: 150px; width: 150px; margin: auto;">
-                                            <img  class="prev-img fotoPerfil center" src="../Img/tcc.jfif">
+                                            <img  class="prev-img fotoPerfil center" src="../Img/default.png">
                                         </div>
                                         <div class="fotoPerfil" style="position: relative; margin-top: -150px; z-index: 1">
                                             <div class="linkfoto white-text center">Adicionar Foto</div>
