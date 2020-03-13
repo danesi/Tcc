@@ -79,8 +79,8 @@
                 $('#cidade').val(localidade).focus();
                 $('#estado').val(uf).focus();
                 $('#complemento').val(complemento).focus();
-                $('#endereco').val(logradouro).focus();
                 $('#numero').val(gia).focus();
+                $('#endereco').val(logradouro).focus();
             }
         })
     });
