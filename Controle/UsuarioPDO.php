@@ -94,7 +94,70 @@
             }
         }
 
-        public function selecUltimoUsuario()
+        function alteraFoto()
+        {
+            if (filesize($_FILES['imagem']['tmp_name']) > 15000000) {
+                $_SESSION['toast'][] = "O tamanho máximo de arquivo é de 15MB";
+                header("location: ../Tela/perfil.php");
+            } else {
+                $fatorReducao = 5;
+                $tamanho = filesize($_FILES['imagem']['tmp_name']);
+                $qualidade = (100000000 - ($tamanho * $fatorReducao)) / 1000000;
+                if ($qualidade < 5) {
+                    $qualidade = 5;
+                }
+                $us = new usuario(unserialize($_SESSION['logado']));
+                $antiga = $us->getFoto();
+                $nome_imagem = hash_file('md5', $_FILES['imagem']['tmp_name']);
+                $ext = explode('.', $_FILES['imagem']['name']);
+                $extensao = ".".$ext[(count($ext) - 1)];
+                $extensao = strtolower($extensao);
+                switch ($extensao) {
+                    case '.jfif':
+                    case '.jpeg':
+                    case '.jpg':
+                        imagewebp(imagecreatefromjpeg($_FILES['imagem']['tmp_name']), __DIR__.'/../Img/Perfil/'.$nome_imagem.'.webp', $qualidade);
+                        break;
+                    case '.svg':
+                        move_uploaded_file($_FILES['imagem']['tmp_name'], __DIR__.'/../Img/Perfil/'.$nome_imagem.'.svg');
+                        break;
+                    case '.gif':
+                        move_uploaded_file($_FILES['imagem']['tmp_name'], __DIR__.'/../Img/Perfil/'.$nome_imagem.'.gif');
+                        break;
+                    case '.png':
+                        $img = imagecreatefrompng($_FILES['imagem']['tmp_name']);
+                        imagepalettetotruecolor($img);
+                        imagewebp($img, __DIR__.'/../Img/Perfil/'.$nome_imagem.'.webp', $qualidade);
+                        break;
+                    case '.webp':
+                        imagewebp(imagecreatefromwebp($_FILES['imagem']['tmp_name']), __DIR__.'/../Img/Perfil/'.$nome_imagem.'.webp', $qualidade);
+                        break;
+                    case '.bmp':
+                        imagewebp(imagecreatefromwbmp($_FILES['imagem']['tmp_name']), __DIR__.'/../Img/Perfil/'.$nome_imagem.'.webp', $qualidade);
+                        break;
+                }
+                $conexao = new conexao();
+                $pdo = $conexao->getConexao();
+                $stmt = $pdo->prepare("update usuario set foto = :foto where id_usuario = :id");
+                $stmt->bindValue(':id', $us->getId_usuario());
+                $stmt->bindValue(':foto', 'Img/Perfil/'.$nome_imagem.($extensao == '.svg' ? ".svg" : ($extensao == '.gif' ? ".gif" : ".webp")));
+                //Verificar se os dados foram inseridos com sucesso
+                if ($stmt->execute()) {
+                    $us->setFoto('Img/Perfil/'.$nome_imagem.($extensao == '.svg' ? ".svg" : ($extensao == '.gif' ? ".gif" : ".webp")));
+                    if ($antiga != 'Img/Perfil/default.png' && $antiga != $us->getFoto()) {
+                        unlink('../'.$antiga);
+                    }
+                    $_SESSION['logado'] = serialize($us);
+                    $_SESSION['toast'][] = "Foto alterada com sucesso!";
+                    header('Location: ../Tela/perfil.php');
+                } else {
+                    $_SESSION['toast'][] = "Erro ao cadastrar foto";
+                    header('Location: ../Tela/perfil.php');
+                }
+            }
+        }
+
+        function selecUltimoUsuario()
         {
             $con = new conexao();
             $pdo = $con->getConexao();
@@ -107,7 +170,7 @@
         }
 
 
-        public function selectUsuario()
+        function selectUsuario()
         {
 
             $con = new conexao();
@@ -122,7 +185,7 @@
         }
 
 
-        public function selectUsuarioId_usuario($id_usuario)
+        function selectUsuarioId_usuario($id_usuario)
         {
 
             $con = new conexao();
@@ -138,7 +201,7 @@
         }
 
 
-        public function selectUsuarioNome($nome)
+        function selectUsuarioNome($nome)
         {
 
             $con = new conexao();
@@ -154,7 +217,7 @@
         }
 
 
-        public function selectUsuarioCpf($cpf)
+        function selectUsuarioCpf($cpf)
         {
 
             $con = new conexao();
@@ -170,7 +233,7 @@
         }
 
 
-        public function selectUsuarioNascimento($nascimento)
+        function selectUsuarioNascimento($nascimento)
         {
 
             $con = new conexao();
@@ -186,7 +249,7 @@
         }
 
 
-        public function selectUsuarioTelefone($telefone)
+        function selectUsuarioTelefone($telefone)
         {
 
             $con = new conexao();
@@ -202,7 +265,7 @@
         }
 
 
-        public function selectUsuarioEmail($email)
+        function selectUsuarioEmail($email)
         {
 
             $con = new conexao();
@@ -218,7 +281,7 @@
         }
 
 
-        public function selectUsuarioSenha($senha)
+        function selectUsuarioSenha($senha)
         {
 
             $con = new conexao();
@@ -234,7 +297,7 @@
         }
 
 
-        public function selectUsuarioId_endereco($id_endereco)
+        function selectUsuarioId_endereco($id_endereco)
         {
 
             $con = new conexao();
@@ -250,24 +313,22 @@
         }
 
 
-        public function updateUsuario(Usuario $usuario)
+        function updateUsuario(Usuario $usuario)
         {
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('update usuario set nome = :nome , cpf = :cpf , nascimento = :nascimento , telefone = :telefone , email = :email , senha = :senha , id_endereco = :id_endereco where id_usuario = :id_usuario;');
+            $stmt = $pdo->prepare('update usuario set nome = :nome , cpf = :cpf , nascimento = :nascimento , telefone = :telefone , email = :email where id_usuario = :id_usuario;');
             $stmt->bindValue(':nome', $usuario->getNome());
             $stmt->bindValue(':cpf', $usuario->getCpf());
             $stmt->bindValue(':nascimento', $usuario->getNascimento());
             $stmt->bindValue(':telefone', $usuario->getTelefone());
             $stmt->bindValue(':email', $usuario->getEmail());
-            $stmt->bindValue(':senha', $usuario->getSenha());
-            $stmt->bindValue(':id_endereco', $usuario->getId_endereco());
             $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
             $stmt->execute();
             return $stmt->rowCount();
         }
 
-        public function deleteUsuario($definir)
+        function deleteUsuario($definir)
         {
             $con = new conexao();
             $pdo = $con->getConexao();
@@ -277,24 +338,23 @@
             return $stmt->rowCount();
         }
 
-        public function deletar()
+        function deletar()
         {
             $this->deleteUsuario($_GET['id']);
             header('location: ../Tela/listarUsuario.php');
         }
 
-
-        /*editar*/
         function editar()
         {
             $usuario = new Usuario($_POST);
             if ($this->updateUsuario($usuario) > 0) {
-                header('location: ../index.php?msg=usuarioAlterado');
+                $_SESSION['logado'] = serialize(new Usuario($this->selectUsuarioId_usuario($usuario->getId_usuario())->fetch()));
+                $_SESSION['toast'][] = "Informaçãos pessoais alteradas!";
+                header('location: ../Tela/perfil.php');
             } else {
-                header('location: ../index.php?msg=usuarioErroAlterar');
+                $_SESSION['toast'][] = "Erro ao alterar informações pessoais";
+                header('location: ../Tela/perfil.php');
             }
         }
-        /*editar*/
-        /*chave*/
     }
                 

@@ -19,12 +19,25 @@ footer{
     object-fit: cover;
     object-position: center;
 }
+
+.fotoPagePerfil{
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    object-position: center;
+}
 .linkfoto{
     border-radius: 50%;
     background: linear-gradient(transparent, transparent, black);
     background-size: 50px;
     opacity: 0;
-    height: 150px;
+    height: 200px;
     padding-top: 65%;
     transition: ease-in 0.2s;
 }
