@@ -37,12 +37,26 @@ footer{
     background: linear-gradient(transparent, transparent, black);
     background-size: 50px;
     opacity: 0;
+    height: 150px;
+    padding-top: 65%;
+    transition: ease-in 0.2s;
+}
+
+.linkfotoPerfil{
+    border-radius: 50%;
+    background: linear-gradient(transparent, transparent, black);
+    background-size: 50px;
+    opacity: 0;
     height: 200px;
     padding-top: 65%;
     transition: ease-in 0.2s;
 }
 
 .linkfoto:hover{
+    opacity: 1;
+}
+
+.linkfotoPerfil:hover{
     opacity: 1;
 }
 

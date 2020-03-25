@@ -33,16 +33,16 @@
             <!--            <div class="center">-->
             <!--                <h6 class="center">É dessa maneira que seu perfil sera mostrado para as outras pessoas</h6>-->
             <!--            </div>-->
-            <div class="row center">
+            <div class="row">
                 <div class="col s3 offset-s1">
                     <div class="card z-depth-3">
                         <div class="card-image">
                             <img src="../<?= $usuario->getFoto() ?>">
                             <span class="card-title"><?= $usuario->getNome() ?></span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped"
+                            <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center"
                                data-position="bottom" data-tooltip="Nota do empregado">4.5</a>
                         </div>
-                        <ul class="card-content">
+                        <ul class="card-content center">
                             <h5>Áreas de atuação</h5>
                             <?php $areas = explode(",", $empregado->getArea_atuacao());
                                 foreach ($areas as $area) { ?>
@@ -56,10 +56,10 @@
                 </div>
                 <div class="right-divider"></div>
                 <div class="card col s6 offset-s1 z-depth-3" style="margin-top: 7%">
-                    <div class="card-title">Editar dados</div>
+                    <div class="card-title center">Editar dados</div>
                     <div class="divider"></div>
                     <br>
-                    <form action="../Controle/EmpregadoControle.php?function=editar" method="post">
+                    <form action="../Controle/EmpregadoControle.php?function=editar" method="post" id="formDados">
                         <input name="id_usuario" value="<?= $empregado->getId_usuario() ?>" hidden>
                         <div class="input-field col l10 m5 s12 offset-l1 offset-m1">
                             <select name="escolaridade" required>
@@ -85,21 +85,20 @@
                             <label>Escolaridade</label>
                         </div>
                         <div class="input-field col l10 offset-l1">
-                            <textarea id="textarea1" class="materialize-textarea"
-                                      name="area_atuacao"><?= $empregado->getArea_atuacao() ?></textarea>
-                            <label for="textarea1">Áreas de atuação</label>
+                            <div class="chips chips-initial"></div>
+                            <input name="area_atuacao" value="" hidden class="area">
                         </div>
-                        <div class="row">
+                        <div class="row center">
                             <input type="submit" class="btn corPadrao2" value="salvar">
                         </div>
                     </form>
-                    <div class="row">
+                    <div class="row center">
                         <samp>* Para alterar outros dados pode acessar a pagina de <a
                                     href="./perfil.php">perfil</a></samp>
                     </div>
                 </div>
                 <div class="card col s10 offset-s1 z-depth-3">
-                    <div class="card-title">Endereço</div>
+                    <div class="card-title center">Endereço</div>
                     <div class="divider"></div>
                     <?php if ($empregadoPDO->verificaEndereco($empregado->getId_usuario())) {
                         $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($usuario->getId_endereco())->fetch());
@@ -208,5 +207,35 @@
                 $('#numero').val(gia).focus();
             }
         })
+    });
+
+    $('.chips').chips({
+        autocompleteOptions: {
+            data: {
+                'Desenvolvedor': null,
+                'Trabalhador rual': null,
+                'Trabalhador urbano': null,
+                'Domestica': null,
+                'Pintor': null,
+            },
+            limit: Infinity,
+            minLength: 1
+        },
+        data: [
+            <?php $areas = explode(",", $empregado->getArea_atuacao());
+            foreach ($areas as $area) { ?>
+            {tag: '<?=$area?>'},
+            <?php
+            } ?>
+            ],
+        placeholder: 'Áreas de atuação*',
+        secondaryPlaceholder: '+Áreas',
+    });
+
+    $("#formDados").submit(function () {
+        var value = $('.chips').text();
+        var areas = value.split('close');
+        $('.area').val(areas);
+        return true;
     });
 </script>

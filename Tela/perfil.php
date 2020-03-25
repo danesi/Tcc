@@ -37,7 +37,7 @@
                                      src="../<?php echo $usuario->getFoto() ?>">
                             </div>
                             <div class="fotoPagePerfil" style="position: relative; margin-top: -205px; z-index: 2">
-                                <div class="linkfoto white-text center">Alterar Foto</div>
+                                <div class="linkfotoPerfil white-text center">Alterar Foto</div>
                             </div>
                         </a>
                         <div class="row center">
