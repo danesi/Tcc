@@ -25,15 +25,16 @@
         function inserirEmpregado()
         {
             $empregado = new empregado($_POST);
-            print_r($_POST);
             $usuario = new usuario(unserialize($_SESSION['logado']));
             $empregado->setId_usuario($usuario->getId_usuario());
+            $count = strlen($empregado->getArea_atuacao());
+            $areas = substr($empregado->getArea_atuacao(), 0, $count-1);
             $con = new conexao();
             $pdo = $con->getConexao();
             $stmt = $pdo->prepare('insert into empregado values(:id_usuario , :escolaridade , :area_atuacao, null);');
             $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
             $stmt->bindValue(':escolaridade', $empregado->getEscolaridade());
-            $stmt->bindValue(':area_atuacao', $empregado->getArea_atuacao());
+            $stmt->bindValue(':area_atuacao', $areas);
             if ($stmt->execute()) {
                 $SendCadImg = filter_input(INPUT_POST, 'cadastrar', FILTER_SANITIZE_STRING);
                 if ($SendCadImg && $_FILES['foto']['name'] != null) {
@@ -46,16 +47,16 @@
                         $caminho = '/Img/Perfil/'.$nome_imagem.$extensao;
                         $this->alteraNomeFoto($usuario->getId_usuario(), $caminho);
                         $_SESSION['toast'][] = "Empregado cadastrado com sucesso!";
-//                    header("Location: ../Tela/perfilEmpregado.php");
+                    header("Location: ../Tela/perfilEmpregado.php");
                     } else {
-//                    header("Location: ../Tela/registroEmpregado.php?msg=erroSalvarImagem");
+                    header("Location: ../Tela/registroEmpregado.php?msg=erroSalvarImagem");
                     }
                 } else {
-//                header("Location: ../Tela/registroEmpregado.php?msg=erroCarrregaImagem");
+                header("Location: ../Tela/registroEmpregado.php?msg=erroCarrregaImagem");
                 }
 
             } else {
-//            header('location: ../index.php?msg=empregadoErroInsert');
+            header('location: ../index.php?msg=empregadoErroInsert');
             }
         }
 
@@ -183,9 +184,11 @@
         {
             $con = new conexao();
             $pdo = $con->getConexao();
+            $count = strlen($empregado->getArea_atuacao());
+            $areas = substr($empregado->getArea_atuacao(), 0, $count-1);
             $stmt = $pdo->prepare('update empregado set escolaridade = :escolaridade , area_atuacao = :area_atuacao where id_usuario = :id_usuario;');
             $stmt->bindValue(':escolaridade', $empregado->getEscolaridade());
-            $stmt->bindValue(':area_atuacao', $empregado->getArea_atuacao());
+            $stmt->bindValue(':area_atuacao', $areas);
             $stmt->bindValue(':id_usuario', $empregado->getId_usuario());
             $stmt->execute();
             return $stmt->rowCount();
