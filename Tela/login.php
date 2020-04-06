@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-            <?php
-            if(isset($_SESSION['logado'])){
-                header('location: ../Tela/home.php');
-            }
+        <?php
+        if(isset($_SESSION['logado'])){
+            header('location: ../Tela/home.php');
+        }
 ?>
 
 <html>

@@ -1,11 +1,5 @@
 <?php
-    if(!isset($_SESSION)){
-        session_start();
-    }
-
-    if(!isset($_SESSION['logado'])){
-        header("Location: ./login.php");
-    }
+    include_once '../Base/requerLogin.php';
 ?>
 <!DOCTYPE html>
 <html>
