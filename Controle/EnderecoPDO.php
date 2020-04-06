@@ -213,8 +213,6 @@ class EnderecoPDO
         header('location: ../Tela/listarEndereco.php');
     }
 
-
-    /*editar*/
     function editarEnderecoEmpregado()
     {
         $endereco = new Endereco($_POST);
@@ -238,6 +236,15 @@ class EnderecoPDO
             header("Location: ../Tela/editarServico.php?id_servico=".$_POST['id_servico']."&endereco");
         }
     }
-    /*editar*/
-    /*chave*/
+
+    function selectPorLocalizacao($local)
+    {
+        $pdo = conexao::getConexao();
+        $stmt = $pdo->prepare("select * from endereco where (cep like :cep or cidade like :cidade or uf like :uf)");
+        $stmt->bindValue(":cep", $local);
+        $stmt->bindValue(":cidade", $local);
+        $stmt->bindValue(":uf", $local);
+        $stmt->execute();
+        return $stmt;
+    }
 }

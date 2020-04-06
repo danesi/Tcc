@@ -7,6 +7,8 @@
     include_once __DIR__.'/../Modelo/Empregador.php';
     include_once __DIR__.'/../Controle/EmpregadorPDO.php';
     include_once __DIR__.'/../Controle/FotoservicoPDO.php';
+    include_once __DIR__.'/../Controle/EnderecoPDO.php';
+    include_once __DIR__.'/../Controle/FotoservicoPDO.php';
 
 
     class ServicoPDO
@@ -255,7 +257,44 @@
                 header("Location: ../Tela/editarServico.php?id_servico=".$_POST['id_servico']."&info");
             }
         }
-        /*editar*/
-        /*chave*/
+
+
+        function selectPorLocalizacao()
+        {
+            $local = $_POST['local'];
+            $pdo = conexao::getConexao();
+            $enderecoPDO = new EnderecoPDO();
+            $fotoservicoPDO = new FotoservicoPDO();
+            $enderecos = $enderecoPDO->selectPorLocalizacao($local);
+
+            while ($linha = $enderecos->fetch()) {
+                $endereco = new Endereco($linha);
+                $stmt = $pdo->prepare("select * from servico where id_endereco = :id_endereco");
+                $stmt->bindValue(":id_endereco", $endereco->getId_endereco());
+                $stmt->execute();
+                while ($servicos = $stmt->fetch()) {
+                    $servico = new Servico($servicos);
+                    $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
+                    echo "<div class='col s3'>
+                        <div class='card z-depth-3'>
+                            <div class='card-image'>
+                                <img src='../". $foto->getCaminho() ."' height='270' width='100'>
+                                <span class='card-title black-text'>".$servico->getNome()."</span>
+                                <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped'
+                                   data-position='bottom' data-tooltip='Nota do serviço'>4.5</a>
+                            </div>
+                            <ul class='card-content'>
+                                <h5>Descrição</h5>
+                                ". $servico->getDescricao() ."
+                                <h5>Salário mensal</h5>
+                                <div class='chip'>R$ ". $servico->getSalario() ."</div>
+                                <br>
+                                <br>
+                            </ul>
+                        </div>
+                    </div>";
+                }
+            }
+        }
     }
                 
