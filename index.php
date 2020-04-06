@@ -11,7 +11,6 @@
         include_once './Base/iNav.php';
         ?>
         <main>
-           
         </main>
         <?php
         include_once './Base/footer.php';

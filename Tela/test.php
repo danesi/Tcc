@@ -5,6 +5,7 @@
     <title>Login</title>
     <?php
         include_once '../Base/header.php';
+        include_once '../Controle/EmpregadoPDO.php';
     ?>
 <body class="homeimg">
 <?php
@@ -13,6 +14,21 @@
 <main>
     <div class="chips chips-autocomplete"></div>
     <button class="aaa">vai</button>
+
+
+    <form action="../Controle/EmpregadoControle.php?function=selectAllAreasAtuacao" method="post">
+        <input type="submit" value="busca">
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <?php
+        $empregadoPDO = new EmpregadoPDO();
+        $areas = ['Domestica', 'Pintor'];
+        $datas = $empregadoPDO->selectEmpregadoProArea($areas);
+        print_r($datas);
+        ?>
 </main>
 </body>
 </html>

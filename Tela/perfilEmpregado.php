@@ -1,7 +1,5 @@
 <?php
-    if (!isset($_SESSION)) {
-        session_start();
-    }
+    include_once '../Base/requerLogin.php';
     include_once "../Modelo/Usuario.php";
     include_once "../Modelo/Empregado.php";
     include_once "../Modelo/Endereco.php";
@@ -188,7 +186,7 @@
 </div>
 </html>
 <script>
-    $('.tooltipped').tooltip();
+
     $('select').formSelect();
     $('.modal').modal();
     $("#cep").mask("00000-000");
@@ -206,7 +204,7 @@
                 $('#endereco').val(logradouro).focus();
                 $('#numero').val(gia).focus();
             }
-        })
+        });
     });
 
     $('.chips').chips({

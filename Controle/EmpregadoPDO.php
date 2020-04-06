@@ -1,21 +1,8 @@
 <?php
-    if (realpath('./index.php')) {
-        include_once './Controle/conexao.php';
-        include_once './Modelo/Empregado.php';
-        include_once './Modelo/Usuario.php';
-    } else {
-        if (realpath('../index.php')) {
-            include_once '../Controle/conexao.php';
-            include_once '../Modelo/Empregado.php';
-            include_once '../Modelo/Usuario.php';
-        } else {
-            if (realpath('../../index.php')) {
-                include_once '../../Controle/conexao.php';
-                include_once '../../Modelo/Empregado.php';
-                include_once '../../Modelo/Usuario.php';
-            }
-        }
-    }
+    include_once __DIR__.'./../Controle/conexao.php';
+    include_once __DIR__.'./../Controle/UsuarioPDO.php';
+    include_once __DIR__.'./../Modelo/Empregado.php';
+    include_once __DIR__.'./../Modelo/Usuario.php';
 
 
     class EmpregadoPDO
@@ -28,7 +15,7 @@
             $usuario = new usuario(unserialize($_SESSION['logado']));
             $empregado->setId_usuario($usuario->getId_usuario());
             $count = strlen($empregado->getArea_atuacao());
-            $areas = substr($empregado->getArea_atuacao(), 0, $count-1);
+            $areas = substr($empregado->getArea_atuacao(), 0, $count - 1);
             $con = new conexao();
             $pdo = $con->getConexao();
             $stmt = $pdo->prepare('insert into empregado values(:id_usuario , :escolaridade , :area_atuacao, null);');
@@ -47,22 +34,20 @@
                         $caminho = '/Img/Perfil/'.$nome_imagem.$extensao;
                         $this->alteraNomeFoto($usuario->getId_usuario(), $caminho);
                         $_SESSION['toast'][] = "Empregado cadastrado com sucesso!";
-                    header("Location: ../Tela/perfilEmpregado.php");
+                        header("Location: ../Tela/perfilEmpregado.php");
                     } else {
-                    header("Location: ../Tela/registroEmpregado.php?msg=erroSalvarImagem");
+                        header("Location: ../Tela/registroEmpregado.php?msg=erroSalvarImagem");
                     }
                 } else {
-                header("Location: ../Tela/registroEmpregado.php?msg=erroCarrregaImagem");
+                    header("Location: ../Tela/registroEmpregado.php?msg=erroCarrregaImagem");
                 }
 
             } else {
-            header('location: ../index.php?msg=empregadoErroInsert');
+                header('location: ../index.php?msg=empregadoErroInsert');
             }
         }
 
         /*inserir*/
-
-
         function alteraNomeFoto($id_usuario, $foto)
         {
             $con = new conexao();
@@ -185,7 +170,7 @@
             $con = new conexao();
             $pdo = $con->getConexao();
             $count = strlen($empregado->getArea_atuacao());
-            $areas = substr($empregado->getArea_atuacao(), 0, $count-1);
+            $areas = substr($empregado->getArea_atuacao(), 0, $count - 1);
             $stmt = $pdo->prepare('update empregado set escolaridade = :escolaridade , area_atuacao = :area_atuacao where id_usuario = :id_usuario;');
             $stmt->bindValue(':escolaridade', $empregado->getEscolaridade());
             $stmt->bindValue(':area_atuacao', $areas);
@@ -221,6 +206,78 @@
             } else {
                 $_SESSION['toast'][] = "Erro ao alterar dados";
                 header('location: ../Tela/perfilEmpregado.php');
+            }
+        }
+
+        function selectAllAreasAtuacao()
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select area_atuacao from empregado");
+            $stmt->execute();
+            $allAreas = null;
+            while ($area = $stmt->fetch()) {
+                $allAreas = $allAreas.$area['area_atuacao'];
+                $allAreas = $allAreas.",";
+            }
+            $count = strlen($allAreas);
+            $areas = substr($allAreas, 0, $count - 1);
+            $areas = explode(",", $areas);
+            return array_unique($areas);
+        }
+
+        function selectEmpregadoProArea()
+        {
+            if(isset($_POST['data'])){
+                $areas = $_POST['data'];
+            }
+            $pdo = conexao::getConexao();
+            $response = [];
+            $empregados = null;
+            if (isset($areas)) {
+                foreach ($areas as $area) {
+                    $stmt = $pdo->prepare("select * from empregado where area_atuacao like '%".$area."%'");
+                    $stmt->execute();
+                    $response[] = $stmt->fetchAll();
+                }
+            } else {
+                $stmt = $pdo->prepare("select * from empregado");
+                $stmt->execute();
+                $response[] = $stmt->fetchAll();
+            }
+            foreach ($response as $datas) {
+                foreach ($datas as $data) {
+                    $empregados = $empregados.$data['id_usuario'].",";
+                }
+            }
+            $count = strlen($empregados);
+            $empregados = substr($empregados, 0, $count - 1);
+            $empregados = explode(",", $empregados);
+            $empregados = array_unique($empregados);
+            foreach ($empregados as $id_empregado) {
+                $empregado = new Empregado($this->selectEmpregadoId_usuario($id_empregado)->fetch());
+                $usuarioPDO = new UsuarioPDO();
+                $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($empregado->getId_usuario())->fetch());
+
+                echo "
+                    <a href='./verEmpregado.php?id=".$empregado->getId_usuario()."'>
+                    <div class='col s3' >
+                    <div class='card empregados'>
+                        <div class='card-image'>
+                            <img src='../".$usuario->getFoto()."'>
+                            <span class='card-title'>".$usuario->getNome()."</span>
+                            <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center'
+                               data-position='bottom' data-tooltip='Nota do empregado'>".$empregado->getNota() ."</a>
+                        </div>
+                        <ul class='card-content center'>
+                            <h5>Áreas de atuação</h5>";
+                $areas = explode(",", $empregado->getArea_atuacao());
+                foreach ($areas as $area) {
+                    echo "<div class='chip'>".$area."</div>";
+                }
+                echo "<h5>Ecolaridade</h5>
+                            <div class='chip'>".$empregado->getEscolaridade()."</div>
+                    </div>
+                </div></a>";
             }
         }
     }

@@ -1,3 +1,6 @@
+<?php
+    include_once '../Base/requerLogin.php';
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,7 +11,7 @@
         ?>
     <body class="homeimg">
         <?php
-        include_once '../Base/navBar.php';
+        include_once '../Base/iNav.php';
         ?>
         <?php
         include_once '../Controle/EmpregadoPDO.php';
