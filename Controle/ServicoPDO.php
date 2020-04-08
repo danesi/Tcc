@@ -86,6 +86,36 @@
             }
         }
 
+        function selectAllServicosAjax()
+        {
+            $con = new conexao();
+            $pdo = $con->getConexao();
+            $stmt = $pdo->prepare('select * from servico ;');
+            $stmt->execute();
+            $fotoservicoPDO = new FotoservicoPDO();
+            while ($linha = $stmt->fetch()) {
+                $servico = new Servico($linha);
+                $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
+                echo '<div class="col s3">
+                        <div class="card z-depth-3">
+                            <div class="card-image">
+                                <img src="../'. $foto->getCaminho() .'" height="270" width="100">
+                                <span class="card-title">'. $servico->getNome() .'</span>
+                                <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped"
+                                   data-position="bottom" data-tooltip="Nota do serviço">4.5</a>
+                                </div>
+                                <ul class="card-content">
+                                    <h5>Descrição</h5>'.$servico->getDescricao() .'
+                                    <h5>Salário mensal</h5>
+                                    <div class="chip">R$ '.$servico->getSalario() .'</div>
+                                    <br>
+                                    <br>
+                                </ul>
+                            </div>
+                            </div>';
+            }
+        }
+
 
         public function selecionaUltimoServico()
         {
@@ -130,18 +160,38 @@
         }
 
 
-        public function selectServicoNome($nome)
+        public function selectPorNome()
         {
-
-            $con = new conexao();
-            $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('select * from servico where nome = :nome;');
-            $stmt->bindValue(':nome', $nome);
+            $nome = $_POST['nome'];
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from servico where nome LIKE :nome");
+            $stmt->bindValue(":nome", '%'.$nome.'%');
             $stmt->execute();
+            $fotoservicoPDO = new FotoservicoPDO();
             if ($stmt->rowCount() > 0) {
-                return $stmt;
+                while ($linha = $stmt->fetch()) {
+                    $servico = new Servico($linha);
+                    $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
+                    echo '<div class="col s3">
+                        <div class="card z-depth-3">
+                            <div class="card-image">
+                                <img src="../'.$foto->getCaminho().'" height="270" width="100">
+                                <span class="card-title">'.$servico->getNome().'</span>
+                                <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped"
+                                   data-position="bottom" data-tooltip="Nota do serviço">4.5</a>
+                                </div>
+                                <ul class="card-content">
+                                    <h5>Descrição</h5>'.$servico->getDescricao().'
+                                    <h5>Salário mensal</h5>
+                                    <div class="chip">R$ '.$servico->getSalario().'</div>
+                                    <br>
+                                    <br>
+                                </ul>
+                            </div>
+                            </div>';
+                }
             } else {
-                return false;
+                echo "<div class='row'><div class='card-title center'>Nenhum resultado encontrado</div></div>";
             }
         }
 
@@ -227,11 +277,11 @@
         {
             $id_servico = $_POST['id_servico'];
             $fotoservicoPDO = new FotoservicoPDO();
-            if($fotoservicoPDO->removerTodasFotos($id_servico)){
+            if ($fotoservicoPDO->removerTodasFotos($id_servico)) {
                 $pdo = conexao::getConexao();
                 $stmt = $pdo->prepare("delete from servico where id_servico = :id_servico");
                 $stmt->bindValue(":id_servico", $id_servico);
-                if($stmt->execute()){
+                if ($stmt->execute()) {
                     $_SESSION['toast'][] = "Serviço excluido com sucesso!";
                     header("Location: ../Tela/perfilServico.php");
                 } else {
@@ -262,38 +312,49 @@
         function selectPorLocalizacao()
         {
             $local = $_POST['local'];
+            if($local == "") {
+                $this->selectAllServicosAjax();
+            }
             $pdo = conexao::getConexao();
             $enderecoPDO = new EnderecoPDO();
             $fotoservicoPDO = new FotoservicoPDO();
             $enderecos = $enderecoPDO->selectPorLocalizacao($local);
-
-            while ($linha = $enderecos->fetch()) {
-                $endereco = new Endereco($linha);
-                $stmt = $pdo->prepare("select * from servico where id_endereco = :id_endereco");
-                $stmt->bindValue(":id_endereco", $endereco->getId_endereco());
-                $stmt->execute();
-                while ($servicos = $stmt->fetch()) {
-                    $servico = new Servico($servicos);
-                    $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
-                    echo "<div class='col s3'>
+            $existe = false;
+            if ($enderecos->rowCount() > 0) {
+                while ($linha = $enderecos->fetch()) {
+                    $endereco = new Endereco($linha);
+                    $stmt = $pdo->prepare("select * from servico where id_endereco = :id_endereco");
+                    $stmt->bindValue(":id_endereco", $endereco->getId_endereco());
+                    $stmt->execute();
+                    if ($stmt->rowCount() > 0) {
+                        while ($servicos = $stmt->fetch()) {
+                            $existe = true;
+                            $servico = new Servico($servicos);
+                            $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
+                            echo "<div class='col s3'>
                         <div class='card z-depth-3'>
                             <div class='card-image'>
-                                <img src='../". $foto->getCaminho() ."' height='270' width='100'>
-                                <span class='card-title black-text'>".$servico->getNome()."</span>
+                                <img src='../".$foto->getCaminho()."' height='270' width='100'>
+                                <span class='card-title'>".$servico->getNome()."</span>
                                 <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped'
                                    data-position='bottom' data-tooltip='Nota do serviço'>4.5</a>
                             </div>
                             <ul class='card-content'>
                                 <h5>Descrição</h5>
-                                ". $servico->getDescricao() ."
+                                ".$servico->getDescricao()."
                                 <h5>Salário mensal</h5>
-                                <div class='chip'>R$ ". $servico->getSalario() ."</div>
+                                <div class='chip'>R$ ".$servico->getSalario()."</div>
                                 <br>
                                 <br>
                             </ul>
                         </div>
                     </div>";
+                        }
+                    }
                 }
+            }
+            if (!$existe) {
+                echo "<div class='row'><div class='card-title center'>Nenhum resultado encontrado</div></div>";
             }
         }
     }

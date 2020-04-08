@@ -240,10 +240,10 @@ class EnderecoPDO
     function selectPorLocalizacao($local)
     {
         $pdo = conexao::getConexao();
-        $stmt = $pdo->prepare("select * from endereco where (cep like :cep or cidade like :cidade or uf like :uf)");
-        $stmt->bindValue(":cep", $local);
-        $stmt->bindValue(":cidade", $local);
-        $stmt->bindValue(":uf", $local);
+        $stmt = $pdo->prepare("select * from endereco where (cep like :cep or cidade like :cidade or estado like :uf)");
+        $stmt->bindValue(":cep", '%'.$local.'%');
+        $stmt->bindValue(":cidade", '%'.$local.'%');
+        $stmt->bindValue(":uf", '%'.$local.'%');
         $stmt->execute();
         return $stmt;
     }

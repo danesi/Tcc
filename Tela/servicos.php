@@ -29,7 +29,7 @@
             </div>
             <div class="col s5">
                 <div class="input-field">
-                    <input placeholder="Busque por Nome" type="text" class="validate">
+                    <input placeholder="Busque por Nome" type="text" class="FindNome" id="nome">
                     <label>Buscar</label>
                 </div>
             </div>
@@ -46,19 +46,59 @@
 </body>
 </html>
 <script>
+    $(document).ready(function(){
+        buscarTodos();
+    });
+
+    $(".localizacao").keyup(function () {
+        buscaPorLocal();
+    });
+
+    $(".FindNome").keyup(function () {
+        buscarPorNome();
+    });
+
+    function buscarPorNome() {
+        var dados = $("#nome").val();
+        console.log(dados);
+        if (dados === ""){
+            buscarTodos();
+        } else {
+            $.ajax({
+                url: '../Controle/servicoControle.php?function=selectPorNome',
+                data: {'nome': dados},
+                type: 'post',
+                success: function (data) {
+                    $(".servico").html(data);
+                }
+            });
+        }
+    }
     function buscaPorLocal() {
         var dados = $(".localizacao").val();
+        if (dados === ""){
+            buscarTodos();
+        } else {
+            $.ajax({
+                url: '../Controle/servicoControle.php?function=selectPorLocalizacao',
+                data: {'local': dados},
+                type: 'post',
+                success: function (data) {
+                    $(".servico").html(data);
+                }
+            });
+        }
+    }
+
+    function buscarTodos() {
         $.ajax({
-            url: '../Controle/servicoControle.php?function=selectPorLocalizacao',
-            data: {'local': dados},
-            type: 'post',
+            url: '../Controle/servicoControle.php?function=selectAllServicosAjax',
             success: function (data) {
                 $(".servico").html(data);
             }
         });
     }
 
-    $(".localizacao").keyup(function () {
-        buscaPorLocal();
-    });
+
+
 </script>
