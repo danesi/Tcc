@@ -31,7 +31,7 @@
 ?>
 <main>
     <div class="row" style="margin-top: 1vh;">
-        <div class="card col s10 offset-s1">
+        <div class="card col l10 m10 offset-l1 offset-m1 s12">
             <h4 class="textoCorPadrao2 center">Perfil dos seus serviços</h4>
             <div class="divider"></div>
             <div class="row center">
@@ -39,7 +39,7 @@
                     $servico = new Servico($linha);
                     $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                     ?>
-                    <div class="col s3">
+                    <div class="col l3 m3 s10 offset-s1">
                         <div class="card z-depth-3">
                             <div class="card-image">
                                 <img src="../<?= $foto->getCaminho() ?>" height="270" width="100">

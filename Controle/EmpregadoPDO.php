@@ -260,7 +260,7 @@
 
                 echo "
                     <a href='./verEmpregado.php?id=".$empregado->getId_usuario()."'>
-                    <div class='col s3' >
+                    <div class='col l3 m3 s10 offset-s1' >
                     <div class='card empregados'>
                         <div class='card-image'>
                             <img src='../".$usuario->getFoto()."'>
