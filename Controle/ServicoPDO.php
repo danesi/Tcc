@@ -18,14 +18,15 @@
         function inserirServico()
         {
             $servico = new servico($_POST);
-            $salario = explode(",", $servico->getSalario());
+            $salario = str_replace(",", ".", $servico->getSalario());
+            $usuario = new Usuario(unserialize($_SESSION['logado']));
             $con = new conexao();
             $pdo = $con->getConexao();
             $stmt = $pdo->prepare('insert into servico values(default , :nome , :descricao , :salario, null, :id_usuario);');
             $stmt->bindValue(':nome', $servico->getNome());
             $stmt->bindValue(':descricao', $servico->getDescricao());
-            $stmt->bindValue(':salario', $salario[0].".".$salario[1]);
-            $stmt->bindValue(':id_usuario', $_SESSION['id_usuario']);
+            $stmt->bindValue(':salario', $salario);
+            $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
             if ($stmt->execute()) {
                 $ultId_servico = $pdo->lastInsertId();
                 $SendCadImg = filter_input(INPUT_POST, 'cadastrar', FILTER_SANITIZE_STRING);
@@ -40,7 +41,8 @@
                         $fotoservicoPDO = new FotoservicoPDO();
                         if ($fotoservicoPDO->inserirFotoServico($ultId_servico, $caminho)) {
                             $_SESSION['toast'][] = "Serviço cadastrado com susseço!";
-                            header("Location: ../Tela/perfilServico.php");
+                            $_SESSION['toast'][] = "Cadastre um endereço para esse serviço!";
+                            header("Location: ../Tela/registroEndereco.php?id_servico=".$ultId_servico);
                         } else {
                             $_SESSION['toast'][] = "Erro ao alterar a foto!";
                             header("Location: ../Tela/registroServico.php");
@@ -65,14 +67,27 @@
             $stmt->bindValue(":id_servico", $id_servico);
             if ($stmt->execute()) {
                 $_SESSION['toast'][] = 'Endereço cadastrado com sucesso!';
-                header("Location: ../Tela/editarServico.php?id_servico=".$id_servico."&endereco");
+                header("Location: ../Tela/perfilServico.php");
             } else {
                 $_SESSION['toast'][] = 'Erro ao associar endereço';
                 header("Location: ../Tela/editarServico.php?id_servico=".$id_servico."&endereco");
             }
         }
 
-        /*inserir*/
+
+        function verificaServico($id_usuario)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from servico where id_usuario = :id_usuario;");
+            $stmt->bindValue(":id_usuario", $id_usuario);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         public function selectServico()
         {
             $con = new conexao();
@@ -99,15 +114,15 @@
                 echo '<div class="col s3">
                         <div class="card z-depth-3">
                             <div class="card-image">
-                                <img src="../'. $foto->getCaminho() .'" height="270" width="100">
-                                <span class="card-title">'. $servico->getNome() .'</span>
+                                <img src="../'.$foto->getCaminho().'" height="270" width="100">
+                                <span class="card-title">'.$servico->getNome().'</span>
                                 <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped"
                                    data-position="bottom" data-tooltip="Nota do serviço">4.5</a>
                                 </div>
                                 <ul class="card-content">
-                                    <h5>Descrição</h5>'.$servico->getDescricao() .'
+                                    <h5>Descrição</h5>'.$servico->getDescricao().'
                                     <h5>Salário mensal</h5>
-                                    <div class="chip">R$ '.$servico->getSalario() .'</div>
+                                    <div class="chip">R$ '.$servico->getSalario().'</div>
                                     <br>
                                     <br>
                                 </ul>
@@ -312,7 +327,7 @@
         function selectPorLocalizacao()
         {
             $local = $_POST['local'];
-            if($local == "") {
+            if ($local == "") {
                 $this->selectAllServicosAjax();
             }
             $pdo = conexao::getConexao();

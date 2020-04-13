@@ -28,7 +28,7 @@
                             <a href="#!" id="linkfoto">
                                 <div style="height: 150px; width: 150px; margin: auto;">
                                     <img class="prev-img fotoPerfil center"
-                                         src="<?= $usuario->getFoto() == '' ? '../Img/default.png' : '../'.$usuario->getFoto() ?>">
+                                         src="../<?= $usuario->getFoto() ?>">
                                 </div>
                                 <div class="fotoPerfil" style="position: relative; margin-top: -150px; z-index: 1">
                                     <div class="linkfoto white-text center">Adicionar Foto</div>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="input-field col s8 m8 s12 offset-l2 offset-m2">
-                        <select name="escolaridade" required>
+                        <select name="escolaridade" required class="validate" id="selectEscolaridade">
                             <option value="" disabled selected>Escolha sua escolaridade</option>
                             <option value="Fundamental - Incompleto">Fundamental - Incompleto</option>
                             <option value="Fundamental - Completo">Fundamental - Completo</option>
@@ -69,8 +69,8 @@
                     <a href="../index.php" class="corPadrao3 btn">Voltar</a>
                     <input type="submit" value="cadastrar" class="btn blue darken-1" name="cadastrar">
                 </div>
+            </form>
         </div>
-        </form>
     </div>
     </div>
 </main>
@@ -80,7 +80,7 @@
 </body>
 </html>
 <script>
-
+    $('select').formSelect();
     $('.chips').chips({
         autocompleteOptions: {
             data: {
@@ -97,77 +97,27 @@
         secondaryPlaceholder: '+Áreas',
     });
 
+    $("#selectEscolaridade").on('invalid', function () {
+        M.toast({html: 'Selecione a escolaridade'});
+    });
+
     $("#form").submit(function () {
-        var value = $('.chips').text();
-        var areas = value.split('close');
-        $('.area').val(areas);
-        return true;
-    });
-    $('select').formSelect();
-    $(document).ready(function () {
-        $("#telefone").mask("(00) 00000-0000");
-        $("#cpf").mask("000.000.000-00");
-        $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
-            i18n: {
-                cancel: 'Cancelar',
-                clear: 'Limpar',
-                done: 'Ok',
-                months: [
-                    'Janeiro',
-                    'Fevereiro',
-                    'Março',
-                    'Abril',
-                    'Maio',
-                    'Junho',
-                    'Julho',
-                    'Agosto',
-                    'Setembro',
-                    'Outubro',
-                    'Novembro',
-                    'Dezembro'
-                ],
-                weekdays: [
-                    'Domingo',
-                    'Segunda-Feira',
-                    'Terça-Feira',
-                    'Quarta-Feira',
-                    'Quinta-Feira',
-                    'Sexta-Feira',
-                    'Sábado'
-                ],
-                monthsShort: [
-                    'Janeiro',
-                    'Fevereiro',
-                    'Março',
-                    'Abril',
-                    'Maio',
-                    'Junho',
-                    'Julho',
-                    'Agosto',
-                    'Setembro',
-                    'Outubro',
-                    'Novembro',
-                    'Dezembro'
-                ],
-                weekdaysShort: [
-                    'Dom',
-                    'Seg',
-                    'Ter',
-                    'Qua',
-                    'Qui',
-                    'Sex',
-                    'Sáb'
-                ],
-                weekdaysAbbrev: ['Do', 'Se', 'Te', 'Qa', 'Qi', 'Se', 'Sa']
+        var foto = $('#btnFile').val();
+        if (foto === "" || foto == null) {
+            M.toast({html: 'Insira uma foto!'});
+            return false;
+        } else {
+            var value = $('.chips').text();
+            var areas = value.split('close');
+            if (areas.length <= 1) {
+                M.toast({html: 'Adicione áreas de atuação'});
+                return false;
+            } else {
+                $('.area').val(areas);
+                return true;
             }
-        });
+        }
     });
-    <?php if ($usuario->getFoto() == "") { ?>
-    $("#foto").on('invalid', function () {
-        M.toast({html: 'Insira uma foto!'});
-    });
-    <?php } ?>
 
 
     $("#linkfoto").click(function () {

@@ -1,4 +1,7 @@
 <?php
+    if (!isset($_SESSION)) {
+        session_start();
+    }
     include_once '../Base/requerLogin.php';
     include_once "../Modelo/Usuario.php";
     include_once "../Modelo/Empregado.php";
@@ -225,7 +228,7 @@
             {tag: '<?=$area?>'},
             <?php
             } ?>
-            ],
+        ],
         placeholder: 'Áreas de atuação*',
         secondaryPlaceholder: '+Áreas',
     });

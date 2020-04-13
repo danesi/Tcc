@@ -1,28 +1,8 @@
 <?php
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-    if (realpath('./index.php')) {
-        include_once './Controle/conexao.php';
-        include_once './Modelo/Empregado.php';
-        include_once './Controle/EmpregadoPDO.php';
-        include_once './Modelo/Usuario.php';
-    } else {
-        if (realpath('../index.php')) {
-            include_once '../Controle/conexao.php';
-            include_once '../Modelo/Empregado.php';
-            include_once '../Controle/EmpregadoPDO.php';
-            include_once '../Modelo/Usuario.php';
-        } else {
-            if (realpath('../../index.php')) {
-                include_once '../../Controle/conexao.php';
-                include_once '../../Modelo/Empregado.php';
-                include_once '../../Controle/EmpregadoPDO.php';
-                include_once '../../Modelo/Usuario.php';
-            }
-        }
-    }
-
+        include_once __DIR__.'/../Controle/conexao.php';
+        include_once __DIR__.'/../Modelo/Empregado.php';
+        include_once __DIR__.'/../Controle/EmpregadoPDO.php';
+        include_once __DIR__.'/../Modelo/Usuario.php';
 
     class UsuarioPDO
     {
@@ -63,16 +43,20 @@
             $senha = md5($_POST['senha1']);
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('insert into usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :foto, 0, 1);');
+            $stmt = $pdo->prepare('insert into usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :foto, 0, default);');
             $stmt->bindValue(':nome', $usuario->getNome());
             $stmt->bindValue(':cpf', $usuario->getCpf());
             $stmt->bindValue(':nascimento', $usuario->getNascimento());
             $stmt->bindValue(':telefone', $usuario->getTelefone());
             $stmt->bindValue(':email', $usuario->getEmail());
             $stmt->bindValue(':senha', $senha);
-            $stmt->bindValue(':foto', "");
+            $stmt->bindValue(':foto', "Img/Perfil/default.png");
             if ($stmt->execute()) {
-                header("Location: ../index.php?msg=sucesso");
+                $id_usuario = $pdo->lastInsertId();
+                header('Location: ../Tela/registroEndereco.php?id_usuario='.$id_usuario);
+            } else {
+                $_SESSION['toast'][] = "Erro ao criar usuário";
+                header('Location: ../Tela/registroUsuario.php');
             }
         }
 
@@ -84,10 +68,10 @@
             $stmt->bindValue(":endereco", $id_endereco);
             $stmt->bindValue(":id_usuario", $id_usuario);
             if ($stmt->execute()) {
-                $usuario = new Usuario($this->selectUsuarioId_usuario($id_usuario));
+                $usuario = new Usuario($this->selectUsuarioId_usuario($id_usuario)->fetch());
                 $_SESSION['logado'] = serialize($usuario);
                 $_SESSION['toast'][] = 'Endereço cadastrado com sucesso!';
-                header("Location: ../Tela/perfilEmpregado.php");
+                header("Location: ../Tela/perfil.php");
             } else {
                 $_SESSION['toast'][] = 'Erro ao associar endereço';
                 header("Location: ../Tela/perfilEmpregado.php");
