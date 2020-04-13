@@ -36,7 +36,7 @@ class EnderecoPDO
     function inserirEnderecoServico()
     {
         $endereco = new endereco($_POST);
-        $id_servico = $_POST['id_servico'];
+        $id_servico = $_POST['id'];
         $pdo = conexao::getConexao();
         $stmt = $pdo->prepare('insert into Endereco values(default , :endereco , :cep , :numero , :complemento , :estado , :cidade);');
         $stmt->bindValue(':endereco', $endereco->getEndereco());
