@@ -111,7 +111,7 @@
             while ($linha = $stmt->fetch()) {
                 $servico = new Servico($linha);
                 $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
-                echo '<div class="col s3">
+                echo '<div class="col l3 m3 s10 offset-s1">
                         <div class="card z-depth-3">
                             <div class="card-image">
                                 <img src="../'.$foto->getCaminho().'" height="270" width="100">
@@ -187,7 +187,7 @@
                 while ($linha = $stmt->fetch()) {
                     $servico = new Servico($linha);
                     $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
-                    echo '<div class="col s3">
+                    echo '<div class="col l3 m3 s10 offset-s1">
                         <div class="card z-depth-3">
                             <div class="card-image">
                                 <img src="../'.$foto->getCaminho().'" height="270" width="100">
@@ -346,7 +346,7 @@
                             $existe = true;
                             $servico = new Servico($servicos);
                             $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
-                            echo "<div class='col s3'>
+                            echo "<div class='col l3 m3 s10 offset-s1'>
                         <div class='card z-depth-3'>
                             <div class='card-image'>
                                 <img src='../".$foto->getCaminho()."' height='270' width='100'>

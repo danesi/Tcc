@@ -27,7 +27,7 @@
 ?>
 <main>
     <div class="row" style="margin-top: 1vh;">
-        <div class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1">
+        <div class="card col l8 offset-l2 m10 offset-m1 s12">
             <h4 class="textoCorPadrao2 center">Editar Serviço</h4>
             <div class="divider"></div>
             <div class="row center">
@@ -188,7 +188,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="input-field col l5 m5 s10 offset-l1">
+                                            <div class="input-field col l5 m5 s10 offset-s1 offset-l1">
                                                 <input type="text" name="numero" id="numero" class="validate"
                                                        value="<?= $endereco->getNumero() ?>">
                                                 <label for="numero">Número</label>

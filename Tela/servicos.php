@@ -18,24 +18,26 @@
 ?>
 <main>
     <div class="row">
-        <div class="card col s10 offset-s1">
-            <span class="card-title col s2" style="margin-top: 3vh">Serviços</span>
-            <div class="col s5">
+        <div class="card col l10 m10 s12 offset-l1 offset-m1">
+            <span class="card-title col l2 m2 hide-on-small-only" style="margin-top: 3vh">Serviços</span>
+            <span class="card-title col s12 center hide-on-med-and-up" style="margin-top: 3vh">Serviços</span>
+            <div class="col l5 m5 s12">
                 <div class="input-field">
                     <i class="material-icons prefix">search</i>
                     <input placeholder="Busque por cidade, UF ou CEP" type="text" class="localizacao">
                     <label>Buscar</label>
                 </div>
             </div>
-            <div class="col s5">
+            <div class="col l5 m5 s12">
                 <div class="input-field">
+                    <i class="material-icons prefix hide-on-med-and-up">search</i>
                     <input placeholder="Busque por Nome" type="text" class="FindNome" id="nome">
                     <label>Buscar</label>
                 </div>
             </div>
         </div>
 
-        <div class="card col s10 offset-s1 servico">
+        <div class="card col l10 m10 s12 offset-l1 offset-m1 servico">
 
         </div>
     </div>

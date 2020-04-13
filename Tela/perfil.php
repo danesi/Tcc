@@ -10,22 +10,22 @@
         include_once '../Base/header.php';
         include_once '../Modelo/Usuario.php';
         include_once '../Controle/EmpregadoPDO.php';
-        include_once '../Controle/EmpregadorPDO.php';
+        include_once '../Controle/ServicoPDO.php';
         $usuario = new Usuario(unserialize($_SESSION['logado']));
         $empregadoPDO = new EmpregadoPDO();
-        $empredagorPDO = new EmpregadorPDO();
+        $servicoPDO = new ServicoPDO();
     ?>
 <body class="homeimg">
 <?php
     include_once '../Base/iNav.php';
 ?>
 <main>
-    <div class="row" style="margin-top: 1vh; padding-right: 5vh">
-        <div class="card col s10 offset-s1">
+    <div class="row">
+        <div class="card col l10 offset-l1 m10 offset-m1 s12">
             <h4 class="textoCorPadrao2 center">Perfil</h4>
             <div class="divider"></div>
             <div class="row">
-                <div class="col l4 offset-l1">
+                <div class="col l4 offset-l1 s12 center">
                     <div class="row">
                         <div class="center card-title">Foto de perfil</div>
                         <br>
@@ -77,7 +77,7 @@
                             <a href="./perfilEmpregado.php" class="waves-effect waves-light btn blue darken-1">Perfil empregado</a>
                         <?php } ?>
                         <br><br>
-                        <?php if(!$empregadorPDO->verificaEmpregador($usuario->getId_usuario())) { ?>
+                        <?php if(!$servicoPDO->verificaServico($usuario->getId_usuario())) { ?>
                             <a class="waves-effect waves-light btn orange darken-1 modal-trigger" href="#modalEmpregador">Quero disponibilizar</a>
                         <?php } else { ?>
                             <a href="./perfilServico.php" class="waves-effect waves-light btn orange darken-1">Perfil servico</a>

@@ -18,9 +18,10 @@
 ?>
 <main>
     <div class="row">
-        <div class="card col s10 offset-s1">
-            <span class="card-title col s6" style="margin-top: 3vh">Empregados</span>
-            <div class="col s6">
+        <div class="card col l10 offset-l1 m10 offset-m1 s12">
+            <span class="card-title col l6 m6 hide-on-small-only" style="margin-top: 3vh">Empregados</span>
+            <span class="card-title col s12 center hide-on-med-and-up" style="margin-top: 3vh">Empregados</span>
+            <div class="col l6 m6 s12">
                 <div class="input-field">
                     <i class="material-icons prefix">search</i>
                     <select multiple name="areas[]" class="area">
@@ -39,22 +40,8 @@
             </div>
         </div>
 
-        <div class="card col s10 offset-s1 empregado">
-            <div class="row center">
-                <div class="preloader-wrapper big active">
-                    <div class="spinner-layer spinner-blue-only">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="card col l10 offset-l1 m10 offset-m1 s12 empregado">
+
         </div>
     </div>
 </main>

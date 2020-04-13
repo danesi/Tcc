@@ -11,13 +11,12 @@
         include_once '../Base/iNav.php';
         ?>
         <main>
-            <div class="row" style="margin-top: 1vh; padding-right: 5vh">
-                <div class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1">
+            <div class="row">
+                <div class="card col l8 offset-l2 m10 offset-m1 s12">
                     <form action="../Controle/UsuarioControle.php?function=inserirUsuario" method="post" id="form">
                         <div class="row center">
                             <h4 class="textoCorPadrao2">Cadastrar Usuario</h4>
                             <div class="divider"></div>
-                            <div class="row">
                                 <div class="input-field col l5 m5 s10 offset-l1 offset-m1 offset-s1">
                                     <input type="text" name="nome" id="nome" class="validate" required>
                                     <label for="nome" class="active">Nome<samp class="red-text">*</samp></label>
@@ -26,8 +25,6 @@
                                     <input type="text" name="cpf" id="cpf" class="validate" required>
                                     <label for="cpf">CPF<samp class="red-text">*</samp></label>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="input-field col l5 m5 s10 offset-l1 offset-m1 offset-s1">
                                     <input type="text" name="nascimento" class="datepicker" class="validate" required>
                                     <label>Data de nascimento<samp class="red-text">*</samp></label>
@@ -36,14 +33,10 @@
                                     <input type="text" name="telefone" id="telefone" class="validate" required>
                                     <label for="telefone">Telefone<samp class="red-text">*</samp></label>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="input-field col s10 offset-l1 offset-m1 offset-s1">
                                     <input type="email" name="email" class="validate" required>
                                     <label>E-mail<samp class="red-text">*</samp></label>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="input-field col l5 m5 s10 offset-l1 offset-m1 offset-s1">
                                     <input type="password" name="senha1" class="validate" required id="senha1">
                                     <label>Senha<samp class="red-text">*</samp></label>

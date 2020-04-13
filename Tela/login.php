@@ -18,7 +18,7 @@
         ?>
         <main>
             <div class="row" style="margin-top: 10vh;">
-                <form action="../Controle/UsuarioControle.php?function=login" class="card col l4 offset-l4 m8 offset-m2 s10 offset-s1" method="post">
+                <form action="../Controle/UsuarioControle.php?function=login" class="card col l6 offset-l3 m8 offset-m2 s12 " method="post">
                     <div class="row center">
                         <h4 class="textoCorPadrao2">Faça Login</h4>
                         <div class="input-field col s10 offset-s1">

@@ -16,8 +16,8 @@
     $usuario = new Usuario(unserialize($_SESSION['logado']));
 ?>
 <main>
-    <div class="row" style="margin-top: 1vh; padding-right: 5vh">
-        <div class="card col l8 offset-l2 m10 offset-m1 s10 offset-s1">
+    <div class="row" >
+        <div class="card col l8 offset-l2 m10 offset-m1 s12 ">
             <form action="../Controle/EmpregadoControle.php?function=inserirEmpregado" method="post" id="form"
                   enctype="multipart/form-data">
                 <div class="row">
@@ -45,7 +45,7 @@
                                    placeholder="Selecione a foto" required hidden>
                         </div>
                     </div>
-                    <div class="input-field col s8 m8 s12 offset-l2 offset-m2">
+                    <div class="input-field col s8 m8 s10 offset-s1 offset-l2 offset-m2">
                         <select name="escolaridade" required class="validate" id="selectEscolaridade">
                             <option value="" disabled selected>Escolha sua escolaridade</option>
                             <option value="Fundamental - Incompleto">Fundamental - Incompleto</option>
@@ -57,7 +57,7 @@
                         </select>
                         <label>Escolaridade<samp class="red-text">*</samp></label>
                     </div>
-                    <div class="input-field col s12 m8 l8 offset-l2 offset-m2">
+                    <div class="input-field col s10 m8 l8 offset-l2 offset-m2 offset-s1">
                         <div class="chips black-text"></div>
                         <input name="area_atuacao" value="" hidden class="area">
                         <div class="row right">

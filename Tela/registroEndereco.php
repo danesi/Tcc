@@ -29,39 +29,32 @@
                         <div class="row">
                             <h4 class="textoCorPadrao2 center">Cadastrar endereço</h4>
                             <div class="divider"></div>
-
-                            <div class="row">
-                                <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
-                                    <input type="text" name="cep" id="cep" class="validate" required>
-                                    <label for="cep" class="active">CEP<samp class="red-text">*</samp></label>
-                                </div>
-                                <div class="input-field col s5 m5 s10 offset-s1">
-                                    <input type="text" name="endereco" id="endereco" class="validate" required>
-                                    <label for="endereco">Endereço<samp class="red-text">*</samp></label>
-                                </div>
+                            <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
+                                <input type="text" name="cep" id="cep" class="validate" required>
+                                <label for="cep" class="active">CEP<samp class="red-text">*</samp></label>
                             </div>
-                            <div class="row">
-                                <div class="input-field col l5 m5 s10 offset-l1">
-                                    <input type="text" name="numero" id="numero" class="validate">
-                                    <label for="numero">Número</label>
-                                </div>
-                                <div class="input-field col s5 m5 s10 offset-s1">
-                                    <input type="text" name="complemento" id="complemento" class="validate">
-                                    <label for="complemento">Complemento</label>
-                                </div>
+                            <div class="input-field col s5 m5 s10 offset-s1">
+                                <input type="text" name="endereco" id="endereco" class="validate" required>
+                                <label for="endereco">Endereço<samp class="red-text">*</samp></label>
                             </div>
-                            <div class="row">
-                                <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
-                                    <input type="text" name="cidade" id="cidade" class="validate" required>
-                                    <label for="cidade">Cidade<samp class="red-text">*</samp></label>
-                                </div>
-                                <div class="input-field col s5 m5 s10 offset-s1">
-                                    <input type="text" name="estado" id="estado" class="validate" required>
-                                    <label for="estado">Estado<samp class="red-text">*</samp></label>
-                                    <div class="row right">
-                                        <samp class="red-text">*</samp><samp class="grey-text"> Campos
-                                            obrigatórios</samp>
-                                    </div>
+                            <div class="input-field col l5 m5 s10 offset-s1 offset-l1">
+                                <input type="text" name="numero" id="numero" class="validate">
+                                <label for="numero">Número</label>
+                            </div>
+                            <div class="input-field col s5 m5 s10 offset-s1">
+                                <input type="text" name="complemento" id="complemento" class="validate">
+                                <label for="complemento">Complemento</label>
+                            </div>
+                            <div class="input-field col s5 m5 s10 offset-l1 offset-m1 offset-s1">
+                                <input type="text" name="cidade" id="cidade" class="validate" required>
+                                <label for="cidade">Cidade<samp class="red-text">*</samp></label>
+                            </div>
+                            <div class="input-field col s5 m5 s10 offset-s1">
+                                <input type="text" name="estado" id="estado" class="validate" required>
+                                <label for="estado">Estado<samp class="red-text">*</samp></label>
+                                <div class="row right">
+                                    <samp class="red-text">*</samp><samp class="grey-text"> Campos
+                                        obrigatórios</samp>
                                 </div>
                             </div>
                         </div>
