@@ -3,57 +3,74 @@
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Listagem Empregador</title>
-        <?php
-            include_once '../Base/header.php';
-            include_once '../Controle/EmpregadorPDO.php';
-            include_once '../Modelo/Empregador.php';
-            $empregadorPDO = new empregadorPDO();
-        ?>
-        <body class="homeimg">
-        <?php
-        include_once '../Base/navBar.php';
-        ?>
-        <main>
-            <div class="row " style="margin-top: 5vh;">
-                <table class=" card col s10 offset-s1 center">
-                <h4 class='center'>Listagem Empregador</h4>
-                    <tr class="center">
-
-                        <td class='center'>Id_usuario</td>
-                        <td class='center'>Razao_social</td>
-                        <td class='center'>Cnpj</td>
-                        <td class='center'>Nota</td>
-                        <td class='center'>Editar</td>
-                        <td class='center'>Excluir</td>
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem Empregado</title>
+    <?php
+        include_once '../Base/header.php';
+        include_once '../Controle/EmpregadorPDO.php';
+        include_once '../Controle/UsuarioPDO.php';
+        include_once '../Modelo/Empregador.php';
+        include_once '../Modelo/Usuario.php';
+        $empregadorPDO = new EmpregadorPDO();
+        $usuarioPDO = new UsuarioPDO();
+    ?>
+<body class="homeimg">
+<?php
+    include_once '../Base/iNav.php';
+?>
+<main>
+    <div class="row " style="margin-top: 5vh;">
+        <div class="card col l10 offset-l1">
+            <div class="card-title center">Empregadores</div>
+            <div class="divider"></div>
+            <div class="row">
+                <table class="highlight responsive-table col l10 offset-l1">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Razão social</th>
+                        <th>CNPJ</th>
+                        <th>Nota</th>
+                        <th>Ações</th>
                     </tr>
-                    <?php
-                    $stmt = $empregadorPDO->selectEmpregador();
-                        
-                    if ($stmt) {
-                        while ($linha = $stmt->fetch()) {
-                            $empregador = new empregador($linha);
-                            ?>
-                        <tr>
-                            <td class="center"><?php echo $empregador->getId_usuario()?></td>
-                            <td class="center"><?php echo $empregador->getRazao_social()?></td>
-                            <td class="center"><?php echo $empregador->getCnpj()?></td>
-                            <td class="center"><?php echo $empregador->getNota()?></td>
-                            <td class = 'center'><a href="./editarEmpregador.php?id=<?php echo $empregador->getid_usuario()?>">Editar</a></td>
-                            <td class="center"><a href="../Controle/EmpregadorControle.php?function=deletar&id=<?php echo $empregador->getid_usuario()?>">Excluir</a></td>
-                        </tr>
-                                <?php
-                        }
-                    }
-                    ?>
-                    </table>
-            </div>
-        </main>
-        <?php
-        include_once '../Base/footer.php';
-        ?>
-    </body>
-</html>
+                    </thead>
 
+                    <tbody>
+                    <?php
+                        $stmtEmpregadores = $empregadorPDO->selectEmpregador();
+                        while ($linha = $stmtEmpregadores->fetch()) {
+                            $empregador = new Empregador($linha);
+                            $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($empregador->getId_usuario())->fetch());
+                            ?>
+                            <tr>
+                                <td><?= $usuario->getNome() ?></td>
+                                <td><?= $empregador->getRazao_social() ?></td>
+                                <td><?= $empregador->getCnpj() ?></td>
+                                <td><?= $empregador->getNota() == "" ? '0' : $empregador->getNota() ?></td>
+                                <td>
+                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i class="material-icons black-text">zoom_in</i></a>
+                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Ver serviços"><i class="material-icons black-text">work_outline</i></a>
+                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Deletar"><i class="material-icons black-text">delete</i></a>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row center">
+                <a href="" class="btn orange darken-1">Voltar</a>
+            </div>
+        </div>
+    </div>
+</main>
+<?php
+    include_once '../Base/footer.php';
+?>
+</body>
+</html>
+<script>
+    $('.tooltipped').tooltip();
+</script>

@@ -3,39 +3,94 @@
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Listagem Usuario</title>
-        <?php
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem Empregado</title>
+    <?php
         include_once '../Base/header.php';
         include_once '../Controle/UsuarioPDO.php';
+        include_once '../Controle/EnderecoPDO.php';
         include_once '../Modelo/Usuario.php';
-        $usuarioPDO = new usuarioPDO();
-        ?>
-    <body class="homeimg">
-        <?php
-        include_once '../Base/navBar.php';
-        ?>
-        <main>
+        include_once '../Modelo/Endereco.php';
+        $usuarioPDO = new UsuarioPDO();
+        $enderecoPDO = new EnderecoPDO();
+    ?>
+<body class="homeimg">
+<?php
+    include_once '../Base/iNav.php';
+?>
+<main>
+    <div class="row " style="margin-top: 5vh;">
+        <div class="card col l10 offset-l1">
+            <div class="card-title center">Serviços</div>
+            <div class="divider"></div>
             <div class="row">
-                <div class="col l9 offset-l3 alinha" style="padding-right: 10vh">
-                    <div class="card blue-grey darken-1">
-                        <div class="card-content white-text">
-                            <span class="card-title">Card Title</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.
-                                I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="#">This is a link</a>
-                            <a href="#">This is a link</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <?php
-        include_once '../Base/footer.php';
-        ?>
-    </body>
-</html>
+                <table class="highlight responsive-table centered">
+                    <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Nascimento</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Endereço</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
 
+                    <tbody>
+                    <?php
+                        $stmtUsuario = $usuarioPDO->selectUsuario();
+                        while ($linha = $stmtUsuario->fetch()) {
+                            $usuario = new Usuario($linha);
+                            $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($usuario->getId_endereco())->fetch());
+                            ?>
+                            <tr>
+                                <td>
+                                    <div class="center-block"
+                                         style="background-image: url('<?= '../'.$usuario->getFoto(); ?>');
+                                                 border-radius: 10%;
+                                                 height: 75px; width: 75px;
+                                                 background-position: center;
+                                                 background-size: cover;
+                                                 background-position: center;
+                                                 background-repeat: no-repeat;
+                                                 object-fit: cover;
+                                                 object-position: center;
+                                                 ">
+                                    </div>
+                                </td>
+                                <td><?= $usuario->getNome() ?></td>
+                                <td><?= $usuario->getCpf() ?></td>
+                                <td><?= $usuario->getNascimentoDate()->format('d/m/Y') ?></td>
+                                <td><?= $usuario->getTelefone() ?></td>
+                                <td><?= $usuario->getEmail() ?></td>
+                                <td><?= $endereco->getEndereco().' - '.$endereco->getCidade() ?></td>
+                                <td>
+                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i
+                                                class="material-icons black-text">zoom_in</i></a>
+                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Deletar"><i
+                                                class="material-icons black-text">delete</i></a>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row center">
+                <a href="" class="btn orange darken-1">Voltar</a>
+            </div>
+        </div>
+    </div>
+</main>
+<?php
+    include_once '../Base/footer.php';
+?>
+</body>
+</html>
+<script>
+    $('.tooltipped').tooltip();
+</script>
