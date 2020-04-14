@@ -3,61 +3,82 @@
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Listagem Servico</title>
-        <?php
-            include_once '../Base/header.php';
-            include_once '../Controle/ServicoPDO.php';
-            include_once '../Modelo/Servico.php';
-            $servicoPDO = new servicoPDO();
-        ?>
-        <body class="homeimg">
-        <?php
-        include_once '../Base/navBar.php';
-        ?>
-        <main>
-            <div class="row " style="margin-top: 5vh;">
-                <table class=" card col s10 offset-s1 center">
-                <h4 class='center'>Listagem Servico</h4>
-                    <tr class="center">
-
-                        <td class='center'>Id_usuario</td>
-                        <td class='center'>Nome</td>
-                        <td class='center'>Descricao</td>
-                        <td class='center'>Salario</td>
-                        <td class='center'>Id_endereco</td>
-                        <td class='center'>Id_empregado</td>
-                        <td class='center'>Editar</td>
-                        <td class='center'>Excluir</td>
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem Empregado</title>
+    <?php
+        include_once '../Base/header.php';
+        include_once '../Controle/ServicoPDO.php';
+        include_once '../Controle/EnderecoPDO.php';
+        include_once '../Controle/UsuarioPDO.php';
+        include_once '../Modelo/Servico.php';
+        include_once '../Modelo/Endereco.php';
+        include_once '../Modelo/Usuario.php';
+        $empregadorPDO = new EmpregadorPDO();
+        $servicoPDO = new ServicoPDO();
+        $enderecoPDO = new EnderecoPDO();
+        $usuarioPDO = new UsuarioPDO();
+    ?>
+<body class="homeimg">
+<?php
+    include_once '../Base/iNav.php';
+?>
+<main>
+    <div class="row " style="margin-top: 5vh;">
+        <div class="card col l10 offset-l1">
+            <div class="card-title center">Serviços</div>
+            <div class="divider"></div>
+            <div class="row">
+                <table class="highlight responsive-table col l10 offset-l1 centered">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Salário</th>
+                        <th>Endereco</th>
+                        <th>Dono</th>
+                        <th>Ações</th>
                     </tr>
-                    <?php
-                    $stmt = $servicoPDO->selectServico();
-                        
-                    if ($stmt) {
-                        while ($linha = $stmt->fetch()) {
-                            $servico = new servico($linha);
-                            ?>
-                        <tr>
-                            <td class="center"><?php echo $servico->getId_servico()?></td>
-                            <td class="center"><?php echo $servico->getNome()?></td>
-                            <td class="center"><?php echo $servico->getDescricao()?></td>
-                            <td class="center"><?php echo $servico->getSalario()?></td>
-                            <td class="center"><?php echo $servico->getId_endereco()?></td>
-                            <td class="center"><?php echo $servico->getId_usuario()?></td>
-                            <td class = 'center'><a href="./editarServico.php?id=<?php echo $servico->getId_servico()?>">Editar</a></td>
-                            <td class="center"><a href="../Controle/ServicoControle.php?function=deletar&id=<?php echo $servico->getId_servico()?>">Excluir</a></td>
-                        </tr>
-                                <?php
-                        }
-                    }
-                    ?>
-                    </table>
-            </div>
-        </main>
-        <?php
-        include_once '../Base/footer.php';
-        ?>
-    </body>
-</html>
+                    </thead>
 
+                    <tbody>
+                    <?php
+                        $stmtServicos = $servicoPDO->selectServico();
+                        while ($linha = $stmtServicos->fetch()) {
+                            $servico = new Servico($linha);
+                            $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($servico->getId_usuario())->fetch());
+                            $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($servico->getId_endereco())->fetch());
+                            ?>
+                            <tr>
+                                <td><?= $servico->getNome() ?></td>
+                                <td><?= $servico->getDescricao() ?></td>
+                                <td><?= 'R$ '.$servico->getSalario() ?></td>
+                                <td><?= $endereco->getEndereco().' - '.$endereco->getCidade() ?></td>
+                                <td><?= $usuario->getNome() ?></td>
+                                <td>
+                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i
+                                                class="material-icons black-text">zoom_in</i></a>
+                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Deletar"><i
+                                                class="material-icons black-text">delete</i></a>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row center">
+                <a href="" class="btn orange darken-1">Voltar</a>
+            </div>
+        </div>
+    </div>
+</main>
+<?php
+    include_once '../Base/footer.php';
+?>
+</body>
+</html>
+<script>
+    $('.tooltipped').tooltip();
+</script>
