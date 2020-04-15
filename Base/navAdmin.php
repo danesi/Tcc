@@ -34,26 +34,45 @@
                 <li>
                     <?php if (!$empregadoPDO->verificaEmpregado($usuario->getId_usuario())) { ?>
                         <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php"
-                           class="waves-effect waves-light btn blue darken-1"><div class="chip blue darken-1 white-text">Quero trabalhar</div></a>
+                           class="waves-effect waves-light btn blue darken-1">
+                            <div class="chip blue darken-1 white-text">Quero trabalhar</div>
+                        </a>
                     <?php } else { ?>
-                        <a href="<?php echo $pontos; ?>./Tela/perfilEmpregado.php"><div class="chip blue darken-1 white-text">Perfil empregado</div></a>
+                        <a href="<?php echo $pontos; ?>./Tela/perfilEmpregado.php">
+                            <div class="chip blue darken-1 white-text">Perfil empregado</div>
+                        </a>
                     <?php } ?>
                 </li>
                 <li>
                     <?php if (!$servicoPDO->verificaServico($usuario->getId_usuario())) { ?>
-                        <a href="#modalEmpregador"><div class="chip orange darken-1 white-text">Quero disponibilizar</div></a>
+                        <a href="#modalEmpregador">
+                            <div class="chip orange darken-1 white-text">Quero disponibilizar</div>
+                        </a>
                     <?php } else { ?>
-                        <a href="<?php echo $pontos; ?>./Tela/perfilServico.php" ><div class="chip orange darken-1 white-text">Perfil servico</div></a>
+                        <a href="<?php echo $pontos; ?>./Tela/perfilServico.php">
+                            <div class="chip orange darken-1 white-text">Perfil servico</div>
+                        </a>
                     <?php } ?>
                 </li>
                 <li>
-                    <a class="dropdown-trigger black-text" data-target='dropListagens'><div class="chip detalheSuave black-text">Listagens</div></a>
+                    <a class="dropdown-trigger black-text" data-target='dropListagens'>
+                        <div class="chip detalheSuave black-text">Listagens</div>
+                    </a>
                     <ul id='dropListagens' class=' dropdown-content'>
-                        <li><a href="<?php echo $pontos ?>Tela/listagemEmpregado.php" class="black-text">Empregados</a></li>
-                        <li><a href="<?php echo $pontos; ?>Tela/listagemEmpregador.php" class="black-text">Empregadores</a></li>
-                        <li><a href="<?php echo $pontos; ?>Tela/listagemServico.php" class="black-text">Serviços</a></li>
-                        <li><a href="<?php echo $pontos; ?>Tela/listagemUsuario.php" class="black-text">Usuários</a></li>
+                        <li><a href="<?php echo $pontos ?>Tela/listagemEmpregado.php" class="black-text">Empregados</a>
+                        </li>
+                        <li><a href="<?php echo $pontos; ?>Tela/listagemEmpregador.php"
+                               class="black-text">Empregadores</a></li>
+                        <li><a href="<?php echo $pontos; ?>Tela/listagemServico.php" class="black-text">Serviços</a>
+                        </li>
+                        <li><a href="<?php echo $pontos; ?>Tela/listagemUsuario.php" class="black-text">Usuários</a>
+                        </li>
                     </ul>
+                </li>
+                <li>
+                    <a href="<?php echo $pontos ?>./Tela/solicitacoes.php">
+                        <div class="chip detalheSuave black-text">Solicitações</div>
+                    </a>
                 </li>
                 <li>
                     <a class="dropdown-trigger black-text" data-target='dropPerfil'>
@@ -83,9 +102,9 @@
                 <a href="#user">
                     <div class="fotoPerfil left-align"
                          style="background-image: url('<?php echo $pontos.$usuario->getFoto(); ?>');background-size: cover;
-                             background-position: center;
-                             background-repeat: no-repeat;
-                             max-height: 20vh; max-width: 20vh;">
+                                 background-position: center;
+                                 background-repeat: no-repeat;
+                                 max-height: 20vh; max-width: 20vh;">
                     </div>
                 </a>
                 <a href="#name"><span class="white-text name"><?php echo $usuario->getNome(); ?></span></a>
@@ -93,35 +112,87 @@
             </div>
         </li>
         <ul class="collapsible">
-            <li>
-                <a href="<?php echo $pontos; ?>./index.php" class="black-text">
-                    Início
-                </a>
-            </li>
-            <li>
-                <?php if (!$empregadoPDO->verificaEmpregado($usuario->getId_usuario())) { ?>
-                    <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php">Quero trabalhar</a>
-                <?php } else { ?>
-                    <a href="<?php echo $pontos; ?>./Tela/perfilEmpregado.php">Perfil empregado</a>
-                <?php } ?>
-            </li>
-            <li>
-                <?php if (!$servicoPDO->verificaServico($usuario->getId_usuario())) { ?>
-                    <a href="#modalEmpregador">Quero disponibilizar</a>
-                <?php } else { ?>
-                    <a href="<?php echo $pontos; ?>./Tela/perfilServico.php">Perfil servico</a>
-                <?php } ?>
-            </li>
-            <li>
-                <a class="dropdown-trigger black-text" data-target='dropPerfilmobile'>
-                    <?php echo $usuario->getNome(); ?>
-                </a>
-                <ul id='dropPerfilmobile' class=' dropdown-content'>
-                    <li><a href="<?php echo $pontos ?>Tela/perfil.php" class="black-text">Meu Perfil</a></li>
-                    <li><a href="<?php echo $pontos; ?>./Controle/usuarioControle.php?function=logoff"
-                           class="black-text">Sair</a>
+
+            <a href="<?php echo $pontos; ?>./index.php" class="black-text">
+                <li>
+                    <div class="headerMeu black-text" style="margin-left: 16px">
+                        Inicio
+                    </div>
+                </li>
+            </a>
+
+            <?php if (!$empregadoPDO->verificaEmpregado($usuario->getId_usuario())) { ?>
+                <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php">
+                    <li>
+                        <div class="headerMeu black-text" style="margin-left: 16px">
+                            Quero trabalhar
+                        </div>
                     </li>
-                </ul>
+                </a>
+            <?php } else { ?>
+                <a href="<?php echo $pontos; ?>./Tela/perfilEmpregado.php">
+                    <li>
+                        <div class="headerMeu black-text" style="margin-left: 16px">
+                            Perfil empregado
+                        </div>
+                    </li>
+                </a>
+            <?php } ?>
+
+            <?php if (!$servicoPDO->verificaServico($usuario->getId_usuario())) { ?>
+                <a href="#modalEmpregador">
+                    <li>
+                        <div class="headerMeu black-text" style="margin-left: 16px">
+                            Quero disponibilizar
+                        </div>
+                    </li>
+                </a>
+            <?php } else { ?>
+                <a href="<?php echo $pontos; ?>./Tela/perfilServico.php">
+                    <li>
+                        <div class="headerMeu black-text" style="margin-left: 16px">
+                            Perfil serviço
+                        </div>
+                    </li>
+                </a>
+            <?php } ?>
+
+            <li>
+                <div class="collapsible-header anime" x="0">Listagens<i class="large material-icons animi">arrow_drop_down</i>
+                </div>
+                <div class="collapsible-body">
+                    <ul class="grey lighten-2">
+                        <li><a href="<?php echo $pontos ?>Tela/listagemEmpregado.php" class="black-text">Empregados</a>
+                        </li>
+                        <li><a href="<?php echo $pontos; ?>Tela/listagemEmpregador.php"
+                               class="black-text">Empregadores</a></li>
+                        <li><a href="<?php echo $pontos; ?>Tela/listagemServico.php" class="black-text">Serviços</a>
+                        </li>
+                        <li><a href="<?php echo $pontos; ?>Tela/listagemUsuario.php" class="black-text">Usuários</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <a href="<?php echo $pontos; ?>./Tela/solicitacoes.php">
+                <li>
+                    <div class="headerMeu black-text" style="margin-left: 16px">
+                        Solicitações
+                    </div>
+                </li>
+            </a>
+
+            <li>
+                <div class="collapsible-header anime" x="0"><?= $usuario->getNome() ?><i
+                            class="large material-icons animi">arrow_drop_down</i></div>
+                <div class="collapsible-body">
+                    <ul class="grey lighten-2">
+                        <li><a href="<?php echo $pontos ?>Tela/perfil.php" class="black-text">Meu Perfil</a></li>
+                        <li><a href="<?php echo $pontos; ?>./Controle/usuarioControle.php?function=logoff"
+                               class="black-text">Sair</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </ul>

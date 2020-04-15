@@ -15,9 +15,8 @@
 ?>
 <main>
     <div class="row">
-        <div class="card col l8 offset-l2 m10 offset-m1 s12>
-            <form action=" ..
-        /Controle/ServicoControle.php?function=inserirServico" method="post" enctype="multipart/form-data">
+        <div class="card col l8 offset-l2 m10 offset-m1 s12">
+            <form action="../Controle/ServicoControle.php?function=inserirServico" method="post" enctype="multipart/form-data">
         <div class="row center">
             <h4 class="textoCorPadrao2">Cadastrar Serviço</h4>
         </div>

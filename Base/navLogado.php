@@ -87,25 +87,51 @@
         </div>
     </li>
     <ul class="collapsible">
-        <li>
-            <a href="<?php echo $pontos; ?>./index.php" class="black-text">
-                Início
+
+        <a href="<?php echo $pontos; ?>./index.php" class="black-text">
+            <li>
+                <div class="headerMeu black-text" style="margin-left: 16px">
+                    Início
+                </div>
+            </li>
+        </a>
+
+
+        <?php if (!$empregadoPDO->verificaEmpregado($usuario->getId_usuario())) { ?>
+            <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php">
+                <li>
+                    <div class="headerMeu black-text" style="margin-left: 16px">
+                        Quero trabalhar
+                    </div>
+                </li>
             </a>
-        </li>
-        <li>
-            <?php if (!$empregadoPDO->verificaEmpregado($usuario->getId_usuario())) { ?>
-                <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php">Quero trabalhar</a>
-            <?php } else { ?>
-                <a href="<?php echo $pontos; ?>./Tela/perfilEmpregado.php">Perfil empregado</a>
-            <?php } ?>
-        </li>
-        <li>
-            <?php if (!$servicoPDO->verificaServico($usuario->getId_usuario())) { ?>
-                <a href="#modalEmpregador">Quero disponibilizar</a>
-            <?php } else { ?>
-                <a href="<?php echo $pontos; ?>./Tela/perfilServico.php">Perfil servico</a>
-            <?php } ?>
-        </li>
+        <?php } else { ?>
+            <a href="<?php echo $pontos; ?>./Tela/perfilEmpregado.php">
+                <li>
+                    <div class="headerMeu black-text" style="margin-left: 16px">
+                        Perfil empregado
+                    </div>
+                </li>
+            </a>
+        <?php } ?>
+
+        <?php if (!$servicoPDO->verificaServico($usuario->getId_usuario())) { ?>
+            <a href="#modalEmpregador">
+                <li>
+                    <div class="headerMeu black-text" style="margin-left: 16px">
+                        Quero disponibilizar
+                    </div>
+                </li>
+            </a>
+        <?php } else { ?>
+            <a href="<?php echo $pontos; ?>./Tela/perfilServico.php">
+                <li>
+                    <div class="headerMeu black-text" style="margin-left: 16px">
+                        Perfil serviço
+                    </div>
+                </li>
+            </a>
+        <?php } ?>
         <li>
             <a class="dropdown-trigger black-text" data-target='dropPerfilmobile'>
                 <?php echo $usuario->getNome(); ?>

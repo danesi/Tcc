@@ -22,7 +22,7 @@
             $usuario = new Usuario(unserialize($_SESSION['logado']));
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('insert into servico values(default , :nome , :descricao , :salario, null, :id_usuario);');
+            $stmt = $pdo->prepare('insert into servico values(default , :nome , :descricao , :salario, null, :id_usuario, default, default);');
             $stmt->bindValue(':nome', $servico->getNome());
             $stmt->bindValue(':descricao', $servico->getDescricao());
             $stmt->bindValue(':salario', $salario);
@@ -71,6 +71,18 @@
             } else {
                 $_SESSION['toast'][] = 'Erro ao associar endereço';
                 header("Location: ../Tela/editarServico.php?id_servico=".$id_servico."&endereco");
+            }
+        }
+
+        function selectServicosPendentes()
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from servico where status = 'pendente';");
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return $stmt;
+            } else {
+                return false;
             }
         }
 
@@ -370,6 +382,39 @@
             }
             if (!$existe) {
                 echo "<div class='row'><div class='card-title center'>Nenhum resultado encontrado</div></div>";
+            }
+        }
+
+        function recusar()
+        {
+            $servico = new Servico($_POST);
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare('update servico set status = :status, motivo = :motivo where id_servico = :id_servico');
+            $stmt->bindValue(":status", "recusado");
+            $stmt->bindValue(":motivo", $servico->getMotivo());
+            $stmt->bindValue(":id_servico", $servico->getId_servico());
+            if ($stmt->execute()) {
+                $_SESSION['toast'][] = "Serviço recusado";
+                header("location: ../Tela/solicitacoes.php");
+            } else {
+                $_SESSION['toast'][] = "Erro ao recusar o serviçp";
+                header("location: ../Tela/solicitacoes.php");
+            }
+        }
+
+        function aceitar()
+        {
+            $id_servico = $_GET['id_servico'];
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare('update servico set status = :status where id_servico = :id_servico');
+            $stmt->bindValue(":status", "aceito");
+            $stmt->bindValue(":id_servico", $id_servico);
+            if ($stmt->execute()) {
+                $_SESSION['toast'][] = "Serviço aceito com sucesso";
+                header("location: ../Tela/solicitacoes.php");
+            } else {
+                $_SESSION['toast'][] = "Erro ao aceitar o serviçp";
+                header("location: ../Tela/solicitacoes.php");
             }
         }
     }

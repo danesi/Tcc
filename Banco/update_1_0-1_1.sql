@@ -6,3 +6,7 @@ CREATE TABLE fotoservico(
 ),
 
 ALTER TABLE servico DROP COLUMN foto;
+
+ALTER TABLE `servico` ADD `status` VARCHAR(220) NOT NULL DEFAULT 'pendente' AFTER `id_usuario`;
+
+ALTER TABLE `servico` ADD `motivo` VARCHAR(220) NULL DEFAULT NULL AFTER `status`;
