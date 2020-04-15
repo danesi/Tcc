@@ -30,7 +30,7 @@
 ?>
 <main>
     <div class="row " style="margin-top: 5vh;">
-        <div class="card col l10 offset-l1">
+        <div class="card col l10 offset-l1 m10 offset-m1 s12">
             <div class="card-title center">Serviços pendentes</div>
             <div class="divider"></div>
             <div class="row">
@@ -51,7 +51,7 @@
                                     <div class="collapsible-header"><b><?= $servico->getNome() ?></b></div>
                                     <div class="collapsible-body">
                                         <div class="row">
-                                            <div class="col l6 m10 s10 offset-m1 offset-s1">
+                                            <div class="col l6 m10 s12 offset-m1">
                                                 <ul class="collection with-header">
                                                     <li class="collection-header">
                                                         <div class="card-title">Serviço</div>
@@ -86,7 +86,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="col l6 m10 s10 offset-m1 offset-s1">
+                                            <div class="col l6 m10 s12 offset-m1">
                                                 <ul class="collection with-header">
                                                     <li class="collection-header">
                                                         <div class="card-title">Empregador</div>
