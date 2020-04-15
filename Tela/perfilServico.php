@@ -1,5 +1,5 @@
 <?php
-    if (!isset($_SESSION)){
+    if (!isset($_SESSION)) {
         session_start();
     }
     include_once '../Base/requerLogin.php';
@@ -42,29 +42,67 @@
                     $servico = new Servico($linha);
                     $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                     ?>
-                    <div class="col l3 m3 s10 offset-s1">
-                        <div class="card z-depth-3">
-                            <div class="card-image">
-                                <img src="../<?= $foto->getCaminho() ?>" height="270" width="100">
-                                <span class="card-title black-text"><?= $servico->getNome() ?></span>
-                                <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped"
-                                   data-position="bottom" data-tooltip="Nota do serviço">4.5</a>
-                            </div>
-                            <ul class="card-content">
-                                <h5>Descrição</h5>
-                                <?php echo $servico->getDescricao();
-                                ?>
-                                <h5>Salário mensal</h5>
-                                <div class="chip">R$ <?= $servico->getSalario() ?></div>
-                                <br>
-                                <br>
-                                <div class="row center">
-                                    <a href="#modalexcluirServico" class="btn red darken-2 modal-trigger btnExcluirServico" id_servico="<?=$servico->getId_servico()?>">Excluir</a>
-                                    <a href="./editarServico.php?id_servico=<?= $servico->getId_servico() ?>&info"
-                                       class="btn blue darken-2">Editar</a>
-                                </div>
-                            </ul>
+                    <div class="col s10 m6 l3 offset-s1">
+                        <div class="card bot z-depth-3">
+                            <div class="card-image ">
 
+                                <div class="center-block"
+                                     style="background-image: url('<?php echo "../".$foto->getCaminho(); ?>');
+                                             height: 250px; max-width: auto;
+                                             background-position: center;
+                                             background-size: cover;
+                                             background-repeat: no-repeat;
+                                             object-fit: cover;
+                                             object-position: center;
+                                             ">
+                                    <?php if ($servico->getStatus() == "pendente") { ?>
+                                        <a href="#modalPendente" class="modal-trigger">
+                                            <div class="chip orange black-text right"
+                                                 style="position: relative; margin-top: 1vh">
+                                                Pendente
+                                            </div>
+                                        </a>
+                                    <?php } ?>
+                                    <?php if ($servico->getStatus() == "recusado") { ?>
+                                        <a href="#modalRecusado" class="btnRecusado"
+                                           motivo="<?= $servico->getMotivo() ?>">
+                                            <div class="chip red black-text right"
+                                                 style="position: relative; margin-top: 1vh">
+                                                Recusado
+                                            </div>
+                                        </a>
+                                    <?php } ?>
+                                    <?php if ($servico->getStatus() == "aceito") { ?>
+                                        <div class="chip green black-text right"
+                                             style="position: relative; margin-top: 1vh">
+                                            Aceito
+                                        </div>
+                                    <?php } ?>
+                                </div>
+
+                            </div>
+                            <div id="divider" class="divider"></div>
+                            <div class="card-content">
+                                <div class="card-title"
+                                     style="margin-top: -2vh"><?php echo $servico->getNome(); ?></div>
+                                <div class="divider"></div>
+                                <div class="row">
+                                    <h5>Descrição</h5>
+                                    <?php echo $servico->getDescricao();
+                                    ?>
+                                    <h5>Salário mensal</h5>
+                                    <div class="chip">R$ <?= $servico->getSalario() ?></div>
+                                    <br>
+                                    <br>
+                                    <div class="row center">
+                                        <a href="#modalexcluirServico"
+                                           class="btn red darken-2 modal-trigger btnExcluirServico"
+                                           id_servico="<?= $servico->getId_servico() ?>">Excluir</a>
+                                        <a href="./editarServico.php?id_servico=<?= $servico->getId_servico() ?>&info"
+                                           class="btn blue darken-2">Editar</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <?php
@@ -85,6 +123,29 @@
         </div>
     </form>
 </div>
+<div id="modalPendente" class="modal">
+    <div class="modal-content">
+        <h4>Serviço pendente</h4>
+        <p>Esse serviço encontra-se pendente, pois ele ainda não foi avaliado por nenhum de nosso administradores.</p>
+        <p>Portanto ele não estará visível para os outros usuários até que um adiministrador de o parecer.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat blue darken-1 white-text">OK</a>
+    </div>
+</div>
+<div id="modalRecusado" class="modal">
+    <div class="modal-content">
+        <h4>Serviço recusado</h4>
+        <p>Infelizmente esse serviço foi interpretado como impróprio para nosso site, portanto ele ficará oculto para os
+            usuário</p>
+        <p>Nossos administradores identificaram os segintes motivos</p>
+        <p><b>Motivo:</b>
+        <p id="motivo"></p></p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat blue darken-1 white-text">OK</a>
+    </div>
+</div>
 <?php
     include_once '../Base/footer.php';
 ?>
@@ -97,5 +158,11 @@
     $('.btnExcluirServico').click(function () {
         id_servico = $(this).attr('id_servico');
         $('.inputIdServico').val(id_servico);
+    });
+
+    $('.btnRecusado').click(function () {
+        var motivo = $(this).attr('motivo');
+        $('#motivo').html(motivo);
+        $('#modalRecusado').modal('open');
     });
 </script>

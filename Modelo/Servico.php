@@ -9,6 +9,8 @@ class Servico
     private $salario;
     private $id_endereco;
     private $id_usuario;
+    private $status;
+    private $motivo;
 
 
     public function __construct()
@@ -100,6 +102,26 @@ class Servico
     public function setFoto($foto)
     {
         $this->foto = $foto;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getMotivo()
+    {
+        return $this->motivo;
+    }
+
+    public function setMotivo($motivo)
+    {
+        $this->motivo = $motivo;
     }
 
 }

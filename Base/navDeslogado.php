@@ -1,19 +1,19 @@
 <?php
-$pontos = "";
-if (realpath("./index.php")) {
-    $pontos = './';
-    include_once './Modelo/Usuario.php';
-} else {
-    if (realpath("../index.php")) {
-        $pontos = '../';
-        include_once '../Modelo/Usuario.php';
+    $pontos = "";
+    if (realpath("./index.php")) {
+        $pontos = './';
+        include_once './Modelo/Usuario.php';
     } else {
-        if (realpath("../../index.php")) {
-            $pontos = '../../';
-            include_once '../../Modelo/Usuario.php';
+        if (realpath("../index.php")) {
+            $pontos = '../';
+            include_once '../Modelo/Usuario.php';
+        } else {
+            if (realpath("../../index.php")) {
+                $pontos = '../../';
+                include_once '../../Modelo/Usuario.php';
+            }
         }
     }
-}
 ?>
 
 <nav class="nav-extended white">
@@ -25,13 +25,19 @@ if (realpath("./index.php")) {
         <a href="<?php echo $pontos; ?>./index.php" class="brand-logo black-text center hide-on-med-and-up">Tcc</a>
         <ul class="right hide-on-med-and-down">
             <li>
-                <a href="<?php echo $pontos; ?>./Tela/login.php"><div class="chip blue darken-1 white-text">Quero trabalhar</div></a>
+                <a href="<?php echo $pontos; ?>./Tela/login.php">
+                    <div class="chip blue darken-1 white-text">Quero trabalhar</div>
+                </a>
             </li>
             <li>
-                <a href="<?php echo $pontos; ?>./Tela/login.php"><div class="chip orange darken-1 white-text">Quero disponibilizar</div></a>
+                <a href="<?php echo $pontos; ?>./Tela/login.php">
+                    <div class="chip orange darken-1 white-text">Quero disponibilizar</div>
+                </a>
             </li>
             <li>
-                <a href="<?php echo $pontos; ?>./Tela/login.php"><div class="chip orange darken-1 white-text">Entrar</div></a>
+                <a href="<?php echo $pontos; ?>./Tela/login.php">
+                    <div class="chip orange darken-1 white-text">Entrar</div>
+                </a>
             </li>
         </ul>
     </div>
@@ -39,15 +45,28 @@ if (realpath("./index.php")) {
 
 <ul id="slide-out" class="sidenav">
     <ul class="collapsible">
-        <li>
-            <a href="<?php echo $pontos; ?>./Tela/login.php" >Quero trabalhar</a>
-        </li>
-        <li>
-            <a href="<?php echo $pontos; ?>./Tela/login.php" >Quero disponibilizar</a>
-        </li>
-        <li>
-            <a href="<?php echo $pontos; ?>./Tela/login.php" >Entrar</a>
-        </li>
+        <a href="<?php echo $pontos; ?>./Tela/login.php">
+            <li>
+                <div class="headerMeu black-text" style="margin-left: 16px">
+                    Quero trabalhar
+                </div>
+            </li>
+        </a>
+        <a href="<?php echo $pontos; ?>./Tela/login.php">
+            <li>
+                <div class="headerMeu black-text" style="margin-left: 16px">
+                    Quero disponibilizar
+                </div>
+            </li>
+        </a>
+
+        <a href="<?php echo $pontos; ?>./Tela/login.php">
+            <li>
+                <div class="headerMeu black-text" style="margin-left: 16px">
+                    Entrar
+                </div>
+            </li>
+        </a>
     </ul>
 </ul>
 <script>
