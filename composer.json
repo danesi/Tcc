@@ -1,0 +1,19 @@
+{
+  "name": "danesi/tcc",
+  "description": "Projeto de tcc",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Daniel Oliveira Anesi",
+      "email": "daniel.o.anesi@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "require": {
+    "phpmailer/phpmailer": "6.1.*"
+  }
+}
