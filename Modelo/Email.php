@@ -12,6 +12,7 @@
     {
 
         private $destino;
+        private $nome;
         private $assunto;
         private $bodyHTML;
         private $body;
@@ -22,7 +23,7 @@
 
             try {
                 //Server settings
-                $mail->SMTPDebug = true;
+                $mail->SMTPDebug = 0;
                 $mail->isSMTP();
                 $mail->Host       = 'email-smtp.sa-east-1.amazonaws.com';
                 $mail->SMTPAuth   = true;
@@ -34,8 +35,8 @@
 
                 //Recipients
                 $mail->setFrom('daniel.o.anesi@outlook.com', 'EasyJobs');
-                $mail->addAddress('daniel.o.anesi@gmail.com', 'Daniel Anesi');
                 $mail->isHTML(true);
+                $mail->addAddress($this->destino, $this->nome);
                 $mail->Subject = $this->assunto;
                 $mail->Body    = $this->body;
                 $mail->AltBody = $this->bodyHTML;
@@ -109,6 +110,22 @@
         public function setBodyHTML($bodyHTML): void
         {
             $this->bodyHTML = $bodyHTML;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getNome()
+        {
+            return $this->nome;
+        }
+
+        /**
+         * @param mixed $nome
+         */
+        public function setNome($nome): void
+        {
+            $this->nome = $nome;
         }
 
     }
