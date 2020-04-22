@@ -23,7 +23,11 @@
                 $usuario = new usuario($linha);
                 $_SESSION['logado'] = serialize($usuario);
                 $_SESSION['id_usuario'] = $usuario->getId_usuario();
-                header('location: ../index.php');
+                if (isset($_POST['uri'])) {
+                    header('location: ../../'.$_POST['uri']);
+                } else {
+                    header('location: ../index.php');
+                }
             } else {
                 header('location: ../Tela/login.php');
             }
@@ -160,6 +164,21 @@
             $con = new conexao();
             $pdo = $con->getConexao();
             $stmt = $pdo->prepare('select * from usuario ;');
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return $stmt;
+            } else {
+                return false;
+            }
+        }
+
+
+        function selectAdms()
+        {
+
+            $con = new conexao();
+            $pdo = $con->getConexao();
+            $stmt = $pdo->prepare('select * from usuario where admin = 1;');
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
                 return $stmt;

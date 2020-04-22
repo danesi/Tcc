@@ -9,6 +9,7 @@
     include_once __DIR__.'/../Controle/FotoservicoPDO.php';
     include_once __DIR__.'/../Controle/EnderecoPDO.php';
     include_once __DIR__.'/../Controle/FotoservicoPDO.php';
+    include_once __DIR__.'/../Controle/EmailPDO.php';
 
 
     class ServicoPDO
@@ -41,6 +42,8 @@
                         $fotoservicoPDO = new FotoservicoPDO();
                         if ($fotoservicoPDO->inserirFotoServico($ultId_servico, $caminho)) {
                             $_SESSION['toast'][] = "Serviço cadastrado com susseço!";
+                            $emailPDO = new EmailPDO();
+                            $emailPDO->notificaNovoServico($servico->getNome(), $usuario);
                             $_SESSION['toast'][] = "Cadastre um endereço para esse serviço!";
                             header("Location: ../Tela/registroEndereco.php?id_servico=".$ultId_servico);
                         } else {

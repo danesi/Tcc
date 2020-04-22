@@ -1,7 +1,11 @@
 <!DOCTYPE html>
         <?php
         if(isset($_SESSION['logado'])){
-            header('location: ../Tela/home.php');
+            if(isset($_GET['uri'])) {
+                header('location: ../../'.$_GET['uri']);
+            } else {
+                header('location: ../Tela/home.php');
+            }
         }
 ?>
 
@@ -21,6 +25,11 @@
                 <form action="../Controle/UsuarioControle.php?function=login" class="card col l6 offset-l3 m8 offset-m2 s12 " method="post">
                     <div class="row center">
                         <h4 class="textoCorPadrao2">Faça Login</h4>
+                        <?php
+                            if (isset($_GET['uri'])) {
+                                echo '<input type="text" name="uri" value="'.$_GET['uri'].'" hidden>';
+                            }
+                        ?>
                         <div class="input-field col s10 offset-s1">
                             <input type="email" name="email">
                             <label>Email</label>

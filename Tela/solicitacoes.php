@@ -36,6 +36,10 @@
             <div class="row">
                 <div class="col l10 m10 s12 offset-l1 offset-m1">
                     <?php
+                        $nome = "";
+                        if (isset($_GET['nome'])) {
+                            $nome = $_GET['nome'];
+                        }
                         $stmtServicos = $servicoPDO->selectServicosPendentes();
                         if ($stmtServicos) {
                     ?>
@@ -47,7 +51,7 @@
                                 $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($servico->getId_endereco())->fetch());
                                 $empregador = new Empregador($empregadorPDO->selectEmpregadorId_usuario($servico->getId_usuario())->fetch());
                                 ?>
-                                <li>
+                                <li <?= $nome == $servico->getNome() ? "class='active'" : ''?>>
                                     <div class="collapsible-header"><b><?= $servico->getNome() ?></b></div>
                                     <div class="collapsible-body">
                                         <div class="row">
