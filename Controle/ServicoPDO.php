@@ -398,6 +398,8 @@
             $stmt->bindValue(":id_servico", $servico->getId_servico());
             if ($stmt->execute()) {
                 $_SESSION['toast'][] = "Serviço recusado";
+                $emailPDO = new EmailPDO();
+                $emailPDO->notificaRecusamento($servico->getId_servico(), $servico->getMotivo());
                 header("location: ../Tela/solicitacoes.php");
             } else {
                 $_SESSION['toast'][] = "Erro ao recusar o serviçp";
@@ -414,6 +416,8 @@
             $stmt->bindValue(":id_servico", $id_servico);
             if ($stmt->execute()) {
                 $_SESSION['toast'][] = "Serviço aceito com sucesso";
+                $emailPDO = new EmailPDO();
+                $emailPDO->notificaAceitamento($id_servico);
                 header("location: ../Tela/solicitacoes.php");
             } else {
                 $_SESSION['toast'][] = "Erro ao aceitar o serviçp";
