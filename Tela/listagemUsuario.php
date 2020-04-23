@@ -21,11 +21,11 @@
 ?>
 <main>
     <div class="row " style="margin-top: 5vh;">
-        <div class="card col l10 offset-l1">
+        <div class="card col l10 offset-l1 m10 offset-m1 s12">
             <div class="card-title center">Serviços</div>
             <div class="divider"></div>
             <div class="row">
-                <table class="highlight responsive-table centered">
+                <table class="highlight responsive-table centered hide-on-small-only">
                     <thead>
                     <tr>
                         <th>Foto</th>
@@ -79,6 +79,47 @@
                     ?>
                     </tbody>
                 </table>
+                <ul class="collapsible hide-on-med-and-up popout">
+                    <?php
+                        $stmtUsuario = $usuarioPDO->selectUsuario();
+                        while ($linha = $stmtUsuario->fetch()) {
+                            $usuario = new Usuario($linha);
+                            $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($usuario->getId_endereco())->fetch());
+                            ?>
+                            <li>
+                                <div class="collapsible-header">
+                                    <div class="left-align"
+                                         style="background-image: url('<?php echo '../'.$usuario->getFoto(); ?>');
+                                                 float: left;
+                                                 margin: 0 8px 0 -5px;
+                                                 border-radius: 50%;
+                                                 height: 25px; width: 25px;
+                                                 background-position: center;
+                                                 background-size: cover;
+                                                 background-position: center;
+                                                 background-repeat: no-repeat;
+                                                 object-fit: cover;
+                                                 object-position: center;
+                                                 ">
+                                    </div>
+                                    <?php echo $usuario->getNome(); ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <p><b>CPF: </b><?= $usuario->getCpf() ?></p>
+                                    <p><b>Nascimento: </b><?= $usuario->getNascimentoDate()->format('d/m/Y') ?></p>
+                                    <p><b>Telefone: </b><?= $usuario->getTelefone() ?></p>
+                                    <p><b>Email: </b><?= $usuario->getEmail() ?></p>
+                                    <p><b>Endereço: </b><?= $endereco->getEndereco().' - '.$endereco->getCidade() ?></p>
+                                    <div class="row center">
+                                        <a href="" class="btn blue darken-1">Ver mais</a>
+                                        <a href="" class="btn red darken-1">Deletar</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php
+                        }
+                    ?>
+                </ul>
             </div>
             <div class="row center">
                 <a class="btn orange darken-1 voltar">Voltar</a>
@@ -93,6 +134,8 @@
 </html>
 <script>
     $('.tooltipped').tooltip();
+    $('.collapsible').collapsible();
+
     $('.voltar').click(function () {
         location.href = document.referrer;
     });
