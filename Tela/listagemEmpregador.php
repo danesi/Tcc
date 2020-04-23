@@ -21,11 +21,11 @@
 ?>
 <main>
     <div class="row " style="margin-top: 5vh;">
-        <div class="card col l10 offset-l1">
+        <div class="card col l10 offset-l1 m10 offset-m1 s12">
             <div class="card-title center">Empregadores</div>
             <div class="divider"></div>
             <div class="row">
-                <table class="highlight responsive-table col l10 offset-l1">
+                <table class="highlight responsive-table col l10 offset-l1 hide-on-small-only">
                     <thead>
                     <tr>
                         <th>Nome</th>
@@ -59,6 +59,30 @@
                     ?>
                     </tbody>
                 </table>
+                <ul class="collapsible hide-on-med-and-up popout">
+                    <?php
+                        $stmtEmpregadores = $empregadorPDO->selectEmpregador();
+                        while ($linha = $stmtEmpregadores->fetch()) {
+                            $empregador = new Empregador($linha);
+                            $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($empregador->getId_usuario())->fetch());
+                            ?>
+                            <li>
+                                <div class="collapsible-header"><b><?= $usuario->getNome() ?></b></div>
+                                <div class="collapsible-body">
+                                    <p><b>Razão social: </b> <?= $empregador->getRazao_social() ?></p>
+                                    <p><b>CNPJ: </b> <?= $empregador->getCnpj() ?></p>
+                                    <p><b>Nota: </b> <?= $empregador->getNota() == "" ? '0' : $empregador->getNota() ?></p>
+                                    <div class="row center">
+                                        <a href="" class="btn blue darken-1">Ver mais</a>
+                                        <a href="" class="btn blue darken-1">Ver serviços</a>
+                                        <a href="" class="btn red darken-1">Deletar</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php
+                        }
+                    ?>
+                </ul>
             </div>
             <div class="row center">
                 <a class="btn orange darken-1 voltar">Voltar</a>
@@ -73,6 +97,8 @@
 </html>
 <script>
     $('.tooltipped').tooltip();
+    $('.collapsible').collapsible();
+
     $('.voltar').click(function () {
         location.href = document.referrer;
     });
