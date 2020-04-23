@@ -25,12 +25,12 @@
         <a href="<?php echo $pontos; ?>./index.php" class="brand-logo black-text center hide-on-med-and-up">Tcc</a>
         <ul class="right hide-on-med-and-down">
             <li>
-                <a href="<?php echo $pontos; ?>./Tela/login.php">
+                <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php">
                     <div class="chip blue darken-1 white-text">Quero trabalhar</div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo $pontos; ?>./Tela/login.php">
+                <a href="<?php echo $pontos; ?>./Tela/perfilEmpregado.php">
                     <div class="chip orange darken-1 white-text">Quero disponibilizar</div>
                 </a>
             </li>
@@ -45,14 +45,14 @@
 
 <ul id="slide-out" class="sidenav">
     <ul class="collapsible">
-        <a href="<?php echo $pontos; ?>./Tela/login.php">
+        <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php">
             <li>
                 <div class="headerMeu black-text" style="margin-left: 16px">
                     Quero trabalhar
                 </div>
             </li>
         </a>
-        <a href="<?php echo $pontos; ?>./Tela/login.php">
+        <a href="<?php echo $pontos; ?>./Tela/perfilEmpregado.php">
             <li>
                 <div class="headerMeu black-text" style="margin-left: 16px">
                     Quero disponibilizar

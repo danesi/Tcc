@@ -61,7 +61,7 @@
                 </table>
             </div>
             <div class="row center">
-                <a href="" class="btn orange darken-1">Voltar</a>
+                <a class="btn orange darken-1 voltar">Voltar</a>
             </div>
         </div>
     </div>
@@ -73,4 +73,7 @@
 </html>
 <script>
     $('.tooltipped').tooltip();
+    $('.voltar').click(function () {
+        location.href = document.referrer;
+    });
 </script>

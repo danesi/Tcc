@@ -126,23 +126,37 @@
             while ($linha = $stmt->fetch()) {
                 $servico = new Servico($linha);
                 $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
-                echo '<div class="col l3 m3 s10 offset-s1">
-                        <div class="card z-depth-3">
-                            <div class="card-image">
-                                <img src="../'.$foto->getCaminho().'" height="270" width="100">
-                                <span class="card-title">'.$servico->getNome().'</span>
-                                <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped"
-                                   data-position="bottom" data-tooltip="Nota do serviço">4.5</a>
+                echo "
+<a href='./verServico.php?id=".$servico->getId_servico()."'>
+<div class=\"col s10 m6 l3 offset-s1 center\">
+                        <div class=\"card servicos\">
+                            <div class=\"card-image \">
+                                <div class=\"center-block\"
+                                     style=\"background-image: url("."../".$foto->getCaminho().");
+                                         height: 250px; max-width: auto;
+                                         background-position: center;
+                                         background-size: cover;
+                                         background-repeat: no-repeat;
+                                         object-fit: cover;
+                                         object-position: center;
+                                         \">
                                 </div>
-                                <ul class="card-content">
-                                    <h5>Descrição</h5>'.$servico->getDescricao().'
-                                    <h5>Salário mensal</h5>
-                                    <div class="chip">R$ '.$servico->getSalario().'</div>
-                                    <br>
-                                    <br>
-                                </ul>
+
                             </div>
-                            </div>';
+                            <div id=\"divider\" class=\"divider\"></div>
+                            <div class=\"card-content\">
+                                <div class=\"card-title\"
+                                     style=\"margin-top: -2vh\">". $servico->getNome()."</div>
+                                <div class=\"divider\"></div>
+                                <div class=\"row\">
+                                    <h5>Descrição</h5>".$servico->getDescricao() ."
+                                    <h5>Salário mensal</h5>
+                                    <div class=\"chip\">R$ ".$servico->getSalario()."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</a>";
             }
         }
 
@@ -202,23 +216,37 @@
                 while ($linha = $stmt->fetch()) {
                     $servico = new Servico($linha);
                     $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
-                    echo '<div class="col l3 m3 s10 offset-s1">
-                        <div class="card z-depth-3">
-                            <div class="card-image">
-                                <img src="../'.$foto->getCaminho().'" height="270" width="100">
-                                <span class="card-title">'.$servico->getNome().'</span>
-                                <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped"
-                                   data-position="bottom" data-tooltip="Nota do serviço">4.5</a>
+                    echo "
+<a href='./verServico.php?id=".$servico->getId_servico()."'>
+<div class=\"col s10 m6 l3 offset-s1 center\">
+                        <div class=\"card servicos\">
+                            <div class=\"card-image \">
+                                <div class=\"center-block\"
+                                     style=\"background-image: url("."../".$foto->getCaminho().");
+                                         height: 250px; max-width: auto;
+                                         background-position: center;
+                                         background-size: cover;
+                                         background-repeat: no-repeat;
+                                         object-fit: cover;
+                                         object-position: center;
+                                         \">
                                 </div>
-                                <ul class="card-content">
-                                    <h5>Descrição</h5>'.$servico->getDescricao().'
-                                    <h5>Salário mensal</h5>
-                                    <div class="chip">R$ '.$servico->getSalario().'</div>
-                                    <br>
-                                    <br>
-                                </ul>
+
                             </div>
-                            </div>';
+                            <div id=\"divider\" class=\"divider\"></div>
+                            <div class=\"card-content\">
+                                <div class=\"card-title\"
+                                     style=\"margin-top: -2vh\">". $servico->getNome()."</div>
+                                <div class=\"divider\"></div>
+                                <div class=\"row\">
+                                    <h5>Descrição</h5>".$servico->getDescricao() ."
+                                    <h5>Salário mensal</h5>
+                                    <div class=\"chip\">R$ ".$servico->getSalario()."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</a>";
                 }
             } else {
                 echo "<div class='row'><div class='card-title center'>Nenhum resultado encontrado</div></div>";
@@ -361,24 +389,37 @@
                             $existe = true;
                             $servico = new Servico($servicos);
                             $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
-                            echo "<div class='col l3 m3 s10 offset-s1'>
-                        <div class='card z-depth-3'>
-                            <div class='card-image'>
-                                <img src='../".$foto->getCaminho()."' height='270' width='100'>
-                                <span class='card-title'>".$servico->getNome()."</span>
-                                <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped'
-                                   data-position='bottom' data-tooltip='Nota do serviço'>4.5</a>
+                            echo "
+<a href='./verServico.php?id=".$servico->getId_servico()."'>
+<div class=\"col s10 m6 l3 offset-s1 center\">
+                        <div class=\"card servicos\">
+                            <div class=\"card-image \">
+                                <div class=\"center-block\"
+                                     style=\"background-image: url("."../".$foto->getCaminho().");
+                                         height: 250px; max-width: auto;
+                                         background-position: center;
+                                         background-size: cover;
+                                         background-repeat: no-repeat;
+                                         object-fit: cover;
+                                         object-position: center;
+                                         \">
+                                </div>
+
                             </div>
-                            <ul class='card-content'>
-                                <h5>Descrição</h5>
-                                ".$servico->getDescricao()."
-                                <h5>Salário mensal</h5>
-                                <div class='chip'>R$ ".$servico->getSalario()."</div>
-                                <br>
-                                <br>
-                            </ul>
+                            <div id=\"divider\" class=\"divider\"></div>
+                            <div class=\"card-content\">
+                                <div class=\"card-title\"
+                                     style=\"margin-top: -2vh\">". $servico->getNome()."</div>
+                                <div class=\"divider\"></div>
+                                <div class=\"row\">
+                                    <h5>Descrição</h5>".$servico->getDescricao() ."
+                                    <h5>Salário mensal</h5>
+                                    <div class=\"chip\">R$ ".$servico->getSalario()."</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>";
+                    </div>
+</a>";
                         }
                     }
                 }
