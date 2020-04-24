@@ -36,18 +36,70 @@
 <main>
     <div class="row" style="margin-top: 1vh;">
         <div class="card col l10 m10 offset-l1 offset-m1 s12">
-            <h4 class="textoCorPadrao2 center">Perfil dos seus serviços</h4>
+            <h4 class="textoCorPadrao2 center">Serviço <?= $servico->getNome() ?></h4>
             <div class="divider"></div>
+            <div class="card-title center">Fotos</div>
+            <div class="row hide-on-small-only" style="margin-left: -32vh; margin-top: -10vh">
+                <div class="carousel center" style="z-index: 10000">
+                    <?php
+                        $stmtFotos = $fotoservicoPDO->selectTodasFotos($servico->getId_servico());
+                        while ($linha = $stmtFotos->fetch()) {
+                            $fotos = new Fotoservico($linha);
+                            ?>
+                            <a class="carousel-item">
+                                <img class="materialboxed" src="<?= '../'.$fotos->getCaminho() ?>"
+                                     style="
+                             height: 250px; max-width: auto;
+                             background-position: center;
+                             background-size: cover;
+                             background-repeat: no-repeat;
+                             object-fit: cover;
+                             object-position: center;">
+                            </a>
+                            <?php
+                        }
+                    ?>
+                </div>
+            </div>
+            <div class="hide-on-med-and-up">
+                <div class="slider">
+                    <ul class="slides">
+                        <?php
+                            $stmtFotos = $fotoservicoPDO->selectTodasFotos($servico->getId_servico());
+                            while ($linha = $stmtFotos->fetch()) {
+                                $fotos = new Fotoservico($linha);
+                                ?>
+                                <li>
+                                    <img src="<?= '../'.$fotos->getCaminho() ?>"
+                                         style="
+                                         width: 100%;
+                                         height: 500px; max-width: 100%;
+                                         background-position: center;
+                                         background-size: cover;
+                                         background-repeat: no-repeat;
+                                         object-fit: cover;
+                                         object-position: center;"
+                                    >
+                                </li>
+                                <?php
+                            }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-title center">Perfil</div>
+            <div class="divider"></div>
+            <br>
             <div class="row center">
                 <?php
                     $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
-                    ?>
-                    <div class="col s10 m6 l3 offset-s1 offset-l1">
-                        <div class="card bot z-depth-3">
-                            <div class="card-image ">
+                ?>
+                <div class="col s10 m6 l3 offset-s1 offset-l1">
+                    <div class="card bot z-depth-3">
+                        <div class="card-image ">
 
-                                <div class="center-block"
-                                     style="background-image: url('<?php echo "../".$foto->getCaminho(); ?>');
+                            <div class="center-block"
+                                 style="background-image: url('<?= "../".$foto->getCaminho(); ?>');
                                          height: 250px; max-width: auto;
                                          background-position: center;
                                          background-size: cover;
@@ -55,24 +107,24 @@
                                          object-fit: cover;
                                          object-position: center;
                                          ">
-                                </div>
-
                             </div>
-                            <div id="divider" class="divider"></div>
-                            <div class="card-content">
-                                <div class="card-title"
-                                     style="margin-top: -2vh"><?php echo $servico->getNome(); ?></div>
-                                <div class="divider"></div>
-                                <div class="row">
-                                    <h5>Descrição</h5>
-                                    <?php echo $servico->getDescricao();
-                                    ?>
-                                    <h5>Salário mensal</h5>
-                                    <div class="chip">R$ <?= $servico->getSalario() ?></div>
-                                </div>
+
+                        </div>
+                        <div id="divider" class="divider"></div>
+                        <div class="card-content">
+                            <div class="card-title"
+                                 style="margin-top: -2vh"><?php echo $servico->getNome(); ?></div>
+                            <div class="divider"></div>
+                            <div class="row">
+                                <h5>Descrição</h5>
+                                <?php echo $servico->getDescricao();
+                                ?>
+                                <h5>Salário mensal</h5>
+                                <div class="chip">R$ <?= $servico->getSalario() ?></div>
                             </div>
                         </div>
                     </div>
+                </div>
                 <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
                     <div class="card-title center">Endereço</div>
                     <div class="divider"></div>
@@ -159,6 +211,9 @@
 <script>
     $('.tooltipped').tooltip();
     $('.modal').modal();
+    $('.carousel').carousel();
+    $('.materialboxed').materialbox();
+    $('.slider').slider();
 
     $('.btnExcluirServico').click(function () {
         id_servico = $(this).attr('id_servico');
