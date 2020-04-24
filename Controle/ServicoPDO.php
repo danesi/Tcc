@@ -127,7 +127,7 @@
                 $servico = new Servico($linha);
                 $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                 echo "
-<a href='./verServico.php?id=".$servico->getId_servico()."'>
+<a href='./verServico.php?id=".$servico->getId_servico()."' class='black-text'>
 <div class=\"col s10 m6 l3 offset-s1 center\">
                         <div class=\"card servicos\">
                             <div class=\"card-image \">
@@ -217,7 +217,7 @@
                     $servico = new Servico($linha);
                     $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                     echo "
-<a href='./verServico.php?id=".$servico->getId_servico()."'>
+<a href='./verServico.php?id=".$servico->getId_servico()."' class='black-text'>
 <div class=\"col s10 m6 l3 offset-s1 center\">
                         <div class=\"card servicos\">
                             <div class=\"card-image \">
@@ -390,7 +390,7 @@
                             $servico = new Servico($servicos);
                             $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                             echo "
-<a href='./verServico.php?id=".$servico->getId_servico()."'>
+<a href='./verServico.php?id=".$servico->getId_servico()."' class='black-text'>
 <div class=\"col s10 m6 l3 offset-s1 center\">
                         <div class=\"card servicos\">
                             <div class=\"card-image \">
