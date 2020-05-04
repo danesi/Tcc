@@ -119,13 +119,13 @@
                 </ul>
                 <p>
                     <label>
-                        <input class="with-gap" name="group1" value="true" type="radio" checked/>
+                        <input class="with-gap" name="deleteUser" value="true" type="radio"/>
                         <span class="black-text">Deletar</span>
                     </label>
                 </p>
                 <p>
                     <label>
-                        <input class="with-gap" name="group1" value="false" type="radio"  />
+                        <input class="with-gap" name="deleteUser" value="false" type="radio" checked/>
                         <span class="black-text">Não deletar</span>
                     </label>
                 </p>

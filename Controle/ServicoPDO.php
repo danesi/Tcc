@@ -10,6 +10,7 @@
     include_once __DIR__.'/../Controle/EnderecoPDO.php';
     include_once __DIR__.'/../Controle/FotoservicoPDO.php';
     include_once __DIR__.'/../Controle/EmailPDO.php';
+    include_once __DIR__.'/../Controle/UsuarioPDO.php';
 
 
     class ServicoPDO
@@ -525,8 +526,36 @@
 
         function deletar()
         {
-            print_r($_POST['servicos']);
-            print_r($_POST['group1']);
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("update servico set deletado = 1 where id_servico = :id_servico");
+            $stmt->bindValue(":id_servico", $_POST['id_servico']);
+            $stmt->execute();
+            if (isset($_POST['servicos'])) {
+                if (isset($_POST['deleteUser'])) {
+                    $servicos = $_POST['servicos'];
+                    foreach ($servicos as $servico) {
+                        $stmt = $pdo->prepare("update servico set deletado = 1 where id_servico = :id_servico");
+                        $stmt->bindValue(":id_servico", $servico);
+                        $stmt->execute();
+                    }
+                    if ($_POST['deleteUser'] == 'true') {
+                        $stmt = $pdo->prepare("select id_usuario from servico where id_servico = :id_servico");
+                        $stmt->bindValue(":id_servico", $_POST['id_servico']);
+                        $stmt->execute();
+                        $id_usuario = $stmt->fetch()['id_usuario'];
+                        $usuarioPDO = new UsuarioPDO();
+                        if ($usuarioPDO->deleteUsuario($id_usuario) > 0) {
+                            $_SESSION['toast'][] = "Serviços e usuário excluidos com sucesso!";
+                            header('Location: ../Tela/listagemServico.php');
+                        }
+                    }
+                    $_SESSION['toast'][] = "Serviços excluidos com sucesso!";
+                    header('Location: ../Tela/listagemServico.php');
+                }
+            } else {
+                $_SESSION['toast'][] = "Serviço excluido com sucesso!";
+                header('Location: ../Tela/listagemServico.php');
+            }
         }
     }
                 

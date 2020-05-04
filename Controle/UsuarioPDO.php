@@ -335,7 +335,7 @@
         {
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('delete from usuario where id_usuario = :definir ;');
+            $stmt = $pdo->prepare('update usuario set deletado = 1 where id_usuario = :definir ;');
             $stmt->bindValue(':definir', $definir);
             $stmt->execute();
             return $stmt->rowCount();
