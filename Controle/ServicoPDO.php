@@ -23,7 +23,7 @@
             $usuario = new Usuario(unserialize($_SESSION['logado']));
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('insert into servico values(default , :nome , :descricao , :salario, null, :id_usuario, default, default);');
+            $stmt = $pdo->prepare('insert into servico values(default , :nome , :descricao , :salario, null, :id_usuario, default, default, default);');
             $stmt->bindValue(':nome', $servico->getNome());
             $stmt->bindValue(':descricao', $servico->getDescricao());
             $stmt->bindValue(':salario', $salario);
@@ -43,7 +43,7 @@
                         if ($fotoservicoPDO->inserirFotoServico($ultId_servico, $caminho)) {
                             $_SESSION['toast'][] = "Serviço cadastrado com susseço!";
                             $emailPDO = new EmailPDO();
-                            $emailPDO->notificaNovoServico($servico->getNome(), $usuario);
+//                            $emailPDO->notificaNovoServico($servico->getNome(), $usuario);
                             $_SESSION['toast'][] = "Cadastre um endereço para esse serviço!";
                             header("Location: ../Tela/registroEndereco.php?id_servico=".$ultId_servico);
                         } else {
@@ -146,10 +146,10 @@
                             <div id=\"divider\" class=\"divider\"></div>
                             <div class=\"card-content\">
                                 <div class=\"card-title\"
-                                     style=\"margin-top: -2vh\">". $servico->getNome()."</div>
+                                     style=\"margin-top: -2vh\">".$servico->getNome()."</div>
                                 <div class=\"divider\"></div>
                                 <div class=\"row\">
-                                    <h5>Descrição</h5>".$servico->getDescricao() ."
+                                    <h5>Descrição</h5>".$servico->getDescricao()."
                                     <h5>Salário mensal</h5>
                                     <div class=\"chip\">R$ ".$servico->getSalario()."</div>
                                 </div>
@@ -187,6 +187,27 @@
                 return false;
             }
         }
+
+        function selectServicoIdEmpregador()
+        {
+            $id_empregador = $_POST['id_empregador'];
+            $con = new conexao();
+            $pdo = $con->getConexao();
+            $stmt = $pdo->prepare('select * from servico where id_usuario = :id_usuario;');
+            $stmt->bindValue(':id_usuario', $id_empregador);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                echo "<b>Serviços relacionados:</b> <ul class='collection'> ";
+                while ($linha = $stmt->fetch()) {
+                    $servico = new Servico($linha);
+                    echo "<li class='collection-item'>".$servico->getNome()."</li>";
+                }
+                echo "</ul>";
+            } else {
+                echo "";
+            }
+        }
+
 
         public function selectServicoId_servico($id_servico)
         {
@@ -236,10 +257,10 @@
                             <div id=\"divider\" class=\"divider\"></div>
                             <div class=\"card-content\">
                                 <div class=\"card-title\"
-                                     style=\"margin-top: -2vh\">". $servico->getNome()."</div>
+                                     style=\"margin-top: -2vh\">".$servico->getNome()."</div>
                                 <div class=\"divider\"></div>
                                 <div class=\"row\">
-                                    <h5>Descrição</h5>".$servico->getDescricao() ."
+                                    <h5>Descrição</h5>".$servico->getDescricao()."
                                     <h5>Salário mensal</h5>
                                     <div class=\"chip\">R$ ".$servico->getSalario()."</div>
                                 </div>
@@ -409,10 +430,10 @@
                             <div id=\"divider\" class=\"divider\"></div>
                             <div class=\"card-content\">
                                 <div class=\"card-title\"
-                                     style=\"margin-top: -2vh\">". $servico->getNome()."</div>
+                                     style=\"margin-top: -2vh\">".$servico->getNome()."</div>
                                 <div class=\"divider\"></div>
                                 <div class=\"row\">
-                                    <h5>Descrição</h5>".$servico->getDescricao() ."
+                                    <h5>Descrição</h5>".$servico->getDescricao()."
                                     <h5>Salário mensal</h5>
                                     <div class=\"chip\">R$ ".$servico->getSalario()."</div>
                                 </div>
@@ -464,6 +485,48 @@
                 $_SESSION['toast'][] = "Erro ao aceitar o serviçp";
                 header("location: ../Tela/solicitacoes.php");
             }
+        }
+
+        function deletarPorIdEmpregador($id_empregador)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare('update servico set deletado = 1 where id_usuario = :id_usuario');
+            $stmt->bindValue(":id_usuario", $id_empregador);
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function selectServicosDoMesmoUsuario()
+        {
+            $id_servico = $_POST['id_servico'];
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from servico where id_usuario in (select id_usuario from servico where id_servico = :id_servico) and id_servico != :servico");
+            $stmt->bindValue(":id_servico", $id_servico);
+            $stmt->bindValue(":servico", $id_servico);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                echo 'Você pode deletar os demais serviços desse mesmo usuário. Caso deseje isso, basta marca-los.';
+                echo "<ul class='collection'><li class='collection-item'>";
+                while ($linha = $stmt->fetch()) {
+                    $servico = new Servico($linha);
+                    echo "<p>
+      <label>
+        <input type=\"checkbox\" class=\"filled-in selectServicos\" name=\"servicos[]\" value='".$servico->getId_servico()."'/>
+        <span>".$servico->getNome()."</span>
+      </label>
+    </p>";
+                }
+                echo "</li></ul>";
+            }
+        }
+
+        function deletar()
+        {
+            print_r($_POST['servicos']);
+            print_r($_POST['group1']);
         }
     }
                 

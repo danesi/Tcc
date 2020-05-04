@@ -13,6 +13,7 @@
         private $foto;
         private $admin;
         private $id_endereco;
+        private $deletado;
 
 
         public function __construct()
@@ -161,6 +162,16 @@
         public function setAdmin($admin)
         {
             $this->admin = $admin;
+        }
+
+        public function getDeletado()
+        {
+            return $this->deletado;
+        }
+
+        public function setDeletado($deletado): void
+        {
+            $this->deletado = $deletado;
         }
 
     }

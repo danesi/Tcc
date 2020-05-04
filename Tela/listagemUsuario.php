@@ -68,7 +68,7 @@
                                 <td><?= $usuario->getEmail() ?></td>
                                 <td><?= $endereco->getEndereco().' - '.$endereco->getCidade() ?></td>
                                 <td>
-                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i
+                                    <a href="./verUsuario.php?id=<?= $usuario->getId_usuario() ?>" class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i
                                                 class="material-icons black-text">zoom_in</i></a>
                                     <a href="" class="tooltipped" data-position="bottom" data-tooltip="Deletar"><i
                                                 class="material-icons black-text">delete</i></a>
@@ -111,7 +111,8 @@
                                     <p><b>Email: </b><?= $usuario->getEmail() ?></p>
                                     <p><b>Endereço: </b><?= $endereco->getEndereco().' - '.$endereco->getCidade() ?></p>
                                     <div class="row center">
-                                        <a href="" class="btn blue darken-1">Ver mais</a>
+                                        <a href="./verUsuario.php?id=<?= $usuario->getId_usuario() ?>"
+                                           class="btn blue darken-1">Ver mais</a>
                                         <a href="" class="btn red darken-1">Deletar</a>
                                     </div>
                                 </div>

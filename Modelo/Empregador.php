@@ -18,6 +18,7 @@ private $id_usuario;
 private $razao_social;
 private $cnpj;
 private $nota;
+private $deletado;
 
 
 public function __construct() {
@@ -70,5 +71,23 @@ public function __construct() {
      function setNota($nota){
           $this->nota = $nota;
      }
+
+    /**
+     * @return mixed
+     */
+    public function getDeletado()
+    {
+        return $this->deletado;
+    }
+
+    /**
+     * @param mixed $deletado
+     */
+    public function setDeletado($deletado): void
+    {
+        $this->deletado = $deletado;
+    }
+
+
 
 }

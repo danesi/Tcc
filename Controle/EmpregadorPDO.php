@@ -3,8 +3,10 @@
         session_start();
     }
     include_once __DIR__.'/../Controle/conexao.php';
+    include_once __DIR__.'/../Controle/ServicoPDO.php';
     include_once __DIR__.'/../Modelo/Empregador.php';
     include_once __DIR__.'/../Modelo/Usuario.php';
+    include_once __DIR__.'/../Modelo/Servico.php';
 
 
     class EmpregadorPDO
@@ -16,7 +18,7 @@
             $empregador = new Empregador($_POST);
             $usuario = new Usuario(unserialize($_SESSION['logado']));
             $pdo = conexao::getConexao();
-            $stmt = $pdo->prepare('insert into empregador values(:id_usuario , :razao_social , :cnpj, :nota);');
+            $stmt = $pdo->prepare('insert into empregador values(:id_usuario , :razao_social , :cnpj, :nota, default);');
             $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
             $stmt->bindValue(':razao_social', $empregador->getRazao_social());
             $stmt->bindValue(':cnpj', $empregador->getCnpj());
@@ -137,20 +139,31 @@
             return $stmt->rowCount();
         }
 
-        public function deleteEmpregador($definir)
+        public function deleteEmpregador($id_usuario)
         {
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('delete from empregador where id_usuario = :definir ;');
-            $stmt->bindValue(':definir', $definir);
-            $stmt->execute();
-            return $stmt->rowCount();
+            $servicoPDO = new ServicoPDO();
+            if ($servicoPDO->deletarPorIdEmpregador($id_usuario)) {
+                $stmt = $pdo->prepare('update empregador set deletado = 1 where id_usuario = :definir');
+                $stmt->bindValue(':definir', $id_usuario);
+                if ($stmt->execute()) {
+                    $_SESSION['toast'][] = "Empregador excluido com sucesso!";
+                    return true;
+                } else {
+                    $_SESSION['toast'][] = "Erro ao excluir o empregador";
+                    return false;
+                }
+            } else {
+                $_SESSION['toast'][] = "Erro ao exlcuir serviços relacionados";
+                return false;
+            }
         }
 
         public function deletar()
         {
-            $this->deleteEmpregador($_GET['id']);
-            header('location: ../Tela/listarEmpregador.php');
+            $this->deleteEmpregador($_POST['id_usuario']);
+            echo "<script>location.href = document.referrer;</script>";
         }
 
 

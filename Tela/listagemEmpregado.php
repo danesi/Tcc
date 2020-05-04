@@ -49,8 +49,12 @@
                                 <td><?= $empregado->getArea_atuacao() ?></td>
                                 <td><?= $empregado->getNota() == "" ? '0' : $empregado->getNota() ?></td>
                                 <td>
-                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i class="material-icons black-text">zoom_in</i></a>
-                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Deletar"><i class="material-icons black-text">delete</i></a>
+                                    <a href="./verEmpregado.php?id=<?= $empregado->getId_usuario() ?>"
+                                       class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i
+                                                class="material-icons black-text">zoom_in</i></a>
+                                    <a href="#!" class="tooltipped modal-trigger exluirEmpregado" id_usuario="<?= $empregado->getId_usuario()?>"
+                                       data-position="bottom" data-tooltip="Deletar"><i
+                                                class="material-icons black-text">delete</i></a>
                                 </td>
                             </tr>
                             <?php
@@ -70,10 +74,12 @@
                                 <div class="collapsible-body">
                                     <p><b>Escolaridade: </b> <?= $empregado->getEscolaridade() ?></p>
                                     <p><b>Áreas de atuaçao: </b> <?= $empregado->getArea_atuacao() ?></p>
-                                    <p><b>Nota: </b> <?= $empregado->getNota() == "" ? '0' : $empregado->getNota() ?></p>
+                                    <p><b>Nota: </b> <?= $empregado->getNota() == "" ? '0' : $empregado->getNota() ?>
+                                    </p>
                                     <div class="row center">
-                                        <a href="" class="btn blue darken-1">Ver mais</a>
-                                        <a href="" class="btn red darken-1">Deletar</a>
+                                        <a href="./verEmpregado.php?id=<?= $empregado->getId_usuario() ?>"
+                                           class="btn blue darken-1">Ver mais</a>
+                                        <a class="btn red darken-1 modal-trigger exluirEmpregado" id_usuario="<?= $empregado->getId_usuario()?>">Deletar</a>
                                     </div>
                                 </div>
                             </li>
@@ -88,6 +94,19 @@
         </div>
     </div>
 </main>
+<div id="modalExluirEmpregado" class="modal">
+    <form action="../Controle/EmpregadoControle.php?function=deletar" method="post">
+        <div class="modal-content">
+            <h4>Antenção</h4>
+            <p>Você realmente deseja deletar esse empregado?</p>
+            <input type="text" id="inputIdUsuario" name="id_usuario" value="" hidden>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="btn modal-close waves-effect orange darken-1">Voltar</a>
+            <button type="submit" class=" btn waves-effect red darken-1">Deletar</button>
+        </div>
+    </form>
+</div>
 <?php
     include_once '../Base/footer.php';
 ?>
@@ -96,6 +115,13 @@
 <script>
     $('.tooltipped').tooltip();
     $('.collapsible').collapsible();
+    $('.modal').modal();
+
+    $('.exluirEmpregado').click(function () {
+        var id_usuario = $(this).attr('id_usuario');
+        $('#inputIdUsuario').val(id_usuario);
+        $('#modalExluirEmpregado').modal('open');
+    });
 
     $('.voltar').click(function () {
         location.href = document.referrer;

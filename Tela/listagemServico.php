@@ -56,9 +56,12 @@
                                 <td><?= $endereco->getEndereco().' - '.$endereco->getCidade() ?></td>
                                 <td><?= $usuario->getNome() ?></td>
                                 <td>
-                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i
+                                    <a href="./verServico.php?id=<?= $servico->getId_servico() ?>" class="tooltipped"
+                                       data-position="bottom" data-tooltip="Ver mais"><i
                                                 class="material-icons black-text">zoom_in</i></a>
-                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Deletar"><i
+                                    <a href="#!" class="tooltipped excluirServico"
+                                       id_servico="<?= $servico->getId_servico() ?>" data-position="bottom"
+                                       data-tooltip="Deletar"><i
                                                 class="material-icons black-text">delete</i></a>
                                 </td>
                             </tr>
@@ -74,7 +77,7 @@
                         $servico = new Servico($linha);
                         $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($servico->getId_usuario())->fetch());
                         $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($servico->getId_endereco())->fetch());
-                        ?>
+                    ?>
                     <li>
                         <div class="collapsible-header"><b><?= $servico->getNome() ?></b></div>
                         <div class="collapsible-body">
@@ -83,13 +86,14 @@
                             <p><b>Endereco: </b><?= $endereco->getEndereco().' - '.$endereco->getCidade() ?></p>
                             <p><b>Dono: </b><?= $usuario->getNome() ?></p>
                             <div class="row center">
-                                <a href="" class="btn blue darken-1">Ver mais</a>
+                                <a href="./verServico.php?id=<?= $servico->getId_servico() ?>"
+                                   class="btn blue darken-1">Ver mais</a>
                                 <a href="" class="btn red darken-1">Deletar</a>
                             </div>
                         </div>
                         <?php
-                        }
-                    ?>
+                            }
+                        ?>
                 </ul>
             </div>
             <div class="row center">
@@ -98,6 +102,41 @@
         </div>
     </div>
 </main>
+<div id="modalEscluirServico" class="modal">
+    <form action="../Controle/ServicoControle.php?function=deletar" method="post">
+        <input type="text" id="inputIdServico" name="id_servico" value="" hidden>
+        <div class="modal-content">
+            <h4>Atenção</h4>
+            <p>Você realmente deseja deletar esse serviço?</p>
+            <p id="DemaisServicos"></p>
+            <div id="alert" class="hide">
+                <ul class='collection'>
+                    <li class='collection-item yellow accent-3'>
+                        <i class="material-icons left ">report_problem</i>
+                        Você está deletando todos os serviços desse usuário, deseja deletar o usuário também?
+                        <br>
+                    </li>
+                </ul>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="true" type="radio" checked/>
+                        <span class="black-text">Deletar</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="false" type="radio"  />
+                        <span class="black-text">Não deletar</span>
+                    </label>
+                </p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect btn orange darken-1">Voltar</a>
+            <button class="btn red darken-1" type="submit">Deletar</button>
+        </div>
+    </form>
+</div>
 <?php
     include_once '../Base/footer.php';
 ?>
@@ -106,8 +145,35 @@
 <script>
     $('.tooltipped').tooltip();
     $('.collapsible').collapsible();
+    $('.modal').modal();
 
     $('.voltar').click(function () {
         location.href = document.referrer;
+    });
+
+    $('.excluirServico').click(function () {
+        var id_servico = $(this).attr('id_servico');
+        $.ajax({
+            url: "../Controle/ServicoControle.php?function=selectServicosDoMesmoUsuario",
+            data: {
+                id_servico: id_servico,
+            },
+            type: 'post',
+            success: function (data) {
+                $('#inputIdServico').val(id_servico);
+                $('#DemaisServicos').html(data);
+                $('#modalEscluirServico').modal('open');
+                $('#alert').addClass('hide');
+                $("input[type='checkbox'].selectServicos").change(function () {
+                    var checkbox = $("input[type='checkbox'].selectServicos");
+                    if (checkbox.length == checkbox.filter(":checked").length) {
+                        $('#alert').removeClass('hide');
+                    } else {
+                        $('#alert').addClass('hide');
+                    }
+                });
+
+            }
+        });
     });
 </script>
