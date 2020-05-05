@@ -145,7 +145,7 @@
             $pdo = $con->getConexao();
             $servicoPDO = new ServicoPDO();
             if ($servicoPDO->deletarPorIdEmpregador($id_usuario)) {
-                $stmt = $pdo->prepare('update empregador set deletado = 1 where id_usuario = :definir');
+                $stmt = $pdo->prepare('delete from empregador where id_usuario = :definir');
                 $stmt->bindValue(':definir', $id_usuario);
                 if ($stmt->execute()) {
                     $_SESSION['toast'][] = "Empregador excluido com sucesso!";

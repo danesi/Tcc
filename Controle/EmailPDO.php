@@ -155,8 +155,7 @@
             try {
                 $empregadoPDO = new EmpregadoPDO();
                 $usuarioPDO = new UsuarioPDO();
-                $empregado = new Empregado($empregadoPDO->selectEmpregadoId_usuario($id_empregado)->fetch());
-                $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($empregado->getId_usuario())->fetch());
+                $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($id_empregado)->fetch());
                 $this->mail->setAssunto("Perfil de empregado deletado");
                 $this->mail->setNome($usuario->getNome());
                 $this->mail->setDestino($usuario->getEmail());

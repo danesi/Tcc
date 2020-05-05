@@ -116,7 +116,8 @@
                                     <div class="row center">
                                         <a href="./verUsuario.php?id=<?= $usuario->getId_usuario() ?>"
                                            class="btn blue darken-1">Ver mais</a>
-                                        <a href="" class="btn red darken-1">Deletar</a>
+                                        <a href="#!" class="btn red darken-1 excluirUsuario"
+                                           id_usuario="<?= $usuario->getId_usuario() ?>">Deletar</a>
                                     </div>
                                 </div>
                             </li>
