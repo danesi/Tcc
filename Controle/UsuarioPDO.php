@@ -2,6 +2,7 @@
         include_once __DIR__.'/../Controle/conexao.php';
         include_once __DIR__.'/../Modelo/Empregado.php';
         include_once __DIR__.'/../Controle/EmpregadoPDO.php';
+        include_once __DIR__.'/../Controle/EmpregadorPDO.php';
         include_once __DIR__.'/../Modelo/Usuario.php';
 
     class UsuarioPDO
@@ -163,7 +164,7 @@
 
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('select * from usuario ;');
+            $stmt = $pdo->prepare('select * from usuario where deletado = 0;');
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
                 return $stmt;
@@ -337,8 +338,13 @@
             $pdo = $con->getConexao();
             $stmt = $pdo->prepare('update usuario set deletado = 1 where id_usuario = :definir ;');
             $stmt->bindValue(':definir', $definir);
-            $stmt->execute();
-            return $stmt->rowCount();
+            if($stmt->execute()) {
+                $empregadorPDO = new EmpregadorPDO();
+                $empregadoPDO = new EmpregadoPDO();
+                $empregadorPDO->deleteEmpregador($definir);
+                $empregadoPDO->deleteEmpregado($definir);
+                return $stmt->rowCount();
+            }
         }
 
         function deletar()

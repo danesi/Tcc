@@ -45,7 +45,7 @@
                 </li>
                 <li>
                     <?php if (!$servicoPDO->verificaServico($usuario->getId_usuario())) { ?>
-                        <a href="#modalEmpregador">
+                        <a href="#modalEmpregador" class="modal-trigger">
                             <div class="chip orange darken-1 white-text">Quero disponibilizar</div>
                         </a>
                     <?php } else { ?>

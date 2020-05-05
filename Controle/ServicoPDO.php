@@ -491,7 +491,7 @@
         function deletarPorIdEmpregador($id_empregador)
         {
             $pdo = conexao::getConexao();
-            $stmt = $pdo->prepare('update servico set deletado = 1 where id_usuario = :id_usuario');
+            $stmt = $pdo->prepare('delete from servico where id_usuario = :id_usuario');
             $stmt->bindValue(":id_usuario", $id_empregador);
             if ($stmt->execute()) {
                 return true;
@@ -526,19 +526,15 @@
 
         function deletar()
         {
-            $pdo = conexao::getConexao();
-            $stmt = $pdo->prepare("update servico set deletado = 1 where id_servico = :id_servico");
-            $stmt->bindValue(":id_servico", $_POST['id_servico']);
-            $stmt->execute();
+            $this->del($_POST['id_servico']);
             if (isset($_POST['servicos'])) {
                 if (isset($_POST['deleteUser'])) {
                     $servicos = $_POST['servicos'];
                     foreach ($servicos as $servico) {
-                        $stmt = $pdo->prepare("update servico set deletado = 1 where id_servico = :id_servico");
-                        $stmt->bindValue(":id_servico", $servico);
-                        $stmt->execute();
+                        $this->del($servico);
                     }
                     if ($_POST['deleteUser'] == 'true') {
+                        $pdo = conexao::getConexao();
                         $stmt = $pdo->prepare("select id_usuario from servico where id_servico = :id_servico");
                         $stmt->bindValue(":id_servico", $_POST['id_servico']);
                         $stmt->execute();
@@ -555,6 +551,17 @@
             } else {
                 $_SESSION['toast'][] = "Serviço excluido com sucesso!";
                 header('Location: ../Tela/listagemServico.php');
+            }
+        }
+
+        private function del($id_servico)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("delete from servico where id_servico = :id_servico");
+            $stmt->bindValue(":id_servico", $id_servico);
+            $fotoservicoPDO = new FotoservicoPDO();
+            if ($fotoservicoPDO->removerTodasFotos($id_servico)) {
+                $stmt->execute();
             }
         }
     }
