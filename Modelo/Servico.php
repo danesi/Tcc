@@ -11,6 +11,7 @@ class Servico
     private $id_usuario;
     private $status;
     private $motivo;
+    private $deletado;
 
 
     public function __construct()
@@ -124,4 +125,19 @@ class Servico
         $this->motivo = $motivo;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDeletado()
+    {
+        return $this->deletado;
+    }
+
+    /**
+     * @param mixed $deletado
+     */
+    public function setDeletado($deletado): void
+    {
+        $this->deletado = $deletado;
+    }
 }

@@ -5,8 +5,10 @@
     include_once __DIR__.'/../Controle/conexao.php';
     include_once __DIR__.'/../Controle/UsuarioPDO.php';
     include_once __DIR__.'/../Controle/ServicoPDO.php';
+    include_once __DIR__.'/../Controle/EmpregadoPDO.php';
     include_once __DIR__.'/../Modelo/Usuario.php';
     include_once __DIR__.'/../Modelo/Servico.php';
+    include_once __DIR__.'/../Modelo/Empregado.php';
     include_once __DIR__.'/../Modelo/Email.php';
 
     use PHPMailer\PHPMailer\Exception;
@@ -141,6 +143,46 @@
 </body>
 </html>
                 ');
+                $this->mail->send();
+                return true;
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+
+        public function notificaEmpregadoDeletado($id_empregado)
+        {
+            try {
+                $empregadoPDO = new EmpregadoPDO();
+                $usuarioPDO = new UsuarioPDO();
+                $empregado = new Empregado($empregadoPDO->selectEmpregadoId_usuario($id_empregado)->fetch());
+                $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($empregado->getId_usuario())->fetch());
+                $this->mail->setAssunto("Perfil de empregado deletado");
+                $this->mail->setNome($usuario->getNome());
+                $this->mail->setDestino($usuario->getEmail());
+                $this->mail->setBody('
+                <!doctype html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+</head>
+<style>
+    div, h4, p {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<body>
+<div>
+    <h4>Perfil exlcuido</h4>
+    <p>Lamentamos, mas um de nossos administradores excluiu seu perfil de empregado</p>
+</div>
+</body>
+</html>');
                 $this->mail->send();
                 return true;
             } catch (Exception $e) {

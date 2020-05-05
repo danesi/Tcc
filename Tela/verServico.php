@@ -165,6 +165,9 @@
                     </div>
                 </div>
             </div>
+            <div class="row center">
+                <a class="btn orange darken-1 voltar">Voltar</a>
+            </div>
         </div>
 </main>
 <div id="modalexcluirServico" class="modal">
@@ -224,5 +227,9 @@
         var motivo = $(this).attr('motivo');
         $('#motivo').html(motivo);
         $('#modalRecusado').modal('open');
+    });
+
+    $('.voltar').click(function () {
+        location.href = document.referrer;
     });
 </script>

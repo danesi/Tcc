@@ -1,6 +1,7 @@
 <?php
     include_once __DIR__.'./../Controle/conexao.php';
     include_once __DIR__.'./../Controle/UsuarioPDO.php';
+    include_once __DIR__.'./../Controle/EmailPDO.php';
     include_once __DIR__.'./../Modelo/Empregado.php';
     include_once __DIR__.'./../Modelo/Usuario.php';
 
@@ -18,7 +19,7 @@
             $areas = substr($empregado->getArea_atuacao(), 0, $count - 1);
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('insert into empregado values(:id_usuario , :escolaridade , :area_atuacao, null);');
+            $stmt = $pdo->prepare('insert into empregado values(:id_usuario , :escolaridade , :area_atuacao, null, default );');
             $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
             $stmt->bindValue(':escolaridade', $empregado->getEscolaridade());
             $stmt->bindValue(':area_atuacao', $areas);
@@ -191,9 +192,15 @@
 
         function deletar()
         {
-            $this->deleteEmpregado($_GET['id_usuario']);
-            $_SESSION['toast'][] = 'Perfil de empregado excluido!';
-            header('location: ../index.php');
+            if ($this->deleteEmpregado($_POST['id_usuario']) > 0) {
+                $_SESSION['toast'][] = 'Empregado excluido!';
+                $emailPDO = new EmailPDO();
+                $emailPDO->notificaEmpregadoDeletado($_POST['id_usuario']);
+                echo "<script>location.href = document.referrer;</script>";
+            } else {
+                $_SESSION['toast'][] = 'Erro ao excluir empregado';
+                echo "<script>location.href = document.referrer;</script>";
+            }
         }
 
 
@@ -227,7 +234,7 @@
 
         function selectEmpregadoProArea()
         {
-            if(isset($_POST['data'])){
+            if (isset($_POST['data'])) {
                 $areas = $_POST['data'];
             }
             $pdo = conexao::getConexao();
@@ -257,7 +264,6 @@
                 $empregado = new Empregado($this->selectEmpregadoId_usuario($id_empregado)->fetch());
                 $usuarioPDO = new UsuarioPDO();
                 $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($empregado->getId_usuario())->fetch());
-
                 echo "
                     <a href='./verEmpregado.php?id=".$empregado->getId_usuario()."'>
                     <div class='col l3 m3 s10 offset-s1' >
@@ -266,7 +272,7 @@
                             <img src='../".$usuario->getFoto()."'>
                             <span class='card-title'>".$usuario->getNome()."</span>
                             <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center'
-                               data-position='bottom' data-tooltip='Nota do empregado'>".$empregado->getNota() ."</a>
+                               data-position='bottom' data-tooltip='Nota do empregado'>".$empregado->getNota()."</a>
                         </div>
                         <ul class='card-content center'>
                             <h5>Áreas de atuação</h5>";

@@ -49,9 +49,12 @@
                                 <td><?= $empregador->getCnpj() ?></td>
                                 <td><?= $empregador->getNota() == "" ? '0' : $empregador->getNota() ?></td>
                                 <td>
-                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i class="material-icons black-text">zoom_in</i></a>
-                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Ver serviços"><i class="material-icons black-text">work_outline</i></a>
-                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Deletar"><i class="material-icons black-text">delete</i></a>
+                                    <a href="./verServicoEmpregado.php?id=<?= $empregador->getId_usuario() ?>"
+                                       class="tooltipped" data-position="bottom" data-tooltip="Ver serviços"><i
+                                                class="material-icons black-text">work_outline</i></a>
+                                    <a href="#!" class="tooltipped excluirEmpregador"
+                                       id_usuario="<?= $empregador->getId_usuario() ?>" data-position="bottom"
+                                       data-tooltip="Deletar"><i class="material-icons black-text">delete</i></a>
                                 </td>
                             </tr>
                             <?php
@@ -71,11 +74,13 @@
                                 <div class="collapsible-body">
                                     <p><b>Razão social: </b> <?= $empregador->getRazao_social() ?></p>
                                     <p><b>CNPJ: </b> <?= $empregador->getCnpj() ?></p>
-                                    <p><b>Nota: </b> <?= $empregador->getNota() == "" ? '0' : $empregador->getNota() ?></p>
+                                    <p><b>Nota: </b> <?= $empregador->getNota() == "" ? '0' : $empregador->getNota() ?>
+                                    </p>
                                     <div class="row center">
-                                        <a href="" class="btn blue darken-1">Ver mais</a>
-                                        <a href="" class="btn blue darken-1">Ver serviços</a>
-                                        <a href="" class="btn red darken-1">Deletar</a>
+                                        <a href="./verServicoEmpregado.php?id=<?= $empregador->getId_usuario() ?>"
+                                           class="btn blue darken-1">Ver serviços</a>
+                                        <a href="#!" class="btn red darken-1"
+                                           id_usuario="<?= $empregador->getId_usuario() ?>">Deletar</a>
                                     </div>
                                 </div>
                             </li>
@@ -90,6 +95,21 @@
         </div>
     </div>
 </main>
+<div id="modalExluirEmpregador" class="modal">
+    <form action="../Controle/EmpregadorControle.php?function=deletar" method="post">
+        <div class="modal-content">
+            <input type="text" name="id_usuario" id="inputIdEmpregador" value="" hidden>
+            <h4>Atenção</h4>
+            <p>Você relamente deseja excluir esse empregador?</p>
+            <p>Caso exclua, você estará excluindo todos os seus serviços relacionados a ele.</p>
+            <p id="servicos"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="btn modal-close waves-effect orange darken-1">Voltar</a>
+            <button type="submit" class="btn waves-effect red darken-1">Deletar</button>
+        </div>
+    </form>
+</div>
 <?php
     include_once '../Base/footer.php';
 ?>
@@ -98,6 +118,23 @@
 <script>
     $('.tooltipped').tooltip();
     $('.collapsible').collapsible();
+    $('.modal').modal();
+
+    $('.excluirEmpregador').click(function () {
+        var id_usuario = $(this).attr('id_usuario');
+        $('#inputIdEmpregador').val(id_usuario);
+        $.ajax({
+            url: "../Controle/ServicoControle.php?function=selectServicoIdEmpregador",
+            data: {
+                id_empregador : id_usuario
+            },
+            type: 'post',
+            success: function (data) {
+                $('#servicos').html(data);
+                $('#modalExluirEmpregador').modal('open');
+            }
+        });
+    });
 
     $('.voltar').click(function () {
         location.href = document.referrer;

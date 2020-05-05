@@ -47,7 +47,7 @@
             $senha = md5($_POST['senha1']);
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('insert into usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :foto, 0, default);');
+            $stmt = $pdo->prepare('insert into usuario values(default , :nome , :cpf , :nascimento , :telefone , :email , :senha , :foto, 0, default, default);');
             $stmt->bindValue(':nome', $usuario->getNome());
             $stmt->bindValue(':cpf', $usuario->getCpf());
             $stmt->bindValue(':nascimento', $usuario->getNascimento());
@@ -335,7 +335,7 @@
         {
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('delete from usuario where id_usuario = :definir ;');
+            $stmt = $pdo->prepare('update usuario set deletado = 1 where id_usuario = :definir ;');
             $stmt->bindValue(':definir', $definir);
             $stmt->execute();
             return $stmt->rowCount();
@@ -343,8 +343,10 @@
 
         function deletar()
         {
-            $this->deleteUsuario($_GET['id']);
-            header('location: ../Tela/listarUsuario.php');
+            if ($this->deleteUsuario($_POST['id_usuario']) > 0) {
+                $_SESSION['toast'][] = "Usuário deletado com sucesso!";
+                header('location: ../Tela/listagemUsuario.php');
+            }
         }
 
         function editar()

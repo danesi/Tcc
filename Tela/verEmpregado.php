@@ -104,6 +104,9 @@
                     <?php
                 } ?>
             </div>
+            <div class="row center">
+                <a class="voltar btn orange darken-1">Voltar</a>
+            </div>
         </div>
     </div>
 </main>
@@ -127,51 +130,15 @@
 
     $('select').formSelect();
     $('.modal').modal();
-    $("#cep").mask("00000-000");
-
-    $('#cep').blur(function () {
-        cep = $(this).val();
-        cep = cep.replace(/\D/g, '');
-        $.ajax({
-            url: 'https://viacep.com.br/ws/' + cep + '/json/unicode',
-            dataType: 'json',
-            success: function ({localidade, uf, complemento, logradouro, gia}) {
-                $('#cidade').val(localidade).focus();
-                $('#estado').val(uf).focus();
-                $('#complemento').val(complemento).focus();
-                $('#endereco').val(logradouro).focus();
-                $('#numero').val(gia).focus();
-            }
-        });
-    });
-
-    $('.chips').chips({
-        autocompleteOptions: {
-            data: {
-                'Desenvolvedor': null,
-                'Trabalhador rual': null,
-                'Trabalhador urbano': null,
-                'Domestica': null,
-                'Pintor': null,
-            },
-            limit: Infinity,
-            minLength: 1
-        },
-        data: [
-            <?php $areas = explode(",", $empregado->getArea_atuacao());
-            foreach ($areas as $area) { ?>
-            {tag: '<?=$area?>'},
-            <?php
-            } ?>
-        ],
-        placeholder: 'Áreas de atuação*',
-        secondaryPlaceholder: '+Áreas',
-    });
 
     $("#formDados").submit(function () {
         var value = $('.chips').text();
         var areas = value.split('close');
         $('.area').val(areas);
         return true;
+    });
+
+    $('.voltar').click(function () {
+        location.href = document.referrer;
     });
 </script>
