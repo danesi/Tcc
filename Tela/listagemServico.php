@@ -88,7 +88,8 @@
                             <div class="row center">
                                 <a href="./verServico.php?id=<?= $servico->getId_servico() ?>"
                                    class="btn blue darken-1">Ver mais</a>
-                                <a href="" class="btn red darken-1">Deletar</a>
+                                <a href="#!" class="btn red darken-1 excluirServico"
+                                   id_servico="<?= $servico->getId_servico() ?>">Deletar</a>
                             </div>
                         </div>
                         <?php

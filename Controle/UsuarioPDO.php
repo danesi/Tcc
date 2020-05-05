@@ -343,8 +343,10 @@
 
         function deletar()
         {
-            $this->deleteUsuario($_GET['id']);
-            header('location: ../Tela/listarUsuario.php');
+            if ($this->deleteUsuario($_POST['id_usuario']) > 0) {
+                $_SESSION['toast'][] = "Usuário deletado com sucesso!";
+                header('location: ../Tela/listagemUsuario.php');
+            }
         }
 
         function editar()

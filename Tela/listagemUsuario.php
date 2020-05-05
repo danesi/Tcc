@@ -68,9 +68,12 @@
                                 <td><?= $usuario->getEmail() ?></td>
                                 <td><?= $endereco->getEndereco().' - '.$endereco->getCidade() ?></td>
                                 <td>
-                                    <a href="./verUsuario.php?id=<?= $usuario->getId_usuario() ?>" class="tooltipped" data-position="bottom" data-tooltip="Ver mais"><i
+                                    <a href="./verUsuario.php?id=<?= $usuario->getId_usuario() ?>" class="tooltipped"
+                                       data-position="bottom" data-tooltip="Ver mais"><i
                                                 class="material-icons black-text">zoom_in</i></a>
-                                    <a href="" class="tooltipped" data-position="bottom" data-tooltip="Deletar"><i
+                                    <a href="#!" class="tooltipped excluirUsuario"
+                                       id_usuario="<?= $usuario->getId_usuario() ?>" data-position="bottom"
+                                       data-tooltip="Deletar"><i
                                                 class="material-icons black-text">delete</i></a>
                                 </td>
                             </tr>
@@ -128,6 +131,20 @@
         </div>
     </div>
 </main>
+<div id="modalExcluirUsuario" class="modal">
+    <form action="../Controle/UsuarioControle.php?function=deletar" method="post">
+        <div class="modal-content">
+            <input type="text" name="id_usuario" id="inputIdUsuario" value="" hidden>
+            <h4>Atenção</h4>
+            <p>Você realmente deseja deletar esse usuário?</p>
+            <p>Ao deleta-lo, você deleta também todas as coisas associadas a ele.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn orange darken-1">voltar</a>
+            <button class="btn red darken-1" type="submit">Deletar</button>
+        </div>
+    </form>
+</div>
 <?php
     include_once '../Base/footer.php';
 ?>
@@ -136,8 +153,15 @@
 <script>
     $('.tooltipped').tooltip();
     $('.collapsible').collapsible();
+    $('.modal').modal();
 
     $('.voltar').click(function () {
         location.href = document.referrer;
+    });
+
+    $('.excluirUsuario').click(function () {
+        var id_usuario = $(this).attr('id_usuario');
+        $('#inputIdUsuario').val(id_usuario);
+        $('#modalExcluirUsuario').modal('open');
     });
 </script>
