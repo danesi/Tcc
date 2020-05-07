@@ -42,7 +42,7 @@
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" name="imagem" id="foto" type="text"
-                                   placeholder="Selecione a foto" required hidden>
+                                   placeholder="Selecione a foto" hidden>
                         </div>
                     </div>
                     <div class="input-field col s8 m8 s10 offset-s1 offset-l2 offset-m2">
@@ -103,7 +103,8 @@
 
     $("#form").submit(function () {
         var foto = $('#btnFile').val();
-        if (foto === "" || foto == null) {
+        var src = $('.fotoPerfil').attr('src');
+        if ((foto === "" || foto == null) && src === '../Img/Perfil/default.png') {
             M.toast({html: 'Insira uma foto!'});
             return false;
         } else {
