@@ -280,3 +280,66 @@ main {
     box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
     width: 101%;
 }
+
+.sideChat {
+    position: fixed;
+    height: 80%;
+    bottom: 0;
+    right: 5px;
+    width: 300px;
+    background-color: whitesmoke;
+    border-radius: 25px 25px 0px 0px;
+    z-index: 500;
+}
+
+.headChat {
+    height: 6%;
+    background-color: #1e88e5;
+    color: white;
+    border-radius: 25px 25px 0px 0px;
+    text-align: center;
+    min-height: 5px;
+    padding: 2.5px;
+}
+
+.bodyChat {
+    overflow: auto;
+    height: 94%;
+}
+.headChatBox {
+    height: 35px;
+    background-color: #1e88e5;
+    color: white;
+    border-radius: 25px 25px 0px 0px;
+    text-align: center;
+    min-height: 5px;
+    padding: 2.5px;
+}
+.bodyChatBox {
+    overflow: auto;
+    height: calc(86% - 35px);
+}
+
+.openChat{
+    display: block !important;
+}
+
+.chatBox{
+    position: fixed;
+    bottom: 0;
+    right: 5px;
+    width: 350px;
+    max-width: 90%;
+    height: 800px;
+    max-height: 70%;
+    min-height: 500px;
+    background-color: whitesmoke;
+    border-radius: 25px 25px 0px 0px;
+    z-index: 500;
+}
+.messageChat{
+    line-height: 15px;
+}
+.inputChat{
+    height: 14%;
+}

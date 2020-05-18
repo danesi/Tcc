@@ -11,6 +11,17 @@ if (realpath("./index.php")) {
         }
     }
 }
+include_once $pontos . "Modelo/Usuario.php";
+include_once $pontos . "Controle/chatPDO.php";
+$chatPDO = new chatPDO();
+$user = new Usuario(unserialize($_SESSION['logado']));
+if ($chatPDO->verificaExistChat($user->getId_usuario())) {
+if (realpath("./verEmpregado.php")) {
+
+} else {
+    include_once $pontos . "Base/chat.php";
+}
+}
 ?>
 
 <footer class="center white">
