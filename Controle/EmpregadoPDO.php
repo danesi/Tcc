@@ -40,7 +40,8 @@
                         header("Location: ../Tela/registroEmpregado.php?msg=erroSalvarImagem");
                     }
                 } else {
-                    header("Location: ../Tela/registroEmpregado.php?msg=erroCarrregaImagem");
+                    $_SESSION['toast'][] = "Empregado cadastrado com sucesso!";
+                    header("Location: ../Tela/perfilEmpregado.php");
                 }
 
             } else {

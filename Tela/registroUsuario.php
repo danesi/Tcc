@@ -13,7 +13,7 @@
         <main>
             <div class="row">
                 <div class="card col l8 offset-l2 m10 offset-m1 s12">
-                    <form action="../Controle/UsuarioControle.php?function=inserirUsuario" method="post" id="form">
+                    <form action="../Controle/UsuarioControle.php?function=inserirUsuario" method="post" id="form" autocomplete="off">
                         <div class="row center">
                             <h4 class="textoCorPadrao2">Cadastrar Usuario</h4>
                             <div class="divider"></div>
@@ -26,7 +26,7 @@
                                     <label for="cpf">CPF<samp class="red-text">*</samp></label>
                                 </div>
                                 <div class="input-field col l5 m5 s10 offset-l1 offset-m1 offset-s1">
-                                    <input type="text" name="nascimento" class="datepicker" class="validate" required>
+                                    <input type="text" name="nascimento" class="datepicker" id="date" required autocomplete="off|">
                                     <label>Data de nascimento<samp class="red-text">*</samp></label>
                                 </div>
                                 <div class="input-field col l5 m5 s10 offset-s1">
@@ -38,11 +38,11 @@
                                     <label>E-mail<samp class="red-text">*</samp></label>
                                 </div>
                                 <div class="input-field col l5 m5 s10 offset-l1 offset-m1 offset-s1">
-                                    <input type="password" name="senha1" class="validate" required id="senha1">
+                                    <input type="password" name="senha1" class="validate" required id="senha1" autocomplete="new-password">
                                     <label>Senha<samp class="red-text">*</samp></label>
                                 </div>
                                 <div class="input-field col l5 m5 s10 offset-s1">
-                                    <input type="password" name="senha2" class="validate" required id="senha2">
+                                    <input type="password" name="senha2" class="validate" required id="senha2" autocomplete="new-password">
                                     <label>Repita a senha<samp class="red-text">*</samp></label>
                                     <div class="row right">
                                         <samp class="red-text">*</samp><samp class="grey-text"> Campos obrigatórios</samp>
@@ -130,6 +130,10 @@
                 weekdaysAbbrev: ['Do', 'Se', 'Te', 'Qa', 'Qi', 'Se', 'Sa']
             }
         });
+    });
+
+    $('#date').focusin(function () {
+        $(".datepicker").datepicker('open');
     });
 </script>
 

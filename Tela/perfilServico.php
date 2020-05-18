@@ -108,7 +108,13 @@
                     <?php
                 } ?>
             </div>
+            <div class="fixed-action-btn" >
+                <a class="btn-floating btn-large red initLoader " href="./registroServico.php">
+                    <i class="large material-icons corPadrao2">add</i>
+                </a>
+            </div>
         </div>
+
 </main>
 <div id="modalexcluirServico" class="modal">
     <form action="../Controle/ServicoControle.php?function=excluir" method="post">
