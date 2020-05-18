@@ -216,4 +216,8 @@
                 weekdaysAbbrev: ['Do', 'Se', 'Te', 'Qa', 'Qi', 'Se', 'Sa']
             }
         });
+
+    $('#nascimento').focusin(function () {
+        $(".datepicker").datepicker('open');
+    });
 </script>
