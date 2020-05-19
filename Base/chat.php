@@ -29,8 +29,10 @@ if (realpath("./index.php")) {
                     include_once $pontos . "Controle/chatPDO.php";
                     $chatPDO = new chatPDO();
                     $stmt = $chatPDO->selectListaContatos();
+                    $logado = new Usuario(unserialize($_SESSION['logado']));
                     while ($linha = $stmt->fetch()) {
                         $usuario = new usuario($linha);
+                        $notificacao = $chatPDO->verificaNotificacao($usuario->getId_usuario(), $logado->getId_usuario())->fetch();
                         echo "  <li class='hoverable vali waves-effect openChat collection-item' id_destinatario='" . $usuario->getId_usuario() . "'>
                                        
                                         <div class='fotoPerfil le' style='background-image: url(" . $pontos . $usuario->getFoto() . ");
@@ -42,7 +44,7 @@ if (realpath("./index.php")) {
                                         width: 40px'
                                         ></div>
                                       
-                                        <span class='title'>" . $usuario->getNome() . "</span>".($linha['newMessages']==0?"":"<span class='badge corPadrao3 white-text'>".$linha['newMessages']."</span>")."
+                                        <span class='title'>" . $usuario->getNome() . "</span>".($notificacao['newMessages']==0?"":"<span class='badge orange darken-1 white-text'>".$notificacao['newMessages']."</span>")."
                                 </li>";
 
                     }
@@ -72,10 +74,26 @@ if (realpath("./index.php")) {
                 <input id="mensagem" name="mensagem" type="text" autocomplete="off">
                 <label for="mensagem">Mensagem</label>
             </div>
-            <div class="col s1">
+            <div class="col s1" id="btnImagen">
                 <div class="file-field input-field">
-                    <a class="btn" href="#!" id="enviaImagem"><i class="material-icons">image</i></a>
-
+                    <a class="btn" href="#!" id="enviaImagem" hidden><i class="material-icons">image</i></a>
+                </div>
+            </div>
+            <div class="col s1" id="btnPreloadImagen" hidden>
+                <div class="file-field input-field">
+                    <a class="btn-flat" href="#!">
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-blue-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div><div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -110,9 +128,15 @@ if (realpath("./index.php")) {
         $(this).hide();
     });
 
+    $(".verMensagem").click(function () {
+        $(".sideChat").show();
+        $(this).hide();
+    });
+
     $(".closeChatList").click(function () {
         $("#openChatList").show();
         $(".sideChat").hide();
+        notification();
     });
 
     var refreshChat;
@@ -140,30 +164,34 @@ if (realpath("./index.php")) {
 
             });
         });
+        notification();
     });
 
     $("#formMensagem").submit(function () {
         var dados = $(this).serialize();
         $("#mensagem").val("");
         $.ajax({
-            url: "<?php echo $pontos; ?>Controle/chatControle.php?function=enviaMensagem&destinatario=" + id_destinatario,
+            url: "<?= $pontos; ?>Controle/chatControle.php?function=enviaMensagem&destinatario=" + id_destinatario,
             data: dados,
             type: "post",
             success: function (data) {
                 //TODO confirmação de envio
-
             }
         });
         return false;
     });
     $("#testeArquivo").submit(function () {
         var formData = new FormData(this);
+        $('#btnImagen').attr("hidden", true);
+        $('#btnPreloadImagen').removeAttr("hidden");
         $.ajax({
-            url: "<?php echo $pontos; ?>Controle/chatControle.php?function=enviaMedia&destinatario=" + id_destinatario,
+            url: "<?= $pontos; ?>Controle/chatControle.php?function=enviaMedia&destinatario=" + id_destinatario,
             type: 'POST',
             data: formData,
             success: function (data) {
                 //TODO reação a envio positivo
+                $('#btnPreloadImagen').attr("hidden", true);
+                $('#btnImagen').removeAttr("hidden");
             },
             cache: false,
             contentType: false,
@@ -186,7 +214,7 @@ if (realpath("./index.php")) {
         $("#nameDestinatario").html(nome_destinatario);
         $(".sideChat").hide();
         $(".chatBox").show();
-        $(".bodyChatBox").load("<?php echo $pontos; ?>Controle/chatControle.php?function=selectConversa&pontos=<?=$pontos?>&destinatario=" + id_destinatario, startPushListener);
+        $(".bodyChatBox").load("<?= $pontos; ?>Controle/chatControle.php?function=selectConversa&pontos=<?=$pontos?>&destinatario=" + id_destinatario, startPushListener);
     }
 
     function intervalo() {
@@ -196,7 +224,7 @@ if (realpath("./index.php")) {
                 $(".bodyChatBox").scrollTop($(".bodyChatBox").height() * 150);
                 x++;
                 ajax = $.ajax({
-                    url: "<?php echo $pontos; ?>Controle/chatControle.php?function=getNewMessage&destinatario=" + id_destinatario + "&last_id=" + lastId+"&pontos=<?=$pontos?>",
+                    url: "<?= $pontos; ?>Controle/chatControle.php?function=getNewMessage&destinatario=" + id_destinatario + "&last_id=" + lastId+"&pontos=<?=$pontos?>",
                     success: function (data) {
                         x--;
                         $(".bodyChatBox").append(data);
@@ -213,6 +241,7 @@ if (realpath("./index.php")) {
         $(".bodyChatBox").scrollTop($(".bodyChatBox").height() * 150);
         refreshChat = setInterval(intervalo, 500);
     }
+
     $(".bodyChat").load("<?php echo $pontos ?>Controle/chatControle.php?function=refreshBodyChat&pontos=<?php echo $pontos ?>", function () {
         $(".openChat").click(function () {
             var nome = $(this).find($(".title")).html();
@@ -222,6 +251,27 @@ if (realpath("./index.php")) {
 
         });
     });
+
+    function notification() {
+        var id = <?= $logado->getId_usuario() ?>;
+        $.ajax({
+            url: "<?= $pontos; ?>Controle/chatControle.php?function=CountNotificacao&id="+id,
+            success: function (data) {
+                console.log(data);
+                if (data > 0) {
+                    $('#openChatList').addClass("pulse");
+                } else {
+                    $('#openChatList').removeClass("pulse");
+                }
+            }
+        });
+    }
+
+    setInterval(function () {
+        notification();
+    }, 20000);
+
+    notification();
 </script>
 
 

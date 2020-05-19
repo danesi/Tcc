@@ -128,7 +128,7 @@
 </div>
 </html>
 <?php
-include_once "../Base/chat2.php";
+ include_once "../Base/chat2.php";
 ?>
 <script>
 

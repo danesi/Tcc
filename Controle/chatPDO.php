@@ -205,6 +205,18 @@ class chatPDO
         }
     }
 
+    public function isFirstMessage()
+    {
+        $id_remetente = $_GET['id_remetente'];
+        $id_destinatario = $_GET['id_destinatario'];
+        $pdo = conexao::getConexao();
+        $stmt = $pdo->prepare("select * from chat where (id_remetente = :id_remetente and id_destinatario = :id_destinatario) or (id_remetente = :id_destinatario and id_destinatario = :id_remetente)");
+        $stmt->bindValue(":id_remetente", $id_remetente);
+        $stmt->bindValue(":id_destinatario", $id_destinatario);
+        $stmt->execute();
+        echo $stmt->rowCount();
+    }
+
     function selectCaixaCompleta($id_usuario)
     {
         //TODO select de auditoria
@@ -267,7 +279,7 @@ class chatPDO
     {
         $con = new conexao();
         $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('select u.*  , count(ch.id_chat) as newMessages from usuario as u left outer join  chat as ch on ch.id_remetente = u.id_usuario and ch.id_destinatario = :id_destinatario and ch.visualizado = 0 group by u.id_usuario;');
+            $stmt = $pdo->prepare('select u.*  , count(ch.id_chat) as newMessages from usuario as u left outer join  chat as ch on ch.id_remetente = u.id_usuario or ch.id_destinatario = u.id_usuario where (ch.id_remetente = :id_destinatario or ch.id_destinatario = :id_destinatario) and u.id_usuario != :id_destinatario group by u.id_usuario, u.nome asc');
         $stmt->bindValue(':id_destinatario', $this->logado->getId_usuario());
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
@@ -275,6 +287,26 @@ class chatPDO
         } else {
             return false;
         }
+    }
+
+    public function verificaNotificacao($id_remetente, $id_destinatario)
+    {
+        $pdo = conexao::getConexao();
+        $stmt = $pdo->prepare("select count(id_chat) as newMessages from chat where id_destinatario = :id_destinatario and id_remetente = :id_remetente and visualizado = 0;");
+        $stmt->bindValue(":id_destinatario", $id_destinatario);
+        $stmt->bindValue(":id_remetente", $id_remetente);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function CountNotificacao()
+    {
+        $id_destinatario = $_GET['id'];
+        $pdo = conexao::getConexao();
+        $stmt = $pdo->prepare("select count(id_chat) as newMessages from chat where id_destinatario = :id_destinatario and visualizado = 0;");
+        $stmt->bindValue(":id_destinatario", $id_destinatario);
+        $stmt->execute();
+        echo $stmt->fetch()['newMessages'];
     }
 
     function refreshBodyChat()
@@ -288,7 +320,9 @@ class chatPDO
                         ";
         $stmt = $this->selectListaContatos();
         while ($linha = $stmt->fetch()) {
-            $usuario = new usuario($linha);
+            $usuario = new Usuario($linha);
+            $logado = new Usuario(unserialize($_SESSION['logado']));
+            $notificacao = $this->verificaNotificacao($usuario->getId_usuario(), $logado->getId_usuario())->fetch();
             echo "  <li class='hoverable vali waves-effect openChat collection-item' id_destinatario='" . $usuario->getId_usuario() . "'>
                                        
                                         <div class='fotoPerfil le' style='background-image: url(" . $pontos . $usuario->getFoto() . ");
@@ -300,7 +334,7 @@ class chatPDO
                                         width: 40px'
                                         ></div>
                                       
-                                        <span class='title'>" . $usuario->getNome() . "</span>".($linha['newMessages']==0?"":"<span class='badge corPadrao3 white-text'>".$linha['newMessages']."</span>")."
+                                        <span class='title'>" . $usuario->getNome() . "</span>".($notificacao['newMessages']==0?"":"<span class='badge corPadrao3 white-text'>".$notificacao['newMessages']."</span>")."
                                 </li>";
 
         }
