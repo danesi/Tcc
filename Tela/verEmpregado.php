@@ -36,9 +36,10 @@
             <div class="row">
                 <div class="col l3 offset-l1 m3 offset-m1 s10 offset-s1">
                     <div class="card z-depth-3">
-                        <div class="card-image">
+                        <div class="card-image" id="user">
+                            <span hidden class="id"><?=$empregado->getId_usuario()?></span>
                             <img src="../<?= $user->getFoto() ?>">
-                            <span class="card-title"><?= $user->getNome() ?></span>
+                            <span class="card-title nome" ><?= $user->getNome() ?></span>
                             <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center"
                                data-position="bottom" data-tooltip="Nota do empregado"><?=$empregado->getNota() == null ? '0' : $empregado->getNota()?></a>
                         </div>
@@ -126,6 +127,9 @@
     </div>
 </div>
 </html>
+<?php
+ include_once "../Base/chat2.php";
+?>
 <script>
 
     $('select').formSelect();
@@ -141,4 +145,6 @@
     $('.voltar').click(function () {
         location.href = document.referrer;
     });
+
+    $('#btnChat').hide();
 </script>
