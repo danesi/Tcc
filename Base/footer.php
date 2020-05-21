@@ -1,4 +1,7 @@
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 $pontos = "";
 if (realpath("./index.php")) {
     $pontos = './';
@@ -13,13 +16,16 @@ if (realpath("./index.php")) {
 }
 include_once $pontos . "Modelo/Usuario.php";
 include_once $pontos . "Controle/chatPDO.php";
-$chatPDO = new chatPDO();
-$user = new Usuario(unserialize($_SESSION['logado']));
-$url = str_replace("/Tcc/Tela", "", $_SERVER["PHP_SELF"]);
-if ($chatPDO->verificaExistChat($user->getId_usuario())) {
-if ($url != "/verEmpregado.php") {
-    include_once $pontos . "Base/chat.php";
-}
+include_once $pontos . 'Base/toast.php';
+if (isset($_SESSION['logado'])) {
+    $chatPDO = new chatPDO();
+    $user = new Usuario(unserialize($_SESSION['logado']));
+    $url = str_replace("/Tcc/Tela", "", $_SERVER["PHP_SELF"]);
+    if ($chatPDO->verificaExistChat($user->getId_usuario())) {
+        if ($url != "/verEmpregado.php") {
+            include_once $pontos . "Base/chat.php";
+        }
+    }
 }
 ?>
 
