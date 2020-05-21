@@ -17,7 +17,7 @@ if (realpath("./index.php")) {
 ?>
 <div class="sideChat z-depth-3" style="display: none; z-index: 99999">
     <div class="headChat">
-        <div class="center-block">Contatos <a href="#!" class="closeChatList"><i
+        <div><b class="left" style="margin-left: 2vh">Contatos </b><a href="#!" class="closeChatList"><i
                         class="material-icons right white-text" style="margin-right: 15px;">close</i></a></div>
     </div>
     <div class="bodyChat">
