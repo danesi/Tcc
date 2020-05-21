@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Listagem Empregado</title>
+    <title>EasyJobs</title>
     <?php
         include_once '../Base/header.php';
         include_once '../Controle/UsuarioPDO.php';
