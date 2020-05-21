@@ -28,8 +28,8 @@
             <a href="#" data-target="slide-out" class="sidenav-trigger">
                 <i class="material-icons black-text">menu</i>
             </a>
-            <a href="<?php echo $pontos; ?>./index.php" class="brand-logo left black-text hide-on-small-only">Tcc</a>
-            <a href="<?php echo $pontos; ?>./index.php" class="brand-logo black-text center hide-on-med-and-up">Tcc</a>
+            <a href="<?php echo $pontos; ?>./index.php" class="brand-logo left black-text hide-on-small-only">EasyJobs</a>
+            <a href="<?php echo $pontos; ?>./index.php" class="brand-logo black-text center hide-on-med-and-up">EasyJobs</a>
             <ul class="right hide-on-med-and-down">
                 <li>
                     <?php if (!$empregadoPDO->verificaEmpregado($usuario->getId_usuario())) { ?>
