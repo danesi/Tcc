@@ -24,7 +24,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>EasyJobs</title>
     <?php
         include_once '../Base/header.php';
     ?>
