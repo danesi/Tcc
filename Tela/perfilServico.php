@@ -12,6 +12,8 @@
     include_once "../Controle/EnderecoPDO.php";
     include_once "../Controle/EmpregadorPDO.php";
     include_once "../Controle/FotoservicoPDO.php";
+    include_once "../Controle/chatPDO.php";
+    $chatPDO = new chatPDO();
     $usuario = new Usuario(unserialize($_SESSION['logado']));
     $servicoPDO = new ServicoPDO();
     $enderecoPDO = new EnderecoPDO();
@@ -108,9 +110,9 @@
                     <?php
                 } ?>
             </div>
-            <div class="fixed-action-btn" >
+            <div class="fixed-action-btn" <?= $chatPDO->verificaExistChat($usuario->getId_usuario()) ? "style='margin-bottom: 11vh'" : ""?>>
                 <a class="btn-floating btn-large red initLoader " href="./registroServico.php">
-                    <i class="large material-icons corPadrao2">add</i>
+                    <i class="large material-icons blue darken-1">add</i>
                 </a>
             </div>
         </div>
