@@ -22,7 +22,7 @@ if (isset($_SESSION['logado'])) {
     $user = new Usuario(unserialize($_SESSION['logado']));
     $url = str_replace("/Tcc/Tela", "", $_SERVER["PHP_SELF"]);
     if ($chatPDO->verificaExistChat($user->getId_usuario())) {
-        if ($url != "/verEmpregado.php") {
+        if ($url != "/verEmpregado.php" && $url != "/verServico.php") {
             include_once $pontos . "Base/chat.php";
         }
     }

@@ -8,10 +8,12 @@
     include_once "../Modelo/Endereco.php";
     include_once "../Modelo/Empregador.php";
     include_once "../Modelo/Fotoservico.php";
+    include_once "../Modelo/Empregado.php";
     include_once "../Controle/UsuarioPDO.php";
     include_once "../Controle/ServicoPDO.php";
     include_once "../Controle/EnderecoPDO.php";
     include_once "../Controle/EmpregadorPDO.php";
+    include_once "../Controle/EmpregadoPDO.php";
     include_once "../Controle/FotoservicoPDO.php";
 ?>
 <!DOCTYPE html>
@@ -28,12 +30,19 @@
     $usuarioPDO = new UsuarioPDO();
     $servicoPDO = new ServicoPDO();
     $enderecoPDO = new EnderecoPDO();
-    $empregadorPDO = new EmpregadorPDO();
     $fotoservicoPDO = new FotoservicoPDO();
-    $empregador = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario->getId_usuario())->fetch());
+    $empregadorPDO = new EmpregadorPDO();
     $servico = new Servico($servicoPDO->selectServicoId_servico($_GET['id'])->fetch());
+    $logado = new Usuario(unserialize($_SESSION['logado']));
+    $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($servico->getId_usuario())->fetch());
+    $empregado = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario->getId_usuario())->fetch());
 ?>
 <main>
+    <div id="user" hidden>
+        <div class="nome">Proprietário <?=$usuario->getNome()?></div>
+        <span hidden class="id"><?=$empregado->getId_usuario()?></span>
+    </div>
+
     <div class="row" style="margin-top: 1vh;">
         <div class="card col l10 m10 offset-l1 offset-m1 s12">
             <h4 class="textoCorPadrao2 center">Serviço <?= $servico->getNome() ?></h4>
@@ -208,6 +217,9 @@
 </div>
 <?php
     include_once '../Base/footer.php';
+?>
+<?php
+include_once "../Base/chat2.php";
 ?>
 </body>
 </html>
