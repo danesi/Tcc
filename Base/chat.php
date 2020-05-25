@@ -124,6 +124,7 @@ if (realpath("./index.php")) {
         };
     }
     $("#openChatList").click(function () {
+        $('.imgBoxed').removeClass('materialboxed');
         $(".sideChat").show();
         $(this).hide();
     });
@@ -134,6 +135,7 @@ if (realpath("./index.php")) {
     });
 
     $(".closeChatList").click(function () {
+        $('.imgBoxed').addClass('materialboxed');
         $("#openChatList").show();
         $(".sideChat").hide();
         notification();
@@ -144,6 +146,7 @@ if (realpath("./index.php")) {
     var id_destinatario = 0;
     var x = 0;
     $(".openChat").click(function () {
+        $('.imgBoxed').removeClass('materialboxed');
         var nome = $(this).find($(".title")).html();
         var id = $(this).attr("id_destinatario");
         id_destinatario = id;
@@ -151,6 +154,7 @@ if (realpath("./index.php")) {
 
     });
     $(".closeChat").click(function () {
+        $('.imgBoxed').addClass('materialboxed');
         $("#openChatList").show();
         $(".chatBox").hide();
         ajax.abort();

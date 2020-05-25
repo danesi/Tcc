@@ -4,14 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 
-
-
     </style>
 </head>
 <body>
-<?php
-    include_once "../Base/header.php"
-?>
+
 <div class="slideshow-container">
 
     <div class="mySlides fade">
@@ -23,7 +19,7 @@
     </div>
 
     <div class="mySlides fade">
-        <img src="../Img/Servico/c20ad4d76fe97759aa27a0c99bff6710.jpeg" style="width:100%">
+        <img src="../Img/Servico/c4ca4238a0b923820dcc509a6f75849b.jpg" style="width:100%">
     </div>
 
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>

@@ -17,7 +17,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_SESSION['logado'])) {
-    $_SESSION['toast'][] = "Você precisa estar logado para fazer essa operação";
     $uri = $_SERVER["REQUEST_URI"];
     header('location: ' . $pontos . 'Tela/login.php?uri='.$uri);
 } else {

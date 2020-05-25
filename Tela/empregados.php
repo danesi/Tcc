@@ -1,6 +1,3 @@
-<?php
-    include_once '../Base/requerLogin.php';
-?>
 <!DOCTYPE html>
 <html>
 <head>

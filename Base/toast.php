@@ -16,8 +16,6 @@ if (realpath("./index.php")) {
     }
 }
 
-include_once $pontos . 'Base/header.php';
-
 if (isset($_SESSION['toast'])) {
     $tempo = 0;
     foreach ($_SESSION['toast'] as $toast) {

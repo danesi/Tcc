@@ -1,20 +1,20 @@
 <?php
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-    include_once '../Base/requerLogin.php';
-    include_once "../Modelo/Usuario.php";
-    include_once "../Modelo/Servico.php";
-    include_once "../Modelo/Endereco.php";
-    include_once "../Modelo/Empregador.php";
-    include_once "../Modelo/Fotoservico.php";
-    include_once "../Modelo/Empregado.php";
-    include_once "../Controle/UsuarioPDO.php";
-    include_once "../Controle/ServicoPDO.php";
-    include_once "../Controle/EnderecoPDO.php";
-    include_once "../Controle/EmpregadorPDO.php";
-    include_once "../Controle/EmpregadoPDO.php";
-    include_once "../Controle/FotoservicoPDO.php";
+if (!isset($_SESSION)) {
+    session_start();
+}
+include_once '../Base/requerLogin.php';
+include_once "../Modelo/Usuario.php";
+include_once "../Modelo/Servico.php";
+include_once "../Modelo/Endereco.php";
+include_once "../Modelo/Empregador.php";
+include_once "../Modelo/Fotoservico.php";
+include_once "../Modelo/Empregado.php";
+include_once "../Controle/UsuarioPDO.php";
+include_once "../Controle/ServicoPDO.php";
+include_once "../Controle/EnderecoPDO.php";
+include_once "../Controle/EmpregadorPDO.php";
+include_once "../Controle/EmpregadoPDO.php";
+include_once "../Controle/FotoservicoPDO.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,25 +22,26 @@
     <meta charset="UTF-8">
     <title>EasyJobs</title>
     <?php
-        include_once '../Base/header.php';
+    include_once '../Base/header.php';
     ?>
+    <link rel="stylesheet" href="../css/slider.css">
 <body class="homeimg">
 <?php
-    include_once '../Base/iNav.php';
-    $usuarioPDO = new UsuarioPDO();
-    $servicoPDO = new ServicoPDO();
-    $enderecoPDO = new EnderecoPDO();
-    $fotoservicoPDO = new FotoservicoPDO();
-    $empregadorPDO = new EmpregadorPDO();
-    $servico = new Servico($servicoPDO->selectServicoId_servico($_GET['id'])->fetch());
-    $logado = new Usuario(unserialize($_SESSION['logado']));
-    $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($servico->getId_usuario())->fetch());
-    $empregado = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario->getId_usuario())->fetch());
+include_once '../Base/iNav.php';
+$usuarioPDO = new UsuarioPDO();
+$servicoPDO = new ServicoPDO();
+$enderecoPDO = new EnderecoPDO();
+$fotoservicoPDO = new FotoservicoPDO();
+$empregadorPDO = new EmpregadorPDO();
+$servico = new Servico($servicoPDO->selectServicoId_servico($_GET['id'])->fetch());
+$logado = new Usuario(unserialize($_SESSION['logado']));
+$usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($servico->getId_usuario())->fetch());
+$empregado = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario->getId_usuario())->fetch());
 ?>
 <main>
     <div id="user" hidden>
-        <div class="nome">Proprietário <?=$usuario->getNome()?></div>
-        <span hidden class="id"><?=$empregado->getId_usuario()?></span>
+        <div class="nome">Proprietário <?= $usuario->getNome() ?></div>
+        <span hidden class="id"><?= $empregado->getId_usuario() ?></span>
     </div>
 
     <div class="row" style="margin-top: 1vh;">
@@ -48,52 +49,29 @@
             <h4 class="textoCorPadrao2 center">Serviço <?= $servico->getNome() ?></h4>
             <div class="divider"></div>
             <div class="card-title center">Fotos</div>
-            <div class="row hide-on-small-only" style="margin-left: -32vh; margin-top: -10vh">
-                <div class="carousel center" style="z-index: 10000">
+            <div class="row foto">
+                <div class="slideshow-container">
                     <?php
-                        $stmtFotos = $fotoservicoPDO->selectTodasFotos($servico->getId_servico());
-                        while ($linha = $stmtFotos->fetch()) {
-                            $fotos = new Fotoservico($linha);
-                            ?>
-                            <a class="carousel-item">
-                                <img class="materialboxed" src="<?= '../'.$fotos->getCaminho() ?>"
-                                     style="
-                             height: 250px; max-width: auto;
-                             background-position: center;
-                             background-size: cover;
-                             background-repeat: no-repeat;
-                             object-fit: cover;
-                             object-position: center;">
-                            </a>
-                            <?php
-                        }
-                    ?>
-                </div>
-            </div>
-            <div class="hide-on-med-and-up">
-                <div class="slider">
-                    <ul class="slides">
-                        <?php
-                            $stmtFotos = $fotoservicoPDO->selectTodasFotos($servico->getId_servico());
-                            while ($linha = $stmtFotos->fetch()) {
-                                $fotos = new Fotoservico($linha);
-                                ?>
-                                <li>
-                                    <img src="<?= '../'.$fotos->getCaminho() ?>"
-                                         style="
-                                         width: 100%;
-                                         height: 500px; max-width: 100%;
-                                         background-position: center;
-                                         background-size: cover;
-                                         background-repeat: no-repeat;
-                                         object-fit: cover;
-                                         object-position: center;"
-                                    >
-                                </li>
-                                <?php
-                            }
+                    $stmtFotos = $fotoservicoPDO->selectTodasFotos($servico->getId_servico());
+                    $num = $stmtFotos->rowCount();
+                    while ($linha = $stmtFotos->fetch()) {
+                        $fotos = new Fotoservico($linha);
                         ?>
-                    </ul>
+                        <div class="mySlides fade">
+                            <img class="materialboxed imgBoxed" src="../<?= $fotos->getCaminho() ?>" style="width:100%">
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+                <div style="text-align:center">
+                    <?php
+                    for ($i = 1; $i <= $num; $i++) {
+                        echo '<span class="dot" onclick="currentSlide(' . $i . ')"></span>';
+                    }
+                    ?>
                 </div>
             </div>
             <div class="card-title center">Perfil</div>
@@ -101,14 +79,14 @@
             <br>
             <div class="row">
                 <?php
-                    $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
+                $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                 ?>
                 <div class="col s10 m6 l3 offset-s1 offset-l1 center">
                     <div class="card bot z-depth-3">
                         <div class="card-image ">
 
                             <div class="center-block"
-                                 style="background-image: url('<?= "../".$foto->getCaminho(); ?>');
+                                 style="background-image: url('<?= "../" . $foto->getCaminho(); ?>');
                                          height: 250px; max-width: auto;
                                          background-position: center;
                                          background-size: cover;
@@ -136,10 +114,12 @@
                 </div>
                 <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
                     <?php
-                        $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($servico->getId_endereco())->fetch());
+                    $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($servico->getId_endereco())->fetch());
                     ?>
                     <ul class="collection with-header">
-                        <li class="collection-header"><div class="card-title center">Endereço</div></li>
+                        <li class="collection-header">
+                            <div class="card-title center">Endereço</div>
+                        </li>
                         <li class="collection-item">
                             <div><b>Endereço</b>
                                 <div class="secondary-content black-text">
@@ -227,7 +207,7 @@
     </div>
 </div>
 <?php
-    include_once '../Base/footer.php';
+include_once '../Base/footer.php';
 ?>
 <?php
 include_once "../Base/chat2.php";
@@ -255,4 +235,35 @@ include_once "../Base/chat2.php";
     $('.voltar').click(function () {
         location.href = document.referrer;
     });
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
 </script>
