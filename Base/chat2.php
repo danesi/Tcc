@@ -126,11 +126,13 @@ if (realpath("./index.php")) {
         };
     }
     $("#openChatList").click(function () {
+        $('.imgBoxed').removeClass('materialboxed');
         $(".sideChat").show();
         $(this).hide();
     });
 
     $(".closeChatList").click(function () {
+        $('.imgBoxed').addClass('materialboxed');
         $("#openChatList").show();
         $(".sideChat").hide();
     });
@@ -140,6 +142,8 @@ if (realpath("./index.php")) {
     var id_destinatario = 0;
     var x = 0;
     $("#openChat").click(function () {
+        $('.imgBoxed').removeClass('materialboxed');
+        console.log($('img'));
         var nome = $('#user').find($(".nome")).html();
         var id = $(".id").html();
         id_destinatario = id;
@@ -147,6 +151,7 @@ if (realpath("./index.php")) {
 
     });
     $(".closeChat").click(function () {
+        $('.imgBoxed').addClass('materialboxed');
         $("#openChatList").show();
         $(".chatBox").hide();
         ajax.abort();

@@ -28,6 +28,7 @@
                         <?php
                             if (isset($_GET['uri'])) {
                                 echo '<input type="text" name="uri" value="'.$_GET['uri'].'" hidden>';
+                                echo '<script>M.toast({html: "Você precisa de estar logado para acessar essa página"})</script>';
                             }
                         ?>
                         <div class="input-field col s10 offset-s1">
