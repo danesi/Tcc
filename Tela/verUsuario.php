@@ -1,5 +1,5 @@
 <?php
-    include_once '../Base/requerLogin.php';
+include_once '../Base/requerLogin.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -7,26 +7,29 @@
     <meta charset="UTF-8">
     <title>EasyJobs</title>
     <?php
-        include_once '../Base/header.php';
-        include_once '../Controle/UsuarioPDO.php';
-        include_once '../Controle/EmpregadorPDO.php';
-        include_once '../Controle/ServicoPDO.php';
-        include_once '../Controle/EnderecoPDO.php';
-        include_once '../Modelo/Empregador.php';
-        include_once '../Modelo/Usuario.php';
-        include_once '../Modelo/Servico.php';
-        include_once '../Modelo/Endereco.php';
-        $usuarioPDO = new UsuarioPDO();
-        $empregadoPDO = new EmpregadoPDO();
-        $servicoPDO = new ServicoPDO();
-        $enderecoPDO = new EnderecoPDO();
+    include_once '../Base/header.php';
+    include_once '../Controle/UsuarioPDO.php';
+    include_once '../Controle/EmpregadorPDO.php';
+    include_once '../Controle/ServicoPDO.php';
+    include_once '../Controle/EnderecoPDO.php';
+    include_once '../Modelo/Empregador.php';
+    include_once '../Modelo/Usuario.php';
+    include_once '../Modelo/Servico.php';
+    include_once '../Modelo/Endereco.php';
+    $usuarioPDO = new UsuarioPDO();
+    $empregadoPDO = new EmpregadoPDO();
+    $servicoPDO = new ServicoPDO();
+    $enderecoPDO = new EnderecoPDO();
     ?>
 <body class="homeimg">
 <?php
-    include_once '../Base/iNav.php';
-    $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($_GET['id'])->fetch());
-    $empregado = new Empregado($empregadoPDO->selectEmpregadoId_usuario($usuario->getId_usuario())->fetch());
-    $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($usuario->getId_endereco())->fetch());
+include_once '../Base/iNav.php';
+$usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($_GET['id'])->fetch());
+$endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($usuario->getId_endereco())->fetch());
+$stmtEmpregado = $empregadoPDO->selectEmpregadoId_usuario($usuario->getId_usuario());
+if ($stmtEmpregado) {
+    $empregado = new Empregado($stmtEmpregado->fetch());
+}
 ?>
 <main>
     <div class="row " style="margin-top: 5vh;">
@@ -43,15 +46,24 @@
                                data-position="bottom" data-tooltip="Nota do empregado">4.5</a>
                         </div>
                         <ul class="card-content center">
-                            <h5>Áreas de atuação</h5>
-                            <?php $areas = explode(",", $empregado->getArea_atuacao());
+                            <?php
+                            if (isset($empregado)) {
+                                $areas = explode(",", $empregado->getArea_atuacao());
+                                echo '<h5>Áreas de atuação</h5>';
                                 foreach ($areas as $area) { ?>
                                     <div class="chip"><?= $area ?></div>
                                     <?php
                                 }
+                                ?>
+                                <h5>Ecolaridade</h5>
+                                <div class="chip"><?= $empregado->getEscolaridade() ?></div>
+                                <?php
+                            } else {
+                                ?>
+                                <div class="card-title">Esse usuário não possui perfil de empregado</div>
+                                <?php
+                            }
                             ?>
-                            <h5>Ecolaridade</h5>
-                            <div class="chip"><?= $empregado->getEscolaridade() ?></div>
                     </div>
                 </div>
                 <div class="card col l6 offset-l1 m6 offset-m1 s10 offset-s1">
@@ -60,26 +72,28 @@
                     </div>
                     <div class="collection">
                         <?php
-                            $stmtServicos = $servicoPDO->selectServicoId_usuario($usuario->getId_usuario());
-                            if ($stmtServicos) {
-                                while ($linha = $stmtServicos->fetch()) {
-                                    $servico = new Servico($linha);
-                                    ?>
-                                    <a href="./verServico.php?id=<?= $servico->getId_servico() ?>"
-                                       class="collection-item black-text"><b><?= $servico->getNome() ?></b></a>
-                                    <?php
-                                }
-                            } else {
+                        $stmtServicos = $servicoPDO->selectServicoId_usuario($usuario->getId_usuario());
+                        if ($stmtServicos) {
+                            while ($linha = $stmtServicos->fetch()) {
+                                $servico = new Servico($linha);
                                 ?>
-                                <p class="center">Nenhum serviço para esse usuário </p>
+                                <a href="./verServico.php?id=<?= $servico->getId_servico() ?>"
+                                   class="collection-item black-text"><b><?= $servico->getNome() ?></b></a>
                                 <?php
                             }
+                        } else {
+                            ?>
+                            <p class="center">Nenhum serviço para esse usuário </p>
+                            <?php
+                        }
                         ?>
                     </div>
                 </div>
                 <div class="card col l6 offset-l1 m6 offset-m1 s10 offset-s1">
                     <ul class="collection with-header">
-                        <li class="collection-header"><div class="card-title center">Endereço</div></li>
+                        <li class="collection-header">
+                            <div class="card-title center">Endereço</div>
+                        </li>
                         <li class="collection-item">
                             <div><b>Endereço</b>
                                 <div class="secondary-content black-text">
@@ -133,7 +147,7 @@
 </main>
 </body>
 <?php
-    include_once '../Base/footer.php';
+include_once '../Base/footer.php';
 ?>
 </html>
 <script>

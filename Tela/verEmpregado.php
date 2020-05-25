@@ -56,43 +56,55 @@
                     </div>
                 </div>
                 <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
-                    <div class="card-title center">Endereço</div>
-                    <div class="divider"></div>
+
                     <?php if ($empregadoPDO->verificaEndereco($empregado->getId_usuario())) {
                         $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($user->getId_endereco())->fetch());
                     ?>
-                    <div class="input-field col s10 offset-s1">
-                        <input type="text" name="cep" id="cep" class="validate" required
-                               value="<?= $endereco->getCep() ?>">
-                        <label for="cep" class="active">CEP</label>
-                    </div>
-                    <div class="input-field col s10 offset-s1">
-                        <input type="text" name="endereco" id="endereco" class="validate" required
-                               value="<?= $endereco->getEndereco() ?>">
-                        <label for="endereco">Endereço</label>
-                    </div>
-
-                    <div class="input-field col s10 offset-s1">
-                        <input type="text" name="numero" id="numero" class="validate"
-                               value="<?= $endereco->getNumero() ?>">
-                        <label for="numero">Número</label>
-                    </div>
-                    <div class="input-field col s10 offset-s1">
-                        <input type="text" name="complemento" id="complemento" class="validate"
-                               value="<?= $endereco->getComplemento() ?>">
-                        <label for="complemento">Complemento</label>
-                    </div>
-
-                    <div class="input-field col s10 offset-s1">
-                        <input type="text" name="cidade" id="cidade" class="validate" required
-                               value="<?= $endereco->getCidade() ?>">
-                        <label for="cidade">Cidade</label>
-                    </div>
-                    <div class="input-field col s10 offset-s1">
-                        <input type="text" name="estado" id="estado" class="validate" required
-                               value="<?= $endereco->getEstado() ?>">
-                        <label for="estado">Estado</label>
-                    </div>
+                    <ul class="collection with-header">
+                        <li class="collection-header"><div class="card-title center">Endereço</div></li>
+                        <li class="collection-item">
+                            <div><b>Endereço</b>
+                                <div class="secondary-content black-text">
+                                    <?= $endereco->getEndereco() ?>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div><b>CEP</b>
+                                <div class="secondary-content black-text">
+                                    <?= $endereco->getCep() ?>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div><b>Número</b>
+                                <div class="secondary-content black-text">
+                                    <?= $endereco->getNumero() ?>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div><b>Complemento</b>
+                                <div class="secondary-content black-text">
+                                    <?= $endereco->getComplemento() ?>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div><b>UF</b>
+                                <div class="secondary-content black-text">
+                                    <?= $endereco->getEstado() ?>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div><b>Cidade</b>
+                                <div class="secondary-content black-text">
+                                    <?= $endereco->getCidade() ?>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <?php
                     } else {
