@@ -108,7 +108,7 @@
         {
             $con = new conexao();
             $pdo = $con->getConexao();
-            $stmt = $pdo->prepare('select * from servico ;');
+            $stmt = $pdo->prepare('select * from servico where deletado = 0;');
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
                 return $stmt;
