@@ -46,7 +46,7 @@ $empregado = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario-
 
     <div class="row" style="margin-top: 1vh;">
         <div class="card col l10 m10 offset-l1 offset-m1 s12">
-            <h4 class="textoCorPadrao2 center">Serviço <?= $servico->getNome() ?></h4>
+            <h4 class="textoCorPadrao2 center">Serviço <?= $servico->getNome() ?> aaaa</h4>
             <div class="divider"></div>
             <div class="card-title center">Fotos</div>
             <div class="row foto">
