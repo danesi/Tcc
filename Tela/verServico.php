@@ -46,7 +46,7 @@ $empregado = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario-
 
     <div class="row" style="margin-top: 1vh;">
         <div class="card col l10 m10 offset-l1 offset-m1 s12">
-            <h4 class="textoCorPadrao2 center">Serviço <?= $servico->getNome() ?> aaaa</h4>
+            <h4 class="center textoCorPadrao2">Serviço <?= $servico->getNome() ?></h4>
             <div class="divider"></div>
             <div class="card-title center">Fotos</div>
             <div class="row foto">
@@ -164,6 +164,39 @@ $empregado = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario-
                         </li>
                     </ul>
                 </div>
+                <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
+                    <ul class="collection with-header">
+                        <li class="collection-header">
+                            <div class="card-title center">Proprietário</div>
+                        </li>
+                        <li class="collection-item">
+                            <a href="./verUsuario.php?id=<?= $usuario->getId_usuario() ?>" class="black-text">
+                                <div><b>Nome</b>
+                                    <div class="secondary-content black-text">
+                                        <?= $usuario->getNome() ?>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
+                    <ul class="collection with-header">
+                        <li class="collection-header">
+                            <div class="card-title center">Avaliação</div>
+                        </li>
+                        <li class="collection-item">
+                            <p class="center">Avalie esse serviço, dando uma nota de 0 - 10</p>
+                            <div class="input-field col s10 offset-s1 offset-l1">
+                                <input type="number" name="nota" id="nota" min="0" max="5">
+                                <label for="nota">Nota</label>
+                            </div>
+                            <div class="row center">
+                                <button class="btn blue darken-1 avaliar">Avaliar</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="row center">
                 <a class="btn orange darken-1 voltar">Voltar</a>
@@ -261,9 +294,33 @@ include_once "../Base/chat2.php";
             slides[i].style.display = "none";
         }
         for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
+            dots[i].className = dots[i].className.replace(" actives", "");
         }
         slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
+        dots[slideIndex - 1].className += " actives";
     }
+
+    $(".avaliar").click(function () {
+        var nota = $('#nota').val();
+        if (nota !== null && nota !== '') {
+            $.ajax({
+                url: '../Controle/ServicoControle.php?function=avaliar',
+                type: 'post',
+                data: {
+                    nota: nota,
+                    id_servico: <?= $_GET['id'] ?>
+                },
+                success: function (data) {
+                    if (data > 0) {
+                        M.toast({html: "Avaliação registrada"});
+                    } else {
+                        M.toast({html: "Erro ao salvar a avaliação"});
+                        M.toast({html: "tente novamente mais tarde"});
+                    }
+                }
+            })
+        } else {
+            M.toast({html: "Preencha a nota!"})
+        }
+    });
 </script>

@@ -564,5 +564,10 @@
                 $stmt->execute();
             }
         }
+
+        function avaliar()
+        {
+
+        }
     }
                 
