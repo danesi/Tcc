@@ -1,19 +1,20 @@
 <?php
-    $pontos = "";
-    if (realpath("./index.php")) {
-        $pontos = './';
-        include_once './Modelo/Usuario.php';
+$pontos = "";
+if (realpath("./index.php")) {
+    $pontos = './';
+    include_once './Modelo/Usuario.php';
+} else {
+    if (realpath("../index.php")) {
+        $pontos = '../';
+        include_once '../Modelo/Usuario.php';
     } else {
-        if (realpath("../index.php")) {
-            $pontos = '../';
-            include_once '../Modelo/Usuario.php';
-        } else {
-            if (realpath("../../index.php")) {
-                $pontos = '../../';
-                include_once '../../Modelo/Usuario.php';
-            }
+        if (realpath("../../index.php")) {
+            $pontos = '../../';
+            include_once '../../Modelo/Usuario.php';
         }
     }
+}
+$url = str_replace("/Tcc/Tela", "", $_SERVER["PHP_SELF"]);
 ?>
 
 <nav class="nav-extended white">
@@ -21,8 +22,8 @@
         <a href="#" data-target="slide-out" class="sidenav-trigger">
             <i class="material-icons black-text">menu</i>
         </a>
-        <a href="<?php echo $pontos; ?>./index.php" class="brand-logo left black-text hide-on-small-only">EasyJobs</a>
-        <a href="<?php echo $pontos; ?>./index.php" class="brand-logo black-text center hide-on-med-and-up">EasyJobs</a>
+        <a href="<?php echo $pontos; ?>./index.php" class="brand-logo left black-text hide-on-small-only <?=$url=='/index.php'?'white-text':''?>">EasyJobs</a>
+        <a href="<?php echo $pontos; ?>./index.php" class="brand-logo black-text center hide-on-med-and-up <?=$url=='/index.php'?'white-text':''?>">EasyJobs</a>
         <ul class="right hide-on-med-and-down">
             <li>
                 <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php">
