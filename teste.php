@@ -10,33 +10,25 @@
 <?php
     include_once './Base/iNav.php';
 ?>
-<main>
-    <div class="carousel">
-        <a class="carousel-item"><img class="materialboxed"
-                                                   src="Img/Servico/45c48cce2e2d7fbdea1afc51c7c6ad26.jpg" style="
-height: 250px; max-width: auto;
-                                         background-position: center;
-                                         background-size: cover;
-                                         background-repeat: no-repeat;
-                                         object-fit: cover;
-                                         object-position: center;
-"></a><a class="carousel-item"><img class="materialboxed"
-                                                   src="Img/Servico/c81e728d9d4c2f636f067f89cc14862c.png" style="
-height: 250px; max-width: auto;
-                                         background-position: center;
-                                         background-size: cover;
-                                         background-repeat: no-repeat;
-                                         object-fit: cover;
-                                         object-position: center;
-"></a><a class="carousel-item"><img class="materialboxed"
-                                                   src="Img/Servico/c9f0f895fb98ab9159f51fd0297e236d.jpg" style="
-height: 250px; max-width: auto;
-                                         background-position: center;
-                                         background-size: cover;
-                                         background-repeat: no-repeat;
-                                         object-fit: cover;
-                                         object-position: center;
-"></a>
+<style>
+    .rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+    }
+    .rating > span {
+        display: inline-block;
+        position: relative;
+        width: 1.1em;
+    }
+    .rating > span:hover:before,
+    .rating > span:hover ~ span:before {
+        content: "\2605";
+        position: absolute;
+    }
+</style>
+<main style="margin-top: 100px;">
+    <div class="rating">
+        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
     </div>
 </main>
 <?php

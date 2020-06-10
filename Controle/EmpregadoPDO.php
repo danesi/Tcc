@@ -265,6 +265,7 @@
                 $empregado = new Empregado($this->selectEmpregadoId_usuario($id_empregado)->fetch());
                 $usuarioPDO = new UsuarioPDO();
                 $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($empregado->getId_usuario())->fetch());
+                $media = $this->selectMedia($empregado->getId_usuario());
                 echo "
                     <a href='./verEmpregado.php?id=".$empregado->getId_usuario()."'>
                     <div class='col l3 m3 s10 offset-s1' >
@@ -273,7 +274,7 @@
                             <img src='../".$usuario->getFoto()."'>
                             <span class='card-title'>".$usuario->getNome()."</span>
                             <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center'
-                               data-position='bottom' data-tooltip='Nota do empregado'>".$empregado->getNota()."</a>
+                               data-position='bottom' data-tooltip='Nota do empregado'>".$media."</a>
                         </div>
                         <ul class='card-content center'>
                             <h5>Áreas de atuação</h5>";
@@ -286,6 +287,49 @@
                     </div>
                 </div></a>";
             }
+        }
+
+        function avaliar()
+        {
+            $newNota = $_POST['nota'];
+            $id_empregado = $_POST['id_empregado'];
+            $id_usuario = $_POST['id_usuario'];
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("insert into nota_empregado values (default, :id_empregado, :id_usuario, :nota)");
+            $stmt->bindValue(":id_empregado", $id_empregado);
+            $stmt->bindValue(":id_usuario", $id_usuario);
+            $stmt->bindValue(":nota", $newNota);
+            $stmt->execute();
+            echo $stmt->rowCount();
+        }
+
+        function selectAvaliacaoId_usuario($id_usuario, $id_empregado)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from nota_empregado where id_usuario = :id_usuario and id_empregado = :id_empregado");
+            $stmt->bindValue(":id_usuario", $id_usuario);
+            $stmt->bindValue(":id_empregado", $id_empregado);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        function selectMedia($id_empregado)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from nota_empregado where id_empregado = :id_empregado");
+            $stmt->bindValue(":id_empregado", $id_empregado);
+            $stmt->execute();
+            $quant = $stmt->rowCount();
+            $notas = $stmt->fetchAll();
+            $sum = 0;
+            $media = 0;
+            foreach ($notas as $nota) {
+                $sum += $nota['nota'];
+            }
+            if ($quant != 0)  {
+                $media = $sum / $quant;
+            }
+            return $media;
         }
     }
                 

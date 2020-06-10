@@ -1,14 +1,14 @@
 <?php
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-    include_once '../Base/requerLogin.php';
-    include_once "../Modelo/Usuario.php";
-    include_once "../Modelo/Empregado.php";
-    include_once "../Modelo/Endereco.php";
-    include_once "../Controle/EmpregadoPDO.php";
-    include_once "../Controle/EnderecoPDO.php";
-    include_once "../Controle/UsuarioPDO.php";
+if (!isset($_SESSION)) {
+    session_start();
+}
+include_once '../Base/requerLogin.php';
+include_once "../Modelo/Usuario.php";
+include_once "../Modelo/Empregado.php";
+include_once "../Modelo/Endereco.php";
+include_once "../Controle/EmpregadoPDO.php";
+include_once "../Controle/EnderecoPDO.php";
+include_once "../Controle/UsuarioPDO.php";
 
 ?>
 <!DOCTYPE html>
@@ -17,16 +17,18 @@
     <meta charset="UTF-8">
     <title>EasyJobs</title>
     <?php
-        include_once '../Base/header.php';
+    include_once '../Base/header.php';
     ?>
 <body class="homeimg">
 <?php
-    include_once '../Base/iNav.php';
-    $usuarioPDO = new UsuarioPDO();
-    $user = new Usuario($usuarioPDO->selectUsuarioId_usuario($_GET['id'])->fetch());
-    $empregadoPDO = new EmpregadoPDO();
-    $enderecoPDO = new EnderecoPDO();
-    $empregado = new Empregado($empregadoPDO->selectEmpregadoId_usuario($_GET['id'])->fetch());
+include_once '../Base/iNav.php';
+$usuarioPDO = new UsuarioPDO();
+$user = new Usuario($usuarioPDO->selectUsuarioId_usuario($_GET['id'])->fetch());
+$logado = new Usuario(unserialize($_SESSION['logado']));
+$empregadoPDO = new EmpregadoPDO();
+$enderecoPDO = new EnderecoPDO();
+$empregado = new Empregado($empregadoPDO->selectEmpregadoId_usuario($_GET['id'])->fetch());
+$media = $empregadoPDO->selectMedia($empregado->getId_usuario());
 ?>
 <main>
     <div class="row">
@@ -37,19 +39,19 @@
                 <div class="col l3 offset-l1 m3 offset-m1 s10 offset-s1">
                     <div class="card z-depth-3">
                         <div class="card-image" id="user">
-                            <span hidden class="id"><?=$empregado->getId_usuario()?></span>
+                            <span hidden class="id"><?= $empregado->getId_usuario() ?></span>
                             <img src="../<?= $user->getFoto() ?>">
-                            <span class="card-title nome" ><?= $user->getNome() ?></span>
+                            <span class="card-title nome"><?= $user->getNome() ?></span>
                             <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center"
-                               data-position="bottom" data-tooltip="Nota do empregado"><?=$empregado->getNota() == null ? '0' : $empregado->getNota()?></a>
+                               data-position="bottom" data-tooltip="Nota do empregado"><?= $media ?></a>
                         </div>
                         <ul class="card-content center">
                             <h5>Áreas de atuação</h5>
                             <?php $areas = explode(",", $empregado->getArea_atuacao());
-                                foreach ($areas as $area) { ?>
-                                    <div class="chip"><?= $area ?></div>
-                                    <?php
-                                }
+                            foreach ($areas as $area) { ?>
+                                <div class="chip"><?= $area ?></div>
+                                <?php
+                            }
                             ?>
                             <h5>Ecolaridade</h5>
                             <div class="chip"><?= $empregado->getEscolaridade() ?></div>
@@ -58,10 +60,12 @@
                 <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
 
                     <?php if ($empregadoPDO->verificaEndereco($empregado->getId_usuario())) {
-                        $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($user->getId_endereco())->fetch());
+                    $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($user->getId_endereco())->fetch());
                     ?>
                     <ul class="collection with-header">
-                        <li class="collection-header"><div class="card-title center">Endereço</div></li>
+                        <li class="collection-header">
+                            <div class="card-title center">Endereço</div>
+                        </li>
                         <li class="collection-item">
                             <div><b>Endereço</b>
                                 <div class="secondary-content black-text">
@@ -107,7 +111,7 @@
                     </ul>
                 </div>
                 <?php
-                    } else {
+                } else {
                     ?>
                     <samp>Nenhum endereço encontrado, cadastre um agora para completar seu perfil</samp>
                     <div class="row center">
@@ -115,7 +119,42 @@
                            class="waves-effect waves-light btn modal-trigger blue darken-2">Cadastrar endereço</a>
                     </div>
                     <?php
-                } ?>
+                }
+                if ($_GET['id'] != $logado->getId_usuario()) {
+                    ?>
+                    <div id="avaliacao">
+                        <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
+                            <ul class="collection with-header">
+                                <li class="collection-header">
+                                    <div class="card-title center">Avaliação</div>
+                                </li>
+                                <?php
+                                $nota = $empregadoPDO->selectAvaliacaoId_usuario($logado->getId_usuario(), $empregado->getId_usuario());
+                                if ($nota->rowCount() > 0) {
+                                    ?>
+                                    <li class="collection-item">
+                                        <p class="center">Sua avaliação foi de nota: <?= $nota->fetch()['nota'] ?></p>
+                                    </li>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <li class="collection-item">
+                                        <p class="center">Avalie esse empregado, dando uma nota de 0 - 10</p>
+                                        <div class="input-field col s10 offset-s1 offset-l1">
+                                            <input type="number" name="nota" id="nota" min="0" max="10">
+                                            <label for="nota">Nota</label>
+                                        </div>
+                                        <div class="row center">
+                                            <button class="btn blue darken-1 avaliar">Avaliar</button>
+                                        </div>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
             <div class="row center">
                 <a class="voltar btn orange darken-1">Voltar</a>
@@ -124,7 +163,7 @@
     </div>
 </main>
 <?php
-    include_once '../Base/footer.php';
+include_once '../Base/footer.php';
 ?>
 </body>
 <div id="modalExcluir" class="modal">
@@ -140,7 +179,7 @@
 </div>
 </html>
 <?php
- include_once "../Base/chat2.php";
+include_once "../Base/chat2.php";
 ?>
 <script>
 
@@ -159,4 +198,30 @@
     });
 
     $('#btnChat').hide();
+
+    $(".avaliar").click(function () {
+        var nota = $('#nota').val();
+        if (nota !== null && nota !== '') {
+            $.ajax({
+                url: '../Controle/EmpregadoControle.php?function=avaliar',
+                type: 'post',
+                data: {
+                    nota: nota,
+                    id_empregado: <?= $_GET['id'] ?>,
+                    id_usuario: <?= $logado->getId_usuario() ?>
+                },
+                success: function (data) {
+                    if (data > 0) {
+                        M.toast({html: "Avaliação registrada"});
+                        $("#avaliacao").load(window.location.href + " #avaliacao");
+                    } else {
+                        M.toast({html: "Erro ao salvar a avaliação"});
+                        M.toast({html: "tente novamente mais tarde"});
+                    }
+                }
+            })
+        } else {
+            M.toast({html: "Preencha a nota!"})
+        }
+    });
 </script>
