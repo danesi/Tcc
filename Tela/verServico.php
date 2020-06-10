@@ -37,6 +37,7 @@ $servico = new Servico($servicoPDO->selectServicoId_servico($_GET['id'])->fetch(
 $logado = new Usuario(unserialize($_SESSION['logado']));
 $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($servico->getId_usuario())->fetch());
 $empregado = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario->getId_usuario())->fetch());
+$media = $servicoPDO->selectMedia($servico->getId_servico());
 ?>
 <main>
     <div id="user" hidden>
@@ -95,7 +96,8 @@ $empregado = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario-
                                          object-position: center;
                                          ">
                             </div>
-
+                            <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center'
+                               data-position='bottom' data-tooltip='Nota do servico'><?= $media ?></a>
                         </div>
                         <div id="divider" class="divider"></div>
                         <div class="card-content">
@@ -180,23 +182,42 @@ $empregado = new Empregador($empregadorPDO->selectEmpregadorId_usuario($usuario-
                         </li>
                     </ul>
                 </div>
-                <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
-                    <ul class="collection with-header">
-                        <li class="collection-header">
-                            <div class="card-title center">Avaliação</div>
-                        </li>
-                        <li class="collection-item">
-                            <p class="center">Avalie esse serviço, dando uma nota de 0 - 10</p>
-                            <div class="input-field col s10 offset-s1 offset-l1">
-                                <input type="number" name="nota" id="nota" min="0" max="5">
-                                <label for="nota">Nota</label>
-                            </div>
-                            <div class="row center">
-                                <button class="btn blue darken-1 avaliar">Avaliar</button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <?php
+                if (!$servicoPDO->verificaServicoIdUsuario($servico->getId_servico(), $logado->getId_usuario())) {
+                    ?>
+                    <div id="avaliacao">
+                        <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
+                            <ul class="collection with-header">
+                                <li class="collection-header">
+                                    <div class="card-title center">Avaliação</div>
+                                </li>
+                                <?php
+                                $nota = $servicoPDO->selectAvaliacaoId_usuario($logado->getId_usuario(), $servico->getId_servico());
+                                if ($nota->rowCount() > 0) {
+                                    ?>
+                                    <li class="collection-item">
+                                        <p class="center">Sua avaliação foi de nota: <?= $nota->fetch()['nota'] ?></p>
+                                    </li>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <li class="collection-item">
+                                        <p class="center">Avalie esse serviço, dando uma nota de 0 - 10</p>
+                                        <div class="input-field col s10 offset-s1 offset-l1">
+                                            <input type="number" name="nota" id="nota" min="0" max="10">
+                                            <label for="nota">Nota</label>
+                                        </div>
+                                        <div class="row center">
+                                            <button class="btn blue darken-1 avaliar">Avaliar</button>
+                                        </div>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
             <div class="row center">
                 <a class="btn orange darken-1 voltar">Voltar</a>
@@ -301,6 +322,7 @@ include_once "../Base/chat2.php";
     }
 
     $(".avaliar").click(function () {
+        console.log('oi');
         var nota = $('#nota').val();
         if (nota !== null && nota !== '') {
             $.ajax({
@@ -308,11 +330,14 @@ include_once "../Base/chat2.php";
                 type: 'post',
                 data: {
                     nota: nota,
-                    id_servico: <?= $_GET['id'] ?>
+                    id_servico: <?= $_GET['id'] ?>,
+                    id_usuario: <?= $logado->getId_usuario() ?>
                 },
                 success: function (data) {
+                    console.log(data);
                     if (data > 0) {
                         M.toast({html: "Avaliação registrada"});
+                        $("#avaliacao").load(window.location.href + " #avaliacao");
                     } else {
                         M.toast({html: "Erro ao salvar a avaliação"});
                         M.toast({html: "tente novamente mais tarde"});

@@ -126,6 +126,7 @@
             $fotoservicoPDO = new FotoservicoPDO();
             while ($linha = $stmt->fetch()) {
                 $servico = new Servico($linha);
+                $media = $this->selectMedia($servico->getId_servico());
                 $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                 echo "
 <a href='./verServico.php?id=".$servico->getId_servico()."' class='black-text'>
@@ -142,7 +143,8 @@
                                          object-position: center;
                                          \">
                                 </div>
-
+                                <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center'
+                               data-position='bottom' data-tooltip='Nota do servico'>".$media."</a>
                             </div>
                             <div id=\"divider\" class=\"divider\"></div>
                             <div class=\"card-content\">
@@ -237,6 +239,7 @@
             if ($stmt->rowCount() > 0) {
                 while ($linha = $stmt->fetch()) {
                     $servico = new Servico($linha);
+                    $media = $this->selectMedia($servico->getId_servico());
                     $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                     echo "
 <a href='./verServico.php?id=".$servico->getId_servico()."' class='black-text'>
@@ -253,7 +256,8 @@
                                          object-position: center;
                                          \">
                                 </div>
-
+                                <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center'
+                               data-position='bottom' data-tooltip='Nota do servico'>".$media."</a>
                             </div>
                             <div id=\"divider\" class=\"divider\"></div>
                             <div class=\"card-content\">
@@ -410,6 +414,7 @@
                         while ($servicos = $stmt->fetch()) {
                             $existe = true;
                             $servico = new Servico($servicos);
+                            $media = $this->selectMedia($servico->getId_servico());
                             $foto = new Fotoservico($fotoservicoPDO->selectFotoPrincipalServico($servico->getId_servico())->fetch());
                             echo "
 <a href='./verServico.php?id=".$servico->getId_servico()."' class='black-text'>
@@ -426,7 +431,8 @@
                                          object-position: center;
                                          \">
                                 </div>
-
+                                <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center'
+                               data-position='bottom' data-tooltip='Nota do servico'>".$media."</a>
                             </div>
                             <div id=\"divider\" class=\"divider\"></div>
                             <div class=\"card-content\">
@@ -567,7 +573,59 @@
 
         function avaliar()
         {
+            $newNota = $_POST['nota'];
+            $id_servico = $_POST['id_servico'];
+            $id_usuario = $_POST['id_usuario'];
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("insert into nota_servico values (default, :id_servico, :id_usuario, :nota)");
+            $stmt->bindValue(":id_servico", $id_servico);
+            $stmt->bindValue(":id_usuario", $id_usuario);
+            $stmt->bindValue(":nota", $newNota);
+            $stmt->execute();
+            echo $stmt->rowCount();
+        }
 
+        function selectAvaliacaoId_usuario($id_usuario, $id_servico)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from nota_servico where id_usuario = :id_usuario and id_servico = :id_servico");
+            $stmt->bindValue(":id_usuario", $id_usuario);
+            $stmt->bindValue(":id_servico", $id_servico);
+            $stmt->execute();
+            return $stmt;
+        }
+
+        function selectMedia($id_servico)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from nota_servico where id_servico = :id_servico");
+            $stmt->bindValue(":id_servico", $id_servico);
+            $stmt->execute();
+            $quant = $stmt->rowCount();
+            $notas = $stmt->fetchAll();
+            $sum = 0;
+            $media = 0;
+            foreach ($notas as $nota) {
+                $sum += $nota['nota'];
+            }
+            if ($quant != 0)  {
+                $media = $sum / $quant;
+            }
+            return $media;
+        }
+
+        function verificaServicoIdUsuario($id_servico, $id_usuario)
+        {
+            $pdo = conexao::getConexao();
+            $stmt = $pdo->prepare("select * from servico where id_servico = :id_servico and id_usuario = :id_usuario");
+            $stmt->bindValue(":id_servico", $id_servico);
+            $stmt->bindValue(":id_usuario", $id_usuario);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                 return false;
+            }
         }
     }
                 
