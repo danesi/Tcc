@@ -58,7 +58,7 @@
                         <label>Escolaridade<samp class="red-text">*</samp></label>
                     </div>
                     <div class="input-field col s10 m8 l8 offset-l2 offset-m2 offset-s1">
-                        <div class="chips black-text"></div>
+                        <div class="chips black-text tooltipped" data-position="bottom" data-tooltip="Escreva a área e após pressione enter"></div>
                         <input name="area_atuacao" value="" hidden class="area">
                         <div class="row right">
                             <samp class="red-text">*</samp><samp class="grey-text"> Campos obrigatórios</samp>
@@ -114,6 +114,7 @@
                 M.toast({html: 'Adicione áreas de atuação'});
                 return false;
             } else {
+                console.log(areas);
                 $('.area').val(areas);
                 return true;
             }
@@ -139,4 +140,5 @@
             reader.readAsDataURL(fileToUpload);
         };
     }
+    $('.tooltipped').tooltip();
 </script>

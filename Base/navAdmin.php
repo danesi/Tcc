@@ -33,8 +33,7 @@
             <ul class="right hide-on-med-and-down">
                 <li>
                     <?php if (!$empregadoPDO->verificaEmpregado($usuario->getId_usuario())) { ?>
-                        <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php"
-                           class="waves-effect waves-light btn blue darken-1">
+                        <a href="<?php echo $pontos; ?>./Tela/registroEmpregado.php">
                             <div class="chip blue darken-1 white-text">Quero trabalhar</div>
                         </a>
                     <?php } else { ?>
@@ -140,7 +139,7 @@
             <?php } ?>
 
             <?php if (!$servicoPDO->verificaServico($usuario->getId_usuario())) { ?>
-                <a href="#modalEmpregador">
+                <a href="#modalEmpregador" class="modal-trigger">
                     <li>
                         <div class="headerMeu black-text" style="margin-left: 16px">
                             Quero disponibilizar
