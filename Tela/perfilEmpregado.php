@@ -31,15 +31,28 @@
             <h4 class="textoCorPadrao2 center">Perfil de empregado</h4>
             <div class="divider"></div>
             <div class="row">
-                <div class="col l3 offset-l1 m3 offset-m1 s10 offset-s1">
-                    <div class="card z-depth-3">
-                        <div class="card-image">
-                            <img src="../<?= $usuario->getFoto() ?>">
-                            <span class="card-title"><?= $usuario->getNome() ?></span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center"
-                               data-position="bottom" data-tooltip="Nota do empregado">4.5</a>
+                <div class="col s10 m6 l3 offset-s1 offset-l1 center">
+                    <div class="card bot z-depth-3">
+                        <div class="card-image ">
+
+                            <div class="center-block"
+                                 style="background-image: url('<?= "../" . $usuario->getFoto(); ?>');
+                                         height: 250px; max-width: auto;
+                                         background-position: center;
+                                         background-size: cover;
+                                         background-repeat: no-repeat;
+                                         object-fit: cover;
+                                         object-position: center;
+                                         ">
+                            </div>
+                            <a class='btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center'
+                               data-position='bottom' data-tooltip='Nota do empregado'><?= '0' ?></a>
                         </div>
-                        <ul class="card-content center">
+                        <div id="divider" class="divider"></div>
+                        <div class="card-content">
+                            <div class="card-title"
+                                 style="margin-top: -2vh"><?php echo $usuario->getNome(); ?></div>
+                            <div class="divider"></div>
                             <h5>Áreas de atuação</h5>
                             <?php $areas = explode(",", $empregado->getArea_atuacao());
                                 foreach ($areas as $area) { ?>
@@ -49,6 +62,7 @@
                             ?>
                             <h5>Ecolaridade</h5>
                             <div class="chip"><?= $empregado->getEscolaridade() ?></div>
+                        </div>
                     </div>
                 </div>
                 <div class="right-divider"></div>
@@ -84,7 +98,7 @@
                             </div>
 
                         <div class="input-field col l10 offset-l1">
-                            <div class="chips chips-initial"></div>
+                            <div class="chips chips-initial tooltipped" data-position="bottom" data-tooltip="Escreva a área e após pressione enter"></div>
                             <input name="area_atuacao" value="" hidden class="area">
                         </div></div>
                         <div class="row center">
@@ -237,4 +251,5 @@
         $('.area').val(areas);
         return true;
     });
+    $('.tooltipped').tooltip();
 </script>

@@ -40,12 +40,25 @@ $media = $empregadoPDO->selectMedia($empregado->getId_usuario());
                     <div class="card z-depth-3">
                         <div class="card-image" id="user">
                             <span hidden class="id"><?= $empregado->getId_usuario() ?></span>
-                            <img src="../<?= $user->getFoto() ?>">
-                            <span class="card-title nome"><?= $user->getNome() ?></span>
+                            <span hidden class="nome"><?= $user->getNome() ?></span>
+                            <div class="center-block"
+                                 style="background-image: url('<?= "../" . $user->getFoto(); ?>');
+                                         height: 250px; max-width: auto;
+                                         background-position: center;
+                                         background-size: cover;
+                                         background-repeat: no-repeat;
+                                         object-fit: cover;
+                                         object-position: center;
+                                         ">
+                            </div>
                             <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center"
                                data-position="bottom" data-tooltip="Nota do empregado"><?= $media ?></a>
                         </div>
-                        <ul class="card-content center">
+                        <div id="divider" class="divider"></div>
+                        <div class="card-content center">
+                            <div class="card-title"
+                                 style="margin-top: -2vh"><?php echo $user->getNome(); ?></div>
+                            <div class="divider"></div>
                             <h5>Áreas de atuação</h5>
                             <?php $areas = explode(",", $empregado->getArea_atuacao());
                             foreach ($areas as $area) { ?>
@@ -55,6 +68,7 @@ $media = $empregadoPDO->selectMedia($empregado->getId_usuario());
                             ?>
                             <h5>Ecolaridade</h5>
                             <div class="chip"><?= $empregado->getEscolaridade() ?></div>
+                        </div>
                     </div>
                 </div>
                 <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">
