@@ -1,5 +1,5 @@
 <?php
-    include_once '../Base/requerLogin.php';
+    include_once '../Base/requerAdm.php';
 ?>
 <!DOCTYPE html>
 <html>
