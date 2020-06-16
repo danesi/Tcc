@@ -25,7 +25,8 @@ if (isset($_SESSION['logado'])) {
         $logado = $usuario;
     }
 } else {
-    $_SESSION['toast'][] = "Você precisa estar logado para fazer essa operação";
-    header('location: ' . $pontos . "index.php");
+    $_SESSION['toast'][] = "Você precisa de permissão para acessar essa tela";
+    $uri = $_SERVER["REQUEST_URI"];
+    header('location: ' . $pontos . 'Tela/login.php?uri='.$uri);
 }
 

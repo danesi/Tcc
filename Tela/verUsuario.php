@@ -27,6 +27,7 @@ include_once '../Base/iNav.php';
 $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($_GET['id'])->fetch());
 $endereco = new Endereco($enderecoPDO->selectEnderecoId_endereco($usuario->getId_endereco())->fetch());
 $stmtEmpregado = $empregadoPDO->selectEmpregadoId_usuario($usuario->getId_usuario());
+$media = $empregadoPDO->selectMedia($usuario->getId_usuario());
 if ($stmtEmpregado) {
     $empregado = new Empregado($stmtEmpregado->fetch());
 }
@@ -40,12 +41,24 @@ if ($stmtEmpregado) {
                 <div class="col l3 offset-l1 m3 offset-m1 s10 offset-s1">
                     <div class="card z-depth-3">
                         <div class="card-image">
-                            <img src="../<?= $usuario->getFoto() ?>">
-                            <span class="card-title"><?= $usuario->getNome() ?></span>
+                            <div class="center-block"
+                                 style="background-image: url('<?= "../" . $usuario->getFoto(); ?>');
+                                         height: 250px; max-width: auto;
+                                         background-position: center;
+                                         background-size: cover;
+                                         background-repeat: no-repeat;
+                                         object-fit: cover;
+                                         object-position: center;
+                                         ">
+                            </div>
                             <a class="btn-floating halfway-fab waves-effect waves-light orange darken-2 tooltipped center"
-                               data-position="bottom" data-tooltip="Nota do empregado">4.5</a>
+                               data-position="bottom" data-tooltip="Nota do empregado"><?= $media ?></a>
                         </div>
-                        <ul class="card-content center">
+                        <div id="divider" class="divider"></div>
+                        <div class="card-content center">
+                            <div class="card-title"
+                                 style="margin-top: -2vh"><?php echo $usuario->getNome(); ?></div>
+                            <div class="divider"></div>
                             <?php
                             if (isset($empregado)) {
                                 $areas = explode(",", $empregado->getArea_atuacao());
@@ -64,6 +77,7 @@ if ($stmtEmpregado) {
                                 <?php
                             }
                             ?>
+                        </div>
                     </div>
                 </div>
                 <div class="card col l6 offset-l1 m6 offset-m1 s10 offset-s1">
