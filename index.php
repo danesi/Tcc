@@ -10,14 +10,53 @@
 <?php
 include_once './Base/iNav.php';
 ?>
+<style>
+    #imagem {
+        width: 100%;
+        height: auto
+    }
+    .text {
+        position: relative;
+        margin-top: -90vh
+    }
+
+    .text-title {
+        font-size: 100px
+    }
+
+    .text-descripion {
+        margin-top: -15vh;
+        font-size: 20px
+    }
+
+    #desce {
+        margin-top: 15vh
+    }
+
+    @media only screen and (max-width: 600px) {
+        .text-title {
+            font-size: 80px
+        }
+
+        .text-descripion {
+            margin-top: -5vh;
+            font-size: 20px
+        }
+        #imagem {
+            width: 100vw;
+            height: 100vh
+        }
+    }
+</style>
 <main>
     <div class="row">
-        <img src="Img/fundo.jpg" alt="" id="imagem" style="max-width: 100vw; height: 100vh;">
-        <div class="center" style="position: relative; margin-top: -90vh">
-            <p class="white-text" style="font-size: 100px"><b>EasyJobs</b></p>
-            <p class="white-text" style="margin-top: -15vh; font-size: 20px">Uma plataforma simples e fácil, para dar
+        <img src="Img/fundo.jpg" alt="" id="imagem" class="hide-on-small-only">
+        <img src="Img/fundoMobile.png" alt="" id="imagem" class="hide-on-med-and-up">
+        <div class="center text">
+            <p class="white-text text-title"><b>EasyJobs</b></p>
+            <p class="white-text text-descripion">Uma plataforma simples e fácil, para dar
                 mais visibilidade para você e sua empresa</p>
-            <a id="desce" class="btn blue darken-1" style="margin-top: 15vh">Saiba mais </a>
+            <a id="desce" class="btn blue darken-1">Saiba mais</a>
         </div>
     </div>
     <div class="row" id="mais" style="margin-top: 30vh;">
@@ -28,7 +67,7 @@ include_once './Base/iNav.php';
                         <div class="icon-block">
                             <h2 class="center light-blue-text"><i class="medium material-icons">flash_on</i></h2>
                             <h5 class="center">Agilidade</h5>
-                            <p class="light">
+                            <p class="light center">
                                 Um site limpo e direto ao ponto, para você ter a facilidade de disponibilizar seu
                                 serviço, ou até mesmo colocar sua vaga de emprego a disposição de quem precisa.
                             </p>
@@ -38,7 +77,7 @@ include_once './Base/iNav.php';
                         <div class="icon-block">
                             <h2 class="center light-blue-text"><i class="medium material-icons">group</i></h2>
                             <h5 class="center">Visibilidade</h5>
-                            <p class="light">
+                            <p class="light center">
                                 Com nós seu serviço tem mais alcance. Estando cadastrado em nosso site, você poderá ser
                                 encontrado por qualquer pessoa, que necessite dos seus serviços.
                             </p>
@@ -48,7 +87,7 @@ include_once './Base/iNav.php';
                         <div class="icon-block">
                             <h2 class="center light-blue-text"><i class="medium material-icons">chat</i></h2>
                             <h5 class="center">Chat</h5>
-                            <p class="light">
+                            <p class="light center">
                                 Nosso site conta com um chat simples e eficiente, para que você possa de forma fácil
                                 entrar em contato com quem for do seu interesse.
                             </p>
