@@ -6,8 +6,8 @@ class Chat
     private $id_chat;
     private $id_remetente;
     private $id_destinatario;
-    private $is_media;
-    private $caminho_media;
+    private $is_midia;
+    private $caminho_midia;
     private $mensagem;
     private $data_envio;
 
@@ -65,22 +65,22 @@ class Chat
 
     public function getIsMedia()
     {
-        return $this->is_media;
+        return $this->is_midia;
     }
 
-    public function setIsMedia($is_media): void
+    public function setIsMedia($is_midia): void
     {
-        $this->is_media = $is_media;
+        $this->is_midia = $is_midia;
     }
 
     public function getCaminhoMedia()
     {
-        return $this->caminho_media;
+        return $this->caminho_midia;
     }
 
-    public function setCaminhoMedia($caminho_media): void
+    public function setCaminhoMedia($caminho_midia): void
     {
-        $this->caminho_media = $caminho_media;
+        $this->caminho_midia = $caminho_midia;
     }
 
     public function getMensagem()

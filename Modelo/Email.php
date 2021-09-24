@@ -1,6 +1,6 @@
 <?php
     include_once __DIR__.'/../Controle/conexao.php';
-    include_once __DIR__.'/../Controle/usuarioPDO.php';
+    include_once __DIR__.'/../Controle/UsuarioPDO.php';
     include_once __DIR__.'/../Modelo/Usuario.php';
     include_once __DIR__.'/../Modelo/Email.php';
     require_once __DIR__.'/../vendor/autoload.php';
@@ -25,16 +25,16 @@
                 //Server settings
                 $mail->SMTPDebug = 0;
                 $mail->isSMTP();
-                $mail->Host       = 'email-smtp.sa-east-1.amazonaws.com';
+                $mail->Host       = 'email-smtp.us-east-2.amazonaws.com';
                 $mail->SMTPAuth   = true;
-                $mail->Username   = 'AKIAZ3OWA5SLUVKQLB5D';
-                $mail->Password   = 'BBiAFEeNqD1c/Jf278NKCQ1B4SliMvxok4rBOYswRsjx';
+                $mail->Username   = 'AKIASINT6NPDO6HXDCOE';
+                $mail->Password   = 'BM2szYKxMQDNTlg9InchpmMrV6aSrsTmjkP+HZIrPRdn';
                 $mail->SMTPSecure = "tls";
                 $mail->Port       = 587;
                 $mail->CharSet = "utf-8";
 
                 //Recipients
-                $mail->setFrom('daniel.o.anesi@outlook.com', 'EasyJobs');
+                $mail->setFrom('daniel.2017000850@aluno.iffar.edu.br', 'EasyJobs');
                 $mail->isHTML(true);
                 $mail->addAddress($this->destino, $this->nome);
                 $mail->Subject = $this->assunto;

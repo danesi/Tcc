@@ -66,7 +66,7 @@ $media = $empregadoPDO->selectMedia($empregado->getId_usuario());
                                 <?php
                             }
                             ?>
-                            <h5>Ecolaridade</h5>
+                            <h5>Escolaridade</h5>
                             <div class="chip"><?= $empregado->getEscolaridade() ?></div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@ $media = $empregadoPDO->selectMedia($empregado->getId_usuario());
                     </div>
                     <?php
                 }
-                if ($_GET['id'] != $logado->getId_usuario()) {
+                if ($_GET['id'] == $logado->getId_usuario()) {
                     ?>
                     <div id="avaliacao">
                         <div class="card col l6 m6 offset-m1 offset-l1 s10 offset-s1 z-depth-3">

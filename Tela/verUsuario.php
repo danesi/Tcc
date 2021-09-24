@@ -68,7 +68,7 @@ if ($stmtEmpregado) {
                                     <?php
                                 }
                                 ?>
-                                <h5>Ecolaridade</h5>
+                                <h5>Escolaridade</h5>
                                 <div class="chip"><?= $empregado->getEscolaridade() ?></div>
                                 <?php
                             } else {

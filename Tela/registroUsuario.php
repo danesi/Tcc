@@ -15,7 +15,7 @@
                 <div class="card col l8 offset-l2 m10 offset-m1 s12">
                     <form action="../Controle/UsuarioControle.php?function=inserirUsuario" method="post" id="form" autocomplete="off">
                         <div class="row center">
-                            <h4 class="textoCorPadrao2">Cadastrar Usuario</h4>
+                            <h4 class="textoCorPadrao2">Cadastrar Usuário</h4>
                             <div class="divider"></div>
                                 <div class="input-field col l5 m5 s10 offset-l1 offset-m1 offset-s1">
                                     <input type="text" name="nome" id="nome" class="validate" required>
@@ -34,16 +34,16 @@
                                     <label for="telefone">Telefone<samp class="red-text">*</samp></label>
                                 </div>
                                 <div class="input-field col s10 offset-l1 offset-m1 offset-s1">
-                                    <input type="email" name="email" class="validate" required>
-                                    <label>E-mail<samp class="red-text">*</samp></label>
+                                    <input type="email" name="email" id="email" class="validate" required>
+                                    <label for="email">E-mail<samp class="red-text">*</samp></label>
                                 </div>
                                 <div class="input-field col l5 m5 s10 offset-l1 offset-m1 offset-s1">
                                     <input type="password" name="senha1" class="validate" required id="senha1" autocomplete="new-password">
-                                    <label>Senha<samp class="red-text">*</samp></label>
+                                    <label for="senha1">Senha<samp class="red-text">*</samp></label>
                                 </div>
                                 <div class="input-field col l5 m5 s10 offset-s1">
                                     <input type="password" name="senha2" class="validate" required id="senha2" autocomplete="new-password">
-                                    <label>Repita a senha<samp class="red-text">*</samp></label>
+                                    <label for="senha2">Repita a senha<samp class="red-text">*</samp></label>
                                     <div class="row right">
                                         <samp class="red-text">*</samp><samp class="grey-text"> Campos obrigatórios</samp>
                                     </div>

@@ -30,6 +30,7 @@
                     header('location: ../index.php');
                 }
             } else {
+                $_SESSION['toast'][] = 'Senha ou email incorretos';
                 header('location: ../Tela/login.php');
             }
         }

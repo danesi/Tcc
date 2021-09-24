@@ -188,4 +188,41 @@
                 return false;
             }
         }
+
+        public function teste()
+        {
+            try {
+                $this->mail->setAssunto("Perfil de empregado deletado");
+                $this->mail->setNome('Anesi');
+                $this->mail->setDestino('daniel.o.anesi@gmail.com');
+                $this->mail->setBody('
+                <!doctype html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+</head>
+<style>
+    div, h4, p {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<body>
+<div>
+    <h4>Perfil exlcuido</h4>
+    <p>Lamentamos, mas um de nossos administradores excluiu seu perfil de empregado</p>
+</div>
+</body>
+</html>');
+                print_r($this->mail->send());
+//                return true;
+            } catch (Exception $e) {
+//                return false;
+                print_r($e);
+            }
+        }
     }

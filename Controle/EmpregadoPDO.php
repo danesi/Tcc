@@ -19,7 +19,7 @@ class EmpregadoPDO
         $areas = substr($empregado->getArea_atuacao(), 0, $count - 1);
         $con = new conexao();
         $pdo = $con->getConexao();
-        $stmt = $pdo->prepare('insert into empregado values(:id_usuario , :escolaridade , :area_atuacao, null, default );');
+        $stmt = $pdo->prepare('insert into empregado values(:id_usuario , :escolaridade , :area_atuacao, null);');
         $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
         $stmt->bindValue(':escolaridade', $empregado->getEscolaridade());
         $stmt->bindValue(':area_atuacao', $areas);
@@ -293,7 +293,7 @@ class EmpregadoPDO
             foreach ($areas as $area) {
                 echo "<div class='chip'>" . $area . "</div>";
             }
-            echo "<h5>Ecolaridade</h5>
+            echo "<h5>Escolaridade</h5>
                             <div class='chip'>" . $empregado->getEscolaridade() . "</div>
                     </div>
                     </div>

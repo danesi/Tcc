@@ -49,33 +49,6 @@ $usuario = new Usuario($usuarioPDO->selectUsuarioId_usuario($empregador->getId_u
                             <li>
                                 <div class="collapsible-header"><b><?= $servico->getNome() ?></b></div>
                                 <div class="collapsible-body">
-                                    <!--                                    <div class="hide-on-med-and-up">-->
-                                    <!--                                        <div class="slider">-->
-                                    <!--                                            <ul class="slides">-->
-                                    <!--                                                --><?php
-                                    //                                                    $stmtFotos = $fotoservicoPDO->selectTodasFotos($servico->getId_servico());
-                                    //                                                    while ($linha = $stmtFotos->fetch()) {
-                                    //                                                        $fotos = new Fotoservico($linha);
-                                    //                                                        ?>
-                                    <!--                                                        <li>-->
-                                    <!--                                                                <img src="-->
-                                    <?//=// '../'.$fotos->getCaminho() ?><!--"-->
-                                    <!--                                                                 style="-->
-                                    <!--                                         width: 100%;-->
-                                    <!--                                         height: 500px; max-width: 100%;-->
-                                    <!--                                         background-position: center;-->
-                                    <!--                                         background-size: cover;-->
-                                    <!--                                         background-repeat: no-repeat;-->
-                                    <!--                                         object-fit: cover;-->
-                                    <!--                                         object-position: center;"-->
-                                    <!--                                                            >-->
-                                    <!--                                                        </li>-->
-                                    <!--                                                        --><?php
-                                    //                                                    }
-                                    //                                                ?>
-                                    <!--                                            </ul>-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
                                     <div class="card-title center">Perfil</div>
                                     <div class="divider"></div>
                                     <br>

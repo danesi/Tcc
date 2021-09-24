@@ -214,20 +214,20 @@
                                                         obrigatórios</samp>
                                                 </div>
                                             </div>
-                                            <div class="row center">
-                                                <?php
-                                                    if ($stmtEndereco) {
-                                                        ?>
-                                                        <input type="submit" class="btn corPadrao2" value="Alterar">
-                                                        <?php
-                                                    } else {
-                                                        ?>
-                                                        <input type="submit" class="btn corPadrao2" value="Cadastrar">
-                                                        <?php
-                                                    }
+                                        </div>
+                                        <div class="row center">
+                                            <?php
+                                            if ($stmtEndereco) {
                                                 ?>
+                                                <input type="submit" class="btn corPadrao2" value="Alterar">
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <input type="submit" class="btn corPadrao2" value="Cadastrar">
+                                                <?php
+                                            }
+                                            ?>
 
-                                            </div>
                                         </div>
                                     </div>
                                 </form>

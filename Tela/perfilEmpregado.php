@@ -60,7 +60,7 @@
                                     <?php
                                 }
                             ?>
-                            <h5>Ecolaridade</h5>
+                            <h5>Escolaridade</h5>
                             <div class="chip"><?= $empregado->getEscolaridade() ?></div>
                         </div>
                     </div>
@@ -75,24 +75,12 @@
                         <div class="row">
                             <div class="input-field col s10 offset-s1">
                                 <select name="escolaridade" required>
-                                    <option value="Fundamental - Incompleto" <?= $empregado->getEscolaridade() == "Fundamental - Incompleto" ? 'selected' : '' ?>>
-                                        Fundamental - Incompleto
-                                    </option>
-                                    <option value="Fundamental - Completo" <?= $empregado->getEscolaridade() == "Fundamental - Completo" ? 'selected' : '' ?>>
-                                        Fundamental - Completo
-                                    </option>
-                                    <option value="Médio - Incompleto" <?= $empregado->getEscolaridade() == "Médio - Incompleto" ? 'selected' : '' ?>>
-                                        Médio - Incompleto
-                                    </option>
-                                    <option value="Médio - Completo" <?= $empregado->getEscolaridade() == "Médio - Completo" ? 'selected' : '' ?>>
-                                        Médio - Completo
-                                    </option>
-                                    <option value="Superior - Incompleto" <?= $empregado->getEscolaridade() == "Superior - Incompleto" ? 'selected' : '' ?>>
-                                        Superior - Incompleto
-                                    </option>
-                                    <option value="Superior - Completo" <?= $empregado->getEscolaridade() == "Superior - Completo" ? 'selected' : '' ?>>
-                                        Superior - Completo
-                                    </option>
+                                    <option value="Fundamental - Incompleto" <?= $empregado->getEscolaridade() == "Fundamental - Incompleto" ? 'selected' : '' ?>>Fundamental - Incompleto</option>
+                                    <option value="Fundamental - Completo" <?= $empregado->getEscolaridade() == "Fundamental - Completo" ? 'selected' : '' ?>>Fundamental - Completo</option>
+                                    <option value="Médio - Incompleto" <?= $empregado->getEscolaridade() == "Médio - Incompleto" ? 'selected' : '' ?>>Médio - Incompleto</option>
+                                    <option value="Médio - Completo" <?= $empregado->getEscolaridade() == "Médio - Completo" ? 'selected' : '' ?>>Médio - Completo</option>
+                                    <option value="Superior - Incompleto" <?= $empregado->getEscolaridade() == "Superior - Incompleto" ? 'selected' : '' ?>>Superior - Incompleto</option>
+                                    <option value="Superior - Completo" <?= $empregado->getEscolaridade() == "Superior - Completo" ? 'selected' : '' ?>>Superior - Completo</option>
                                 </select>
                                 <label>Escolaridade</label>
                             </div>
