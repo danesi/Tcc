@@ -24,7 +24,7 @@ class ServicoPDO
         $usuario = new Usuario(unserialize($_SESSION['logado']));
         $con = new conexao();
         $pdo = $con->getConexao();
-        $stmt = $pdo->prepare('insert into servico values(default , :nome , :descricao , :salario, null, :id_usuario, default, default);');
+        $stmt = $pdo->prepare('insert into servico values(default , :nome , :descricao , :salario, null, :id_usuario, default, default, default);');
         $stmt->bindValue(':nome', $servico->getNome());
         $stmt->bindValue(':descricao', $servico->getDescricao());
         $stmt->bindValue(':salario', $salario);
